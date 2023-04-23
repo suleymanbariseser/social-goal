@@ -1,11 +1,13 @@
+import { ThemeProvider } from '@emotion/react';
 import { Slot } from 'expo-router';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
+import theme from '../lib/theme';
 
 export default function RootLayout() {
   return (
-    <View className='flex-1 bg-slate-950'>
+    <ThemeProvider theme={theme}>
       <StatusBar barStyle="light-content" />
       <Slot />
-    </View>
+    </ThemeProvider>
   );
 }

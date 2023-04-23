@@ -7,14 +7,16 @@
     "ios": "expo start --ios"
   },
   "dependencies": {
+    "@emotion/native": "^11.10.6",
+    "@emotion/react": "^11.10.6",
     "@expo/vector-icons": "^13.0.0",
+    "clsx": "^1.2.1",
     "expo": "~48.0.10",
     "expo-constants": "~14.2.1",
     "expo-linking": "~4.0.1",
     "expo-router": "^1.5.2",
     "expo-status-bar": "~1.4.4",
     "lottie-react-native": "5.1.4",
-    "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.71.6",
     "react-native-reanimated": "~2.14.4",
@@ -23,13 +25,13 @@
     "react-native-svg": "13.4.0",
     "react-query": "^3.39.3",
     "typescript": "^4.9.4",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
-    "@types/react": "~18.0.27",
-    "tailwindcss": "^3.3.1"
+    "@types/react": "~18.0.27"
   },
   "private": true
 }
