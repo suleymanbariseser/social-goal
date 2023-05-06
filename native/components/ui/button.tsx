@@ -4,11 +4,6 @@ import Text from './Text';
 
 interface BaseButtonProps {
   /**
-   * @default 'md'
-   */
-  size?: keyof Theme['spacing'];
-
-  /**
    * @default 'primary'
    */
   color?: keyof Theme['palette'];
@@ -20,10 +15,10 @@ interface BaseButtonProps {
 }
 
 const BaseButton = styled.TouchableOpacity<BaseButtonProps>(
-  ({ size = 'md', color = 'primary', variant = 'contained', ...props }) => ({
+  ({ color = 'primary', variant = 'contained', ...props }) => ({
     display: 'flex',
-    paddingVertical: props.theme.spacing[size],
-    paddingHorizontal: props.theme.spacing.lg,
+    paddingVertical: props.theme.spacing * 4,
+    paddingHorizontal: props.theme.spacing * 6,
     backgroundColor:
       variant === 'contained' ? props.theme.palette[color] : 'transparent',
     borderRadius: 999,

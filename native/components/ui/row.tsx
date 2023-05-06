@@ -1,17 +1,17 @@
 import styled from '@emotion/native';
-import { View } from 'react-native';
-import { Theme } from '../../lib/theme';
 
 type Props = {
   /**
-   * gap between elements
+   * gap between items, value is multiplied by spacing
+   *
+   * @default 0
    */
-  gap?: keyof Theme['spacing'];
+  gap?: number;
 };
 
-const Row = styled.View<Props>((props) => ({
+const Row = styled.View<Props>(({ gap = 0, ...props }) => ({
   flexDirection: 'row',
-  columnGap: props.gap && props.theme.spacing[props.gap],
+  columnGap: gap * props.theme.spacing,
 }));
 
 export default Row;

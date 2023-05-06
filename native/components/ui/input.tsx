@@ -13,11 +13,11 @@ export const InputWrapper = (props: InputWrapperProps) => {
   const theme = useTheme();
   return (
     <Row
-      gap='sm'
+      gap={1}
       style={css({
         backgroundColor: theme.palette.text,
         width: '100%',
-        padding: theme.spacing.md,
+        padding: theme.spacing * 4,
         borderRadius: 999,
       })}
     >

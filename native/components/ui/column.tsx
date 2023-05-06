@@ -3,14 +3,16 @@ import { Theme } from '../../lib/theme';
 
 interface Props {
   /**
-   * gap between elements
+   * gap between items, value is multiplied by spacing
+   *
+   * @default 0
    */
-  gap?: keyof Theme['spacing'];
+  gap?: number;
 }
 
-const Column = styled.View<Props>((props) => ({
+const Column = styled.View<Props>(({ gap = 0, ...props }) => ({
   flexDirection: 'column',
-  rowGap: props.gap && props.theme.spacing[props.gap],
+  rowGap: gap * props.theme.spacing,
 }));
 
 export default Column;

@@ -14,14 +14,9 @@ const theme = {
     fontSize: 16,
     lineHeight: 24,
   },
-  spacing: {
-    xs: 4,
-    sm: 8,
-    md: 16,
-    lg: 24,
-  },
+  spacing: 4,
 };
 
 export type Theme = typeof theme;
 
-export default theme
+export default theme;
