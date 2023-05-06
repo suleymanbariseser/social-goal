@@ -1,13 +1,13 @@
 const theme = {
-  colors: {
-    primary: '#bb86fc',
-    secondary: '#03dac6',
-    background: '#121212',
-    text: '#ffffff',
-    border: '#323232',
-    success: '#00c853',
-    warning: '#ffc107',
-    danger: '#ff1744',
+  palette: {
+    primary: '#004FC4',
+    secondary: '#6600CC',
+    success: '#05A660',
+    error: '#E53535',
+    warning: '#E57A00',
+    info: '#00B7C4',
+    background: '#15161c',
+    text: '#E4E4EB',
   },
   typography: {
     fontFamily: 'Roboto, sans-serif',
@@ -15,6 +15,7 @@ const theme = {
     lineHeight: 24,
   },
   spacing: {
+    xs: 4,
     sm: 8,
     md: 16,
     lg: 24,

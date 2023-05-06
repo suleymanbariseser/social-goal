@@ -22,7 +22,7 @@ interface TextProps {
   /**
    * @default 'text'
    */
-  color?: Theme['colors'];
+  color?: keyof Theme['palette'];
 
   /**
    * @default 'body1'
@@ -32,7 +32,7 @@ interface TextProps {
 
 const Text = styled.Text<TextProps>(
   ({ color = 'text', variant = 'body1', ...props }) => ({
-    color: props.theme.colors[color],
+    color: props.theme.palette[color],
     ...textVariants[variant],
     fontFamily: 'sans-serif'
   })

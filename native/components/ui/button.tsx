@@ -6,12 +6,12 @@ interface BaseButtonProps {
   /**
    * @default 'md'
    */
-  size?: Theme['spacing'];
+  size?: keyof Theme['spacing'];
 
   /**
    * @default 'primary'
    */
-  color?: Theme['colors'];
+  color?: keyof Theme['palette'];
 
   /**
    * @default 'contained'
@@ -22,9 +22,10 @@ interface BaseButtonProps {
 const BaseButton = styled.TouchableOpacity<BaseButtonProps>(
   ({ size = 'md', color = 'primary', variant = 'contained', ...props }) => ({
     display: 'flex',
-    padding: props.theme.spacing[size],
+    paddingVertical: props.theme.spacing[size],
+    paddingHorizontal: props.theme.spacing.lg,
     backgroundColor:
-      variant === 'contained' ? props.theme.colors[color] : 'transparent',
+      variant === 'contained' ? props.theme.palette[color] : 'transparent',
     borderRadius: 999,
     alignItems: 'center',
     justifyContent: 'center',
@@ -32,16 +33,17 @@ const BaseButton = styled.TouchableOpacity<BaseButtonProps>(
 );
 
 interface ButtonProps extends BaseButtonProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export const Button = ({ children, ...props }: ButtonProps) => {
   return (
-    <BaseButton {...props}>
+    <BaseButton {...props} activeOpacity={0.7}>
       <Text
         style={css({
           fontWeight: '500',
         })}
+        variant='body1'
       >
         {children}
       </Text>
