@@ -1,3 +1,4 @@
+import transform from '@/lib/sx/transform';
 import { Theme } from '@/lib/theme';
 import styled from '@emotion/native';
 import type { TextStyle } from 'react-native';
@@ -31,11 +32,14 @@ interface TextProps {
 }
 
 const Text = styled.Text<TextProps>(
-  ({ color = 'text', variant = 'body1', ...props }) => ({
-    color: props.theme.palette[color],
-    ...textVariants[variant],
-    fontFamily: 'sans-serif'
-  })
+  ({ color = 'text', variant = 'body1', ...props }) =>
+    transform(
+      {
+        color,
+        ...textVariants[variant],
+      },
+      props.theme
+    )
 );
 
 export default Text;

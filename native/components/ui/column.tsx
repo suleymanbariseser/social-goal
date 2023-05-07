@@ -1,3 +1,5 @@
+import transform from '@/lib/sx/transform';
+import withSx from '@/lib/sx/with-sx';
 import styled from '@emotion/native';
 
 interface Props {
@@ -9,9 +11,14 @@ interface Props {
   gap?: number;
 }
 
-const Column = styled.View<Props>(({ gap = 0, ...props }) => ({
-  flexDirection: 'column',
-  rowGap: gap * props.theme.spacing,
-}));
+const Column = styled.View<Props>(({ gap = 0, ...props }) =>
+  transform(
+    {
+      flexDirection: 'column',
+      rowGap: gap,
+    },
+    props.theme
+  )
+);
 
-export default Column;
+export default withSx(Column);

@@ -1,6 +1,7 @@
 import styled, { css } from '@emotion/native';
 import Text from './Text';
 import { Theme } from '@/lib/theme';
+import withSx from '@/lib/sx/with-sx';
 
 interface BaseButtonProps {
   /**
@@ -31,7 +32,7 @@ interface ButtonProps extends BaseButtonProps {
   children: React.ReactNode;
 }
 
-export const Button = ({ children, ...props }: ButtonProps) => {
+export const Button = withSx(({ children, ...props }: ButtonProps) => {
   return (
     <BaseButton {...props} activeOpacity={0.7}>
       <Text
@@ -44,4 +45,4 @@ export const Button = ({ children, ...props }: ButtonProps) => {
       </Text>
     </BaseButton>
   );
-};
+});

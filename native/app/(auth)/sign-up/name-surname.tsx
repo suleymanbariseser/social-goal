@@ -5,7 +5,7 @@ import Input from '@/components/ui/input';
 
 export default function NameSurnameScreen() {
   return (
-    <Column style={{ alignItems: 'center' }} gap={2}>
+    <Column sx={{ alignItems: 'center' }} gap={4}>
       <Text variant='headline1'>What is your name?</Text>
       <Input placeholder='Name' />
       <Input placeholder='Surname' />
