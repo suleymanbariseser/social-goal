@@ -1,4 +1,4 @@
-import styled, { css } from '@emotion/native';
+import { css } from '@emotion/native';
 import Row from './row';
 import { TextInput, TextInputProps, View } from 'react-native';
 import { useTheme } from '@emotion/react';

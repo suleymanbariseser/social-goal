@@ -1,6 +1,6 @@
 import styled, { css } from '@emotion/native';
-import { Theme } from '../../lib/theme';
 import Text from './Text';
+import { Theme } from '@/lib/theme';
 
 interface BaseButtonProps {
   /**

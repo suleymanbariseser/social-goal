@@ -1,5 +1,4 @@
 import styled from '@emotion/native';
-import { Theme } from '../../lib/theme';
 
 interface Props {
   /**

@@ -1,5 +1,5 @@
+import { Theme } from '@/lib/theme';
 import styled from '@emotion/native';
-import { Theme } from '../../lib/theme';
 import type { TextStyle } from 'react-native';
 
 const createTextVariant = (

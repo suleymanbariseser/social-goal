@@ -1,7 +1,6 @@
 import { css } from '@emotion/native';
 import { Stack } from 'expo-router';
 import { View } from 'react-native';
-import { Theme } from '../../../lib/theme';
 import { useTheme } from '@emotion/react';
 
 export const unstable_settings = {
@@ -23,7 +22,7 @@ export default function AuthLayout() {
       style={css({
         flex: 1,
         backgroundColor: theme.palette.secondary,
-        paddingHorizontal: theme.spacing.sm,
+        paddingHorizontal: theme.spacing * 4,
       })}
     >
       <Stack>

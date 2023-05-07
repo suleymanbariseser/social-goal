@@ -1,7 +1,14 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react"
+    "jsxImportSource": "@emotion/react",
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["./components/*"],
+      "@/lib/*": ["./lib/*"],
+      "@/context/*": ["./context/*"],
+      "@/assets/*": ["./assets/*"]
+    }
   },
   "extends": "expo/tsconfig.base"
 }

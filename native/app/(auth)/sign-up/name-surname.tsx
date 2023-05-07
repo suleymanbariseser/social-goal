@@ -1,9 +1,7 @@
-import { View } from 'react-native';
-import Text from '../../../components/ui/Text';
-import Row from '../../../components/ui/row';
-import Input from '../../../components/ui/input';
-import Column from '../../../components/ui/column';
-import { Button } from '../../../components/ui/button';
+import Text from '@/components/ui/Text';
+import { Button } from '@/components/ui/button';
+import Column from '@/components/ui/column';
+import Input from '@/components/ui/input';
 
 export default function NameSurnameScreen() {
   return (
