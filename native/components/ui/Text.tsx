@@ -1,45 +1,30 @@
 import transform from '@/lib/sx/transform';
+import withSx from '@/lib/sx/with-sx';
 import { Theme } from '@/lib/theme';
 import styled from '@emotion/native';
-import type { TextStyle } from 'react-native';
-
-const createTextVariant = (
-  size: number,
-  weight: TextStyle['fontWeight']
-): Pick<TextStyle, 'fontWeight' | 'fontSize'> => ({
-  fontSize: size,
-  fontWeight: weight,
-});
-
-const textVariants = {
-  headline1: createTextVariant(26, 'bold'),
-  headline2: createTextVariant(24, 'bold'),
-  headline3: createTextVariant(22, 'bold'),
-  body1: createTextVariant(16, '400'),
-  body2: createTextVariant(14, '400'),
-};
 
 interface TextProps {
   /**
-   * @default 'text'
+   * @default 'text.primary'
    */
-  color?: keyof Theme['palette'];
+  color?: string;
 
   /**
    * @default 'body1'
    *  */
-  variant?: keyof typeof textVariants;
+  variant?: keyof Theme['typography'];
 }
 
 const Text = styled.Text<TextProps>(
-  ({ color = 'text', variant = 'body1', ...props }) =>
-    transform(
+  ({ color = 'text.primary', variant = 'body1', ...props }) => ({
+    ...transform(
       {
         color,
-        ...textVariants[variant],
       },
       props.theme
-    )
+    ),
+    ...props.theme.typography[variant],
+  })
 );
 
-export default Text;
+export default withSx(Text);

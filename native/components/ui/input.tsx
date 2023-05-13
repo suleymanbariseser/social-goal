@@ -1,7 +1,10 @@
 import { css } from '@emotion/native';
-import Row from './row';
-import { TextInput, TextInputProps, View } from 'react-native';
+import { TextInput as RNTextInput, TextInputProps, View } from 'react-native';
+import Box from './box';
+import withSx from '@/lib/sx/with-sx';
 import { useTheme } from '@emotion/react';
+
+const TextInput = withSx(RNTextInput);
 
 type InputWrapperProps = {
   startAdornment?: React.ReactNode;
@@ -10,21 +13,24 @@ type InputWrapperProps = {
 };
 
 export const InputWrapper = (props: InputWrapperProps) => {
-  const theme = useTheme();
   return (
-    <Row
-      gap={1}
-      style={css({
-        backgroundColor: theme.palette.text,
+    <Box
+      sx={{
+        flexDirection: 'row',
         width: '100%',
-        padding: theme.spacing * 4,
+        paddingVertical: 4,
+        paddingHorizontal: 6,
         borderRadius: 999,
-      })}
+        alignItems: 'center',
+        borderColor: 'text.primary',
+        borderStyle: 'solid',
+        borderWidth: 1,
+      }}
     >
       {props.startAdornment && <View>{props.startAdornment}</View>}
       <View style={css({ flex: 1 })}>{props.children}</View>
       {props.endAdornment && <View>{props.endAdornment}</View>}
-    </Row>
+    </Box>
   );
 };
 
@@ -35,14 +41,18 @@ export default function Input({
   endAdornment,
   ...props
 }: Props) {
+  const theme = useTheme();
+
   return (
     <InputWrapper startAdornment={startAdornment} endAdornment={endAdornment}>
       <TextInput
-        style={css({
+        sx={{
           width: '100%',
-        })}
+          color: 'text.primary',
+        }}
         autoCapitalize='none'
         autoCorrect={false}
+        placeholderTextColor={theme.palette.text.secondary}
         {...props}
       />
     </InputWrapper>

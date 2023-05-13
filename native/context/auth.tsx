@@ -17,8 +17,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
       !user &&
       rootSegment !== '(auth)'
       ) {
-      console.log('here');
-      router.replace('/sign-up/name-surname');
+      router.replace('/(auth)');
     } else if (user && rootSegment !== '(app)') {
       router.replace('/');
     }
