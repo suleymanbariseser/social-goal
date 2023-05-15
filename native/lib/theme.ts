@@ -25,7 +25,7 @@ const palette = {
   warning: { main: '#E57A00' },
   info: { main: '#00B7C4' },
   background: {
-    default: '#15161C',
+    default: '#0D0D0D',
     paper: '#D9D9D9',
     box: '#50546B',
   },
