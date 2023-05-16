@@ -1,10 +1,13 @@
-import Text from '@/components/ui/Text';
+import Text from '@/components/ui/text';
 import Box from '@/components/ui/box';
 import { Button } from '@/components/ui/button';
 import Divider from '@/components/ui/divider';
 import Input from '@/components/ui/input';
+import { useRouter } from 'expo-router';
 
-const Auth = () => {
+export default function Auth() {
+  const router = useRouter();
+
   return (
     <Box
       sx={{
@@ -20,10 +23,8 @@ const Auth = () => {
         <Button>Continue with Facebook</Button>
         <Divider content={<Text variant='subtitle2'>OR</Text>} />
         <Input placeholder='Email' />
-        <Button>Next</Button>
+        <Button onPress={() => router.push('/(auth)/login')}>Next</Button>
       </Box>
     </Box>
   );
-};
-
-export default Auth;
+}

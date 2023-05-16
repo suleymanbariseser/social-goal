@@ -4,16 +4,19 @@ import theme from '@/lib/theme';
 import { ThemeProvider } from '@emotion/react';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function RootLayout() {
   return (
     <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <StatusBar barStyle='light-content' />
-        <Box sx={{ backgroundColor: 'background.default', flex: 1 }}>
-          <Slot />
-        </Box>
-      </AuthProvider>
+      <SafeAreaProvider>
+        <AuthProvider>
+          <StatusBar barStyle='light-content' />
+          <Box sx={{ backgroundColor: 'background.default', flex: 1 }}>
+            <Slot />
+          </Box>
+        </AuthProvider>
+      </SafeAreaProvider>
     </ThemeProvider>
   );
 }

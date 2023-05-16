@@ -49,6 +49,7 @@ export default function Input({
         sx={{
           width: '100%',
           color: 'text.primary',
+          ...theme.typography.body1,
         }}
         autoCapitalize='none'
         autoCorrect={false}
