@@ -1,6 +1,6 @@
-import { css } from '@emotion/native';
-import { useTheme } from '@emotion/react';
-import { Stack } from 'expo-router';
+import { Stack as RouterStack } from 'expo-router';
+import { Stack } from 'tamagui';
+
 import Header from '@/components/header';
 
 export const unstable_settings = {
@@ -8,26 +8,24 @@ export const unstable_settings = {
 };
 
 export default function Layout() {
-  const theme = useTheme();
-
   return (
-    <Stack
-      screenOptions={{
-        contentStyle: css({
-          backgroundColor: theme.palette.background.default,
-        }),
-        header: ({ navigation, options }) => (
-          <Header back={navigation.canGoBack()} title={options.title} />
-        ),
-        
-      }}
-    >
-      <Stack.Screen
-        name='index'
-        options={{
-          headerShown: false,
-        }}
-      />
+    <Stack f={1}>
+      <RouterStack
+        screenOptions={{
+          contentStyle: {
+            backgroundColor: 'transparent',
+          },
+          header: ({ navigation, options }) => (
+            <Header back={navigation.canGoBack()} title={options.title} />
+          ),
+        }}>
+        <RouterStack.Screen
+          name="index"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </RouterStack>
     </Stack>
   );
 }

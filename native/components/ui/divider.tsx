@@ -1,4 +1,4 @@
-import Box from './box';
+import { XStack, Stack } from 'tamagui';
 
 interface Props {
   content?: React.ReactNode;
@@ -6,16 +6,10 @@ interface Props {
 
 export default function Divider({ content }: Props) {
   return (
-    <Box
-      sx={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
-      }}
-    >
-      <Box sx={{ flexGrow: 1, height: 1, backgroundColor: 'text.secondary' }} />
-      {content && <Box sx={{ paddingHorizontal: 4 }}>{content}</Box>}
-      <Box sx={{ flexGrow: 1, height: 1, backgroundColor: 'text.secondary' }} />
-    </Box>
+    <XStack w="100%" ai="center">
+      <Stack fg={1} h={1} bg="$textSecondary" />
+      {content && <Stack px="$4">{content}</Stack>}
+      <Stack fg={1} h={1} bg="$textSecondary" />
+    </XStack>
   );
 }

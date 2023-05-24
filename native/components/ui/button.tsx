@@ -1,49 +1,40 @@
-import styled from '@emotion/native';
+import { Stack, StackProps, TextProps, styled } from 'tamagui';
+
 import Text from './text';
-import withSx from '@/lib/sx/with-sx';
-import transform from '@/lib/sx/transform';
-import { TouchableOpacityProps } from 'react-native/types';
 
-interface BaseButtonProps extends TouchableOpacityProps {
-  /**
-   * @default 'text.primary'
-   */
-  color?: string;
+export const BaseButton = styled(Stack, {
+  name: 'ButtonFrame',
 
-  /**
-   * @default 'contained'
-   */
-  variant?: 'contained' | 'text';
-}
+  backgroundColor: '$textPrimary',
+  borderRadius: '$12',
 
-export const BaseButton = withSx(
-  styled.TouchableOpacity<BaseButtonProps>(
-    ({ color = 'text.primary', variant = 'contained', ...props }) =>
-      transform(
-        {
-          display: 'flex',
-          paddingVertical: 4,
-          paddingHorizontal: 6,
-          backgroundColor: variant === 'contained' ? color : 'transparent',
-          borderRadius: 999,
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-        props.theme
-      )
-  )
-);
+  py: '$4',
+  px: '$2.5',
 
-interface ButtonProps extends React.ComponentProps<typeof BaseButton> {
-  children: React.ReactNode;
-}
+  pressStyle: {
+    backgroundColor: '$textSecondary',
+  },
+});
 
-export const Button = ({ children, ...props }: ButtonProps) => {
+const ButtonText = styled(Text, {
+  color: '$background',
+  textAlign: 'center',
+
+  variant: 'subtitle2',
+});
+
+const Button = ({
+  children,
+  textProps,
+  ...props
+}: StackProps & {
+  textProps?: TextProps;
+}) => {
   return (
-    <BaseButton {...props} activeOpacity={0.7}>
-      <Text variant='subtitle1' color='background.default'>
-        {children}
-      </Text>
+    <BaseButton {...props}>
+      <ButtonText {...textProps}>{children}</ButtonText>
     </BaseButton>
   );
 };
+
+export default Button;

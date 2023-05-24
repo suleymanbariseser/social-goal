@@ -1,26 +1,14 @@
-import { useTheme } from '@emotion/react';
-import { BaseButton } from './button';
-import Color from 'color';
+import { StackProps } from 'tamagui';
 
-interface Props extends React.ComponentProps<typeof BaseButton> {
+import { BaseButton } from './button';
+
+interface Props extends StackProps {
   children?: React.ReactNode;
 }
-export default function IconButton({ children, ...props }: Props) {
-  const theme = useTheme();
 
+export default function IconButton({ children, ...props }: Props) {
   return (
-    <BaseButton
-      sx={{
-        backgroundColor: Color(theme.palette.text.primary, 'hex')
-          .alpha(0.1)
-          .toString(),
-        paddingVertical: 0,
-        paddingHorizontal: 0,
-        width: 48,
-        height: 48,
-      }}
-      {...props}
-    >
+    <BaseButton px="$0" py="$0" width="$8" height="$8" {...props}>
       {children}
     </BaseButton>
   );

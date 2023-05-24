@@ -17,6 +17,9 @@ module.exports = function (api) {
         },
       ],
       require.resolve('expo-router/babel'),
+      ['transform-inline-environment-variables', {
+        include: ['TAMAGUI_TARGET']
+      }],
       'react-native-reanimated/plugin',
     ],
   };

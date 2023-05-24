@@ -1,4 +1,4 @@
-import { useNavigation, useRouter, useSegments } from 'expo-router';
+import { useRouter, useSegments } from 'expo-router';
 import * as React from 'react';
 
 export default function AuthProvider(props: React.PropsWithChildren) {
@@ -11,12 +11,12 @@ export default function AuthProvider(props: React.PropsWithChildren) {
     if (user === undefined) {
       return;
     }
-    
+
     if (
       // If the user is not signed in and the initial segment is not anything in the auth group.
       !user &&
       rootSegment !== '(auth)'
-      ) {
+    ) {
       router.replace('/(auth)');
     } else if (user && rootSegment !== '(app)') {
       router.replace('/');

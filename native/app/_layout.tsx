@@ -1,22 +1,28 @@
-import Box from '@/components/ui/box';
-import AuthProvider from '@/context/auth';
-import theme from '@/lib/theme';
-import { ThemeProvider } from '@emotion/react';
+import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
-import { StatusBar } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import { TamaguiProvider, Theme, YStack } from 'tamagui';
+
+import config from '../tamagui.config';
 
 export default function RootLayout() {
+  const [loaded] = useFonts({
+    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
+    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
-    <ThemeProvider theme={theme}>
-      <SafeAreaProvider>
-        <AuthProvider>
-          <StatusBar barStyle='light-content' />
-          <Box sx={{ backgroundColor: 'background.default', flex: 1 }}>
-            <Slot />
-          </Box>
-        </AuthProvider>
-      </SafeAreaProvider>
-    </ThemeProvider>
+    <TamaguiProvider config={config}>
+      <Theme name="dark">
+        <YStack f={1} bg="$backgroundMain">
+          <Slot />
+          <StatusBar style="auto" />
+        </YStack>
+      </Theme>
+    </TamaguiProvider>
   );
 }
