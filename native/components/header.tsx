@@ -1,7 +1,10 @@
 import { AntDesign } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { Button, Text, XStack, YStack } from 'tamagui';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { XStack } from 'tamagui';
+
+import IconButton from './ui/icon-button';
+import Text from './ui/text';
 
 interface Props {
   back?: boolean;
@@ -14,19 +17,16 @@ export default function Header({ back, title }: Props) {
   const router = useRouter();
 
   return (
-    <YStack>
+    <XStack px="$4" pb="$4" pt={safeArea.top}>
       {back && (
-        <Button onPress={() => router.back()}>
-          <AntDesign
-            name='arrowleft'
-            size={24}
-            // color={theme.palette.text.primary}
-          />
-        </Button>
+        <IconButton
+          icon={({ color }) => <AntDesign name="arrowleft" size={24} color="#fff" />}
+          onPress={() => router.back()}
+        />
       )}
       <XStack>
         <Text>{title}</Text>
       </XStack>
-    </YStack>
+    </XStack>
   );
 }

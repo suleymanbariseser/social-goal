@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { YStack } from 'tamagui';
 
 import Button from '@/components/ui/button';
@@ -6,6 +7,12 @@ import Input from '@/components/ui/input';
 import Text from '@/components/ui/text';
 
 export default function Auth() {
+  const router = useRouter();
+
+  const handlePress = () => {
+    router.push('/login');
+  };
+
   return (
     <YStack flex={1} gap="$8" px="$6" justifyContent="center">
       <Text variant="headline1">Let’s plan and communicate</Text>
@@ -14,7 +21,7 @@ export default function Auth() {
         <Button>Continue with Facebook</Button>
         <Divider content={<Text variant="subtitle2">OR</Text>} />
         <Input placeholder="Email" />
-        <Button onPress={console.log}>Next</Button>
+        <Button onPress={handlePress}>Next</Button>
       </YStack>
     </YStack>
   );
