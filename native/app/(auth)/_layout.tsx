@@ -1,8 +1,6 @@
 import { Stack as RouterStack } from 'expo-router';
 import { Stack } from 'tamagui';
 
-import Header from '@/components/header';
-
 export const unstable_settings = {
   initialRouteName: 'index',
 };
@@ -15,9 +13,7 @@ export default function Layout() {
           contentStyle: {
             backgroundColor: 'transparent',
           },
-          header: ({ navigation, options }) => (
-            <Header back={navigation.canGoBack()} title={options.title} />
-          ),
+          headerShown: false,
         }}>
         <RouterStack.Screen
           name="index"

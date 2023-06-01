@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack, YStack } from 'tamagui';
 
@@ -7,22 +8,28 @@ import Text from '@/components/ui/text';
 
 export default function EmailVerification() {
   const safeArea = useSafeAreaInsets();
+  const router = useRouter();
+
+  const handlePress = () => {
+    router.push('/register/password');
+  };
 
   return (
-    <YStack f={1} pt="$1" px="$1.5" pb={safeArea.bottom / 4}>
-      <YStack gap="$0.5">
-        <Text variant="headline1">Register</Text>
-        <Stack maxWidth={220}>
-          <Text variant="subtitle1">Be part of our network and plan your future</Text>
+    <YStack f={1} pb={safeArea.bottom} gap="$4" px="$6">
+      <YStack gap="$2">
+        <Text variant="headline2">Verify Email</Text>
+        <Stack>
+          <Text variant="subtitle1">To continue using app, you must verify your email</Text>
         </Stack>
       </YStack>
-      <YStack f={1} gap="$1" px="$1">
-        <Input placeholder="First name" />
-        <Input placeholder="Last name" />
-        <Input placeholder="Email" />
+      <YStack f={1} gap="$4">
+        <Input value="suleymanbariseser@gmail.com" disabled />
+        <Input placeholder="Verification code" />
       </YStack>
-      <YStack ai="center" gap="$0.5">
-        <Button>Continue</Button>
+      <YStack ai="center" gap="$2">
+        <Button onPress={handlePress} w="100%">
+          Continue
+        </Button>
         <Text>
           Already have an account? <Text color="$primaryMain">Login</Text>
         </Text>

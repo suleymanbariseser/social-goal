@@ -10,7 +10,7 @@ export default function Auth() {
   const router = useRouter();
 
   const handlePress = () => {
-    router.push('/login');
+    router.push('/register');
   };
 
   return (

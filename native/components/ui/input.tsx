@@ -5,7 +5,6 @@ export default styled(Input, {
 
   br: '$12',
   px: '$4',
-  py: '$6',
   backgroundColor: '$backgroundTransparent',
   borderColor: '$textPrimary',
   color: '$textPrimary',
@@ -13,6 +12,7 @@ export default styled(Input, {
   autoCapitalize: 'none',
   autoCorrect: false,
   placeholderTextColor: '$textPrimary',
+  minHeight: 50,
 
   focusStyle: {
     borderColor: '$textPrimary',
