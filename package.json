@@ -1,0 +1,17 @@
+{
+  "name": "social-goal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:server": "pnpm dev --prefix server",
+    "dev:client": "pnpm start --prefix native --ios",
+    "dev": "concurrently \"pnpm dev:server\" \"pnpm dev:client\""
+  },
+  "keywords": [],
+  "author": "Suleyman Baris Eser",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.1.0"
+  }
+}
