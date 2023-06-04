@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:server": "pnpm dev --prefix server",
-    "dev:client": "pnpm start --prefix native --ios",
+    "dev:shared": "pnpm --filter @social-goal/shared dev",
+    "dev:server": "pnpm --filter @social-goal/server dev",
+    "dev:client": "pnpm --filter @social-goal/native dev",
     "dev": "concurrently \"pnpm dev:server\" \"pnpm dev:client\""
   },
   "keywords": [],

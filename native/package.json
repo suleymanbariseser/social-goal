@@ -1,12 +1,14 @@
 {
-  "name": "app",
+  "name": "@social-goal/native",
   "version": "1.0.0",
   "scripts": {
     "start": "TAMAGUI_TARGET=native expo start",
     "android": "TAMAGUI_TARGET=native expo start --android",
-    "ios": "TAMAGUI_TARGET=native expo start --ios"
+    "ios": "TAMAGUI_TARGET=native expo start --ios",
+    "dev": "pnpm ios"
   },
   "dependencies": {
+    "@social-goal/shared": "workspace:*",
     "@expo/vector-icons": "^13.0.0",
     "@tamagui/animations-react-native": "^1.29.3",
     "@tamagui/babel-plugin": "^1.29.3",

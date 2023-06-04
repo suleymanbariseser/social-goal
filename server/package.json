@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "@social-goal/server",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
@@ -12,6 +12,7 @@
   "author": "Suleyman Baris Eser",
   "license": "ISC",
   "dependencies": {
+    "@social-goal/shared": "workspace:*",
     "express": "^4.18.2"
   },
   "devDependencies": {
