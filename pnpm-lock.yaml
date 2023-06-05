@@ -4,14 +4,11 @@ importers:
 
   .:
     specifiers:
-      '@social-goal/shared': workspace:*
       concurrently: ^8.1.0
-    dependencies:
-      '@social-goal/shared': link:shared
     devDependencies:
       concurrently: 8.1.0
 
-  native:
+  packages/client:
     specifiers:
       '@babel/core': ^7.20.0
       '@babel/plugin-proposal-export-namespace-from': ^7.18.9
@@ -96,7 +93,7 @@ importers:
       eslint-config-universe: 11.2.0_lvqgjugzywrmdxqx5vzprnzv2a
       prettier: 2.8.8
 
-  server:
+  packages/server:
     specifiers:
       '@social-goal/shared': workspace:*
       '@types/express': ^4.17.17
@@ -115,7 +112,7 @@ importers:
       nodemon: 2.0.22
       typescript: 5.1.3
 
-  shared:
+  packages/shared:
     specifiers:
       typescript: ^5.1.3
     devDependencies:
@@ -2045,7 +2042,7 @@ packages:
       '@expo/metro-config': 0.7.1
       '@expo/osascript': 2.0.33
       '@expo/spawn-async': 1.5.0
-      body-parser: 1.20.1
+      body-parser: 1.20.2
       chalk: 4.1.2
       connect: 3.7.0
       fs-extra: 9.0.0
@@ -2128,7 +2125,7 @@ packages:
       react-native: '*'
     dependencies:
       '@bacons/react-views': 1.1.3_react-native@0.71.8
-      qs: 6.11.0
+      qs: 6.11.2
       react-native: 0.71.8_kvuck4rtr4iyv6ksg6e2xsaw6a
     dev: false
 
@@ -2619,7 +2616,7 @@ packages:
       '@react-native-community/cli-tools': 10.1.1
       chalk: 4.1.2
       execa: 1.0.0
-      fast-xml-parser: 4.2.2
+      fast-xml-parser: 4.2.3
       glob: 7.2.3
       ora: 5.4.1
     transitivePeerDependencies:
@@ -4757,6 +4754,26 @@ packages:
       - supports-color
     dev: false
 
+  /body-parser/1.20.2:
+    resolution: {integrity: sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA==}
+    engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
+    dependencies:
+      bytes: 3.1.2
+      content-type: 1.0.5
+      debug: 2.6.9
+      depd: 2.0.0
+      destroy: 1.2.0
+      http-errors: 2.0.0
+      iconv-lite: 0.4.24
+      on-finished: 2.4.1
+      qs: 6.11.0
+      raw-body: 2.5.2
+      type-is: 1.6.18
+      unpipe: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /boolbase/1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
     dev: false
@@ -6223,7 +6240,7 @@ packages:
       '@types/qs': 6.9.7
       expo-constants: 14.2.1_expo@48.0.19
       invariant: 2.2.4
-      qs: 6.11.0
+      qs: 6.11.2
       url-parse: 1.5.10
     transitivePeerDependencies:
       - expo
@@ -6448,8 +6465,8 @@ packages:
     resolution: {integrity: sha512-8EZzEP0eKkEEVX+drtd9mtuQ+/QrlfW/5MlwcwK5Nds6EkZ/tRzEexkzUY2mIssnAyVLT+TKHuRXmFNNXYUd6g==}
     dev: false
 
-  /fast-xml-parser/4.2.2:
-    resolution: {integrity: sha512-DLzIPtQqmvmdq3VUKR7T6omPK/VCRNqgFlGtbESfyhcH2R4I8EzK1/K6E8PkRCK2EabWrUHK32NjYRbEFnnz0Q==}
+  /fast-xml-parser/4.2.3:
+    resolution: {integrity: sha512-3wwn8WJZwUPwv7nU2hxIwKdxpwVexw8AYrUSG0prEPZXKbLBmz3eBlqvj+gB7lDY26MHDKCw7A8G2zoVO/Sf9A==}
     hasBin: true
     dependencies:
       strnum: 1.0.5
@@ -9453,6 +9470,13 @@ packages:
       side-channel: 1.0.4
     dev: false
 
+  /qs/6.11.2:
+    resolution: {integrity: sha512-tDNIz22aBzCDxLtVH++VnTfzxlfeK5CbqohpSqpJgj1Wg/cQbStNAz3NuqCs5vV+pjBsK4x4pN9HlVh7rcYRiA==}
+    engines: {node: '>=0.6'}
+    dependencies:
+      side-channel: 1.0.4
+    dev: false
+
   /query-string/7.1.3:
     resolution: {integrity: sha512-hh2WYhq4fi8+b+/2Kg9CEge4fDPvHS534aOOvOZeQ3+Vf2mCFsaFBYj0i+iXcAq6I9Vzp5fjMFBlONvayDC1qg==}
     engines: {node: '>=6'}
@@ -9489,6 +9513,16 @@ packages:
 
   /raw-body/2.5.1:
     resolution: {integrity: sha512-qqJBtEyVgS0ZmPGdCFPWJ3FreoqvG4MVQln/kCgF7Olq95IbOp0/BWyMwbdtn4VTvkM8Y7khCQ2Xgk/tcrCXig==}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      bytes: 3.1.2
+      http-errors: 2.0.0
+      iconv-lite: 0.4.24
+      unpipe: 1.0.0
+    dev: false
+
+  /raw-body/2.5.2:
+    resolution: {integrity: sha512-8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==}
     engines: {node: '>= 0.8'}
     dependencies:
       bytes: 3.1.2

@@ -21,5 +21,6 @@ app.get('/', (_, res) => {
 });
 
 app.listen(8000, () => {
+  console.log('asdjsa')
   console.log('App is running at PORT=8000');
 });
