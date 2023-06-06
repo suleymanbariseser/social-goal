@@ -34,21 +34,13 @@ This will install all the required dependencies for all the projects within the 
 
 To run the project, follow these steps:
 
-1. Start the shared project first. Run the following command:
-
-    ```shell
-    $ pnpm dev:shared
-    ````
-
-This will build and start the shared project, which is a dependency for the client and server projects.
-
-2. Once the shared project is running, you can start the client project by running the following command:
+1. You can start the client project by running the following command:
 
     ```shell
     $ pnpm dev:client
     ```
 
-3. Similarly, you can start the server project by running the following command:
+2. Similarly, you can start the server project by running the following command:
 
     ```shell
     $ pnpm dev:server
