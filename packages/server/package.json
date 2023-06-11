@@ -2,6 +2,7 @@
   "name": "@social-goal/server",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "main": "src/index.ts",
   "scripts": {
     "build": "npx tsc",

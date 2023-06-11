@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
+  "workspaces": ["packages/*"],
   "scripts": {
-    "dev:server": "pnpm --filter @social-goal/server dev",
-    "dev:client": "pnpm --filter @social-goal/client dev",
-    "dev": "concurrently \"pnpm dev:server\" \"pnpm dev:client\""
+    "dev:server": "yarn workspace @social-goal/server dev",
+    "dev:client": "yarn workspace @social-goal/client start"
   },
   "keywords": [],
   "author": "Suleyman Baris Eser",
