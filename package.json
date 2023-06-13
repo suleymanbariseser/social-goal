@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "dev:server": "yarn workspace @social-goal/server dev",
-    "dev:client": "yarn workspace @social-goal/client start"
+    "dev:client": "yarn workspace @social-goal/client start",
+    "format": "yarn prettier --write ."
   },
   "keywords": [],
   "author": "Suleyman Baris Eser",
