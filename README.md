@@ -3,6 +3,7 @@
 Briefly introduce your project and provide a high-level overview.
 
 ## Table of Contents
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
@@ -18,15 +19,16 @@ To get started with this project, follow these steps:
    ```
 
 2. Clone the repository:
-    
-    ```shell
-    $ git clone https://github.com/your-username/your-project.git
-    $ cd your-project/
-    ````
+
+   ```shell
+   $ git clone https://github.com/your-username/your-project.git
+   $ cd your-project/
+   ```
+
 3. Install the dependencies using pnpm:
-    ```shell
-    $ pnpm install
-    ```
+   ```shell
+   $ pnpm install
+   ```
 
 This will install all the required dependencies for all the projects within the workspace.
 
@@ -36,15 +38,15 @@ To run the project, follow these steps:
 
 1. You can start the client project by running the following command:
 
-    ```shell
-    $ pnpm dev:client
-    ```
+   ```shell
+   $ pnpm dev:client
+   ```
 
 2. Similarly, you can start the server project by running the following command:
 
-    ```shell
-    $ pnpm dev:server
-    ```
+   ```shell
+   $ pnpm dev:server
+   ```
 
 Make sure you navigate to the appropriate project directory before running the corresponding command.
 

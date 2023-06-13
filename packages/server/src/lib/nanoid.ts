@@ -15,7 +15,7 @@ const SYMBOLS = '!@#$%^&*()_+-=[]{};:,./<>?';
 
 export const createCode = (options: CreateCodeOptions) => {
   let alphabet = '';
-  
+
   if (options.includeNumbers) alphabet += NUMBERS;
   if (options.includeLowercase) alphabet += LOWERCASES;
   if (options.includeUppercase) alphabet += UPPERCASES;

@@ -4,19 +4,13 @@ import { users } from '../lib/db/schema/user';
 import { userVerifications } from '../lib/db/schema/email-verification';
 import { createCode } from '../lib/nanoid';
 import { hash } from 'bcrypt';
-import { InputOptions } from '../types/auth';
+import { InputOptions } from '../types/trpc';
 import { RegisterUserInput } from '../schemas/auth';
 
-export const registerUser = async ({
-  input,
-}: InputOptions<RegisterUserInput>) => {
+export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) => {
   const { email, firstName, lastName } = input;
 
-  const user = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1);
+  const user = await db.select().from(users).where(eq(users.email, email)).limit(1);
 
   if (user) throw new Error('User already exists');
 
@@ -26,15 +20,11 @@ export const registerUser = async ({
     .select()
     .from(userVerifications)
     .where(
-      and(
-        eq(userVerifications.email, email),
-        gte(userVerifications.createdAt, new Date(startDate))
-      )
+      and(eq(userVerifications.email, email), gte(userVerifications.createdAt, new Date(startDate)))
     )
     .limit(3);
 
-  if (verifications.length >= 3)
-    throw new Error('Too many attempts! Please try again later');
+  if (verifications.length >= 3) throw new Error('Too many attempts! Please try again later');
 
   const code = createCode({
     length: 5,

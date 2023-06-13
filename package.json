@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev:server": "yarn workspace @social-goal/server dev",
     "dev:client": "yarn workspace @social-goal/client start"
@@ -13,6 +15,7 @@
   "author": "Suleyman Baris Eser",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.1.0"
+    "concurrently": "^8.1.0",
+    "prettier": "^2.8.8"
   }
 }

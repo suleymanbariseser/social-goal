@@ -7,9 +7,6 @@ export const middleware = t.middleware;
 export const router = t.router;
 export const publicProcedure = t.procedure;
 
-export const createContext = ({
-  req,
-  res,
-}: CreateExpressContextOptions) => ({});
+export const createContext = ({ req, res }: CreateExpressContextOptions) => ({});
 
 export type Context = inferAsyncReturnType<typeof createContext>;
