@@ -1,11 +1,10 @@
 import { and, eq, gte } from 'drizzle-orm';
-import { db } from '../lib/db';
-import { users } from '../lib/db/schema/user';
-import { userVerifications } from '../lib/db/schema/email-verification';
-import { createCode } from '../lib/nanoid';
 import { hash } from 'bcrypt';
-import { InputOptions } from '../types/trpc';
-import { RegisterUserInput } from '../schemas/auth';
+import { db } from '@/lib/db';
+import { userVerifications, users } from '@/lib/db/schema';
+import { createCode } from '@/lib/nanoid';
+import { RegisterUserInput } from '@/schemas/auth';
+import { InputOptions } from '@/types/trpc';
 
 export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) => {
   const { email, firstName, lastName } = input;

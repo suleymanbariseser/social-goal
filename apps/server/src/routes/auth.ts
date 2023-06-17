@@ -1,7 +1,7 @@
+import { registerUser } from '@/controllers/auth';
+import { publicProcedure, router } from '@/lib/trpc';
+import { registerUserSchema } from '@/schemas/auth';
 import { z } from 'zod';
-import { publicProcedure, router } from '../lib/trpc';
-import { registerUserSchema } from '../schemas/auth';
-import { registerUser } from '../controllers/auth';
 
 export const authRouter = router({
   login: publicProcedure

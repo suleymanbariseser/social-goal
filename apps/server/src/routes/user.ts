@@ -1,6 +1,6 @@
-import { db } from '../lib/db';
-import { users } from '../lib/db/schema/user';
-import { publicProcedure, router } from '../lib/trpc';
+import { db } from "@/lib/db";
+import { users } from "@/lib/db/schema";
+import { publicProcedure, router } from "@/lib/trpc";
 
 export const userRouter = router({
   list: publicProcedure.query(async () => {
