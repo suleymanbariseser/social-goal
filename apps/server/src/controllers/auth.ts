@@ -2,16 +2,28 @@ import { and, eq, gte } from 'drizzle-orm';
 import { hash } from 'bcrypt';
 import { db } from '@/lib/db';
 import { userVerifications, users } from '@/lib/db/schema';
-import { createCode } from '@/lib/nanoid';
-import { RegisterUserInput } from '@/schemas/auth';
 import { InputOptions } from '@/types/trpc';
+import { RegisterUserInput } from '@/schemas/auth';
+import { createCode } from '@/lib/nanoid';
 
 export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) => {
   const { email, firstName, lastName } = input;
 
-  const user = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  console.log('called', db.select);
 
-  if (user) throw new Error('User already exists');
+  // find user by email
+  const user = await db
+    .select({
+      id: users.id,
+    })
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  console.log('user', user);
+
+  // if user already registered inside application then throw error
+  if (user && user.length > 0) throw new Error('User already exists');
 
   const startDate = Date.now() - 1000 * 60 * 60;
 

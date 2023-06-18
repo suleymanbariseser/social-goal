@@ -12,11 +12,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@/lib/*": ["./src/lib/*"],
-      "@/controllers/*": ["./src/controllers/*"],
-      "@/routes/*": ["./src/routes/*"],
-      "@/schemas/*": ["./src/schemas/*"],
-      "@/types/*": ["./src/types/*"]
+      "@/*": ["./src/*"],
     }
   }
 }
