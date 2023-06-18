@@ -3,7 +3,7 @@ import { YStack } from 'tamagui';
 
 import Button from '@/components/ui/button';
 import Divider from '@/components/ui/divider';
-import Input from '@/components/ui/input';
+import { Input } from '@/components/ui/input';
 import Text from '@/components/ui/text';
 
 export default function Auth() {
