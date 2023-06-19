@@ -1,7 +1,8 @@
+import 'dotenv/config';
+
 import * as trpcExpress from '@trpc/server/adapters/express';
 import express from 'express';
 import { appRouter } from '@/routes';
-import 'dotenv/config';
 import { createContext } from '@/lib/trpc';
 
 const app = express();

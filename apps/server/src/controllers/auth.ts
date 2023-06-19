@@ -5,11 +5,10 @@ import { userVerifications, users } from '@/lib/db/schema';
 import { InputOptions } from '@/types/trpc';
 import { RegisterUserInput } from '@/schemas/auth';
 import { createCode } from '@/lib/nanoid';
+import { resend } from '@/lib/resend';
 
 export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) => {
   const { email, firstName, lastName } = input;
-
-  console.log('input', input);
 
   // find user by email
   const user = await db
@@ -19,8 +18,6 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
     .from(users)
     .where(eq(users.email, email))
     .limit(1);
-
-  console.log('user', user);
 
   // if user already registered inside application then throw error
   if (user && user.length > 0) throw new Error('User already exists');
@@ -34,25 +31,32 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
       and(eq(userVerifications.email, email), gte(userVerifications.createdAt, new Date(startDate)))
     )
     .limit(3);
-  console.log('verifications', verifications);
 
+  // if user has sent 3 emails within last hour then throw error
   if (verifications.length >= 3) throw new Error('Too many attempts! Please try again later');
 
+  // create an alpha numeric code
   const code = createCode({
     length: 5,
     includeUppercase: true,
     includeNumbers: true,
   });
-
-  console.log('code', code);
-
+  // encrypt the code to save it in database
   const hashedCode = await hash(code, 10);
-  console.log('hashedCode', hashedCode);
 
-  const newVerification = await db.insert(userVerifications).values({
+  // insert verification row into database
+  await db.insert(userVerifications).values({
     firstName,
     lastName,
     email,
     code: hashedCode,
+  });
+
+  // send email to user and do not wait for it
+  resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: email,
+    subject: 'Email Verification',
+    html: `<div><h1>Dear ${firstName} ${lastName}</h1><p>Thank you for using our application. Please verify your email by entering the following code: <strong>${code}</strong></p></div>`,
   });
 };

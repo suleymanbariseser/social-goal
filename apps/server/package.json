@@ -22,6 +22,7 @@
     "express": "^4.18.2",
     "nanoid": "3.3.6",
     "postgres": "^3.3.5",
+    "resend": "^0.15.3",
     "zod": "^3.21.4"
   },
   "devDependencies": {
