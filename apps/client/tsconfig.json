@@ -9,5 +9,10 @@
       "@/assets/*": ["./assets/*"]
     }
   },
+  "references": [
+    {
+      "path": "../server"
+    }
+  ],
   "extends": "expo/tsconfig.base"
 }

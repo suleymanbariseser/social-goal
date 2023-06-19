@@ -9,6 +9,8 @@ import { createCode } from '@/lib/nanoid';
 export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) => {
   const { email, firstName, lastName } = input;
 
+  console.log('input', input);
+
   // find user by email
   const user = await db
     .select({
@@ -17,6 +19,8 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
     .from(users)
     .where(eq(users.email, email))
     .limit(1);
+
+  console.log('user', user);
 
   // if user already registered inside application then throw error
   if (user && user.length > 0) throw new Error('User already exists');
@@ -30,6 +34,7 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
       and(eq(userVerifications.email, email), gte(userVerifications.createdAt, new Date(startDate)))
     )
     .limit(3);
+  console.log('verifications', verifications);
 
   if (verifications.length >= 3) throw new Error('Too many attempts! Please try again later');
 
@@ -39,7 +44,10 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
     includeNumbers: true,
   });
 
+  console.log('code', code);
+
   const hashedCode = await hash(code, 10);
+  console.log('hashedCode', hashedCode);
 
   const newVerification = await db.insert(userVerifications).values({
     firstName,
@@ -47,7 +55,4 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
     email,
     code: hashedCode,
   });
-
-  console.log('hashedCode', hashedCode);
-  console.log('newVerification', newVerification);
 };

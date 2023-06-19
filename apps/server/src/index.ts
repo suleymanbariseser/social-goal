@@ -1,15 +1,15 @@
 import * as trpcExpress from '@trpc/server/adapters/express';
 import express from 'express';
-import { appRouter } from './routes';
-import { createContext } from './lib/trpc';
+import { appRouter } from '@/routes';
 import 'dotenv/config';
+import { createContext } from '@/lib/trpc';
 
 const app = express();
 
 app.use(
   trpcExpress.createExpressMiddleware({
     router: appRouter,
-    createContext,
+    createContext: createContext,
   })
 );
 

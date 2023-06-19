@@ -1,3 +1,4 @@
+import Color from 'color';
 import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
 import { Stack, Input as TInput, styled } from 'tamagui';
 
@@ -34,7 +35,7 @@ export const Input = ({ error, helperText, disabled, ...rest }: BaseInputProps) 
     <Stack gap="$2" opacity={disabled ? 0.5 : 1}>
       <BaseInput
         {...rest}
-        placeholderTextColor={color}
+        placeholderTextColor={Color(color).alpha(0.7).toString()}
         disabled={disabled}
         borderColor={color}
         focusStyle={{

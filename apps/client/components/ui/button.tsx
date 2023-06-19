@@ -1,4 +1,4 @@
-import { Stack, StackProps, TextProps, styled } from 'tamagui';
+import { Spinner, Stack, StackProps, TextProps, styled } from 'tamagui';
 
 import Text from './text';
 
@@ -10,6 +10,15 @@ export const BaseButton = styled(Stack, {
 
   py: '$4',
   px: '$2.5',
+
+  variants: {
+    // style for disabled button
+    disabled: {
+      true: {
+        opacity: 0.5,
+      },
+    },
+  },
 
   pressStyle: {
     backgroundColor: '$textSecondary',
@@ -26,13 +35,15 @@ const ButtonText = styled(Text, {
 const Button = ({
   children,
   textProps,
+  isLoading,
   ...props
 }: StackProps & {
+  isLoading?: boolean;
   textProps?: TextProps;
 }) => {
   return (
     <BaseButton {...props}>
-      <ButtonText {...textProps}>{children}</ButtonText>
+      {isLoading ? <Spinner size="small" /> : <ButtonText {...textProps}>{children}</ButtonText>}
     </BaseButton>
   );
 };

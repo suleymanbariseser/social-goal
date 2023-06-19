@@ -7,6 +7,7 @@ import { Stack, YStack } from 'tamagui';
 import Button from '@/components/ui/button';
 import { ControlledInput } from '@/components/ui/input';
 import Text from '@/components/ui/text';
+import { trpc } from '@/lib/trpc';
 
 export default function Register() {
   const safeArea = useSafeAreaInsets();
@@ -17,9 +18,10 @@ export default function Register() {
   } = useForm<RegisterUserInput>({
     resolver: zodResolver(registerUserSchema),
   });
+  const { mutate, isLoading } = trpc.auth.register.useMutation();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: RegisterUserInput) => {
+    await mutate(data);
   };
 
   return (
@@ -54,7 +56,11 @@ export default function Register() {
         />
       </YStack>
       <YStack ai="center" gap="$2">
-        <Button onPress={handleSubmit(onSubmit)} w="100%">
+        <Button
+          onPress={handleSubmit(onSubmit)}
+          w="100%"
+          isLoading={isLoading}
+          disabled={isLoading}>
           Continue
         </Button>
         <Text>

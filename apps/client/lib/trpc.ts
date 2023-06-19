@@ -1,4 +1,4 @@
-import type { AppRouter } from '@social-goal/server/src/routes';
+import { AppRouter } from '@social-goal/server/src/routes';
 import { httpBatchLink, createTRPCReact } from '@trpc/react-query';
 
 export const trpc = createTRPCReact<AppRouter>();
