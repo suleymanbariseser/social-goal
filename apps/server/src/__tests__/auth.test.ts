@@ -1,5 +1,5 @@
-import { registerUser } from '@/controllers/auth';
-import { User } from '@/lib/db/schema';
+import { User } from '@/config/db/schema';
+import { registerUser } from '@/routes/auth/controller';
 
 describe('auth controller', () => {
   test('should throw error if user already exists', () => {
