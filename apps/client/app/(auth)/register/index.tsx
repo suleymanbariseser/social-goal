@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterUserInput, registerUserSchema } from '@social-goal/server/src/schemas/auth';
+import { RegisterUserInput, registerUserSchema } from '@social-goal/server/src/routes/auth/schema';
+import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack, YStack } from 'tamagui';
@@ -18,10 +19,11 @@ export default function Register() {
   } = useForm<RegisterUserInput>({
     resolver: zodResolver(registerUserSchema),
   });
-  const { mutate, isLoading } = trpc.auth.register.useMutation();
+  const { mutate, isLoading, error } = trpc.auth.register.useMutation();
+  const router = useRouter();
 
   const onSubmit = async (data: RegisterUserInput) => {
-    await mutate(data);
+    await mutate(data, { onSuccess: () => router.push('/register/email-verification') });
   };
 
   return (
@@ -54,6 +56,11 @@ export default function Register() {
           error={!!errors.email}
           helperText={errors.email?.message}
         />
+        {error && (
+          <Text variant="body3" color="$errorMain">
+            {error?.message}
+          </Text>
+        )}
       </YStack>
       <YStack ai="center" gap="$2">
         <Button
