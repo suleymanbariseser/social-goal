@@ -1,21 +1,36 @@
-import { useRouter } from 'expo-router';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  CompleteRegisterInput,
+  completeRegisterSchema,
+} from '@social-goal/server/src/routes/auth/schema';
+import { useForm } from 'react-hook-form';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRegisterStore } from 'store/auth';
 import { Stack, YStack } from 'tamagui';
 
 import Button from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { ControlledInput } from '@/components/ui/input';
 import Text from '@/components/ui/text';
+import { trpc } from '@/lib/trpc';
 
 export default function Password() {
   const safeArea = useSafeAreaInsets();
-  const router = useRouter();
   const { token } = useRegisterStore();
+  const { mutate, isLoading, error } = trpc.auth.completeRegister.useMutation();
 
-  console.log(token);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CompleteRegisterInput>({
+    resolver: zodResolver(completeRegisterSchema),
+    defaultValues: {
+      token,
+    },
+  });
 
-  const handlePress = () => {
-    router.push('/register/email-verification');
+  const onSubmit = async (data: CompleteRegisterInput) => {
+    await mutate(data, { onSuccess: (data) => console.log(data) });
   };
 
   return (
@@ -27,11 +42,34 @@ export default function Password() {
         </Stack>
       </YStack>
       <YStack f={1} gap="$4">
-        <Input placeholder="Password" />
-        <Input placeholder="Confirm password" />
+        <ControlledInput
+          control={control}
+          name="password"
+          placeholder="Password"
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          secureTextEntry
+        />
+        <ControlledInput
+          control={control}
+          name="rePassword"
+          placeholder="Confirm password"
+          error={!!errors.rePassword}
+          helperText={errors.rePassword?.message}
+          secureTextEntry
+        />
+        {error && (
+          <Text variant="body3" color="$errorMain">
+            {error?.message}
+          </Text>
+        )}
       </YStack>
       <YStack ai="center" gap="$2">
-        <Button onPress={handlePress} w="100%">
+        <Button
+          onPress={handleSubmit(onSubmit)}
+          w="100%"
+          disabled={isLoading}
+          isLoading={isLoading}>
           Register
         </Button>
         <Text>

@@ -1,7 +1,7 @@
 import { publicProcedure, router } from '@/config/trpc';
 import { z } from 'zod';
-import { registerUser, verifyEmail } from './controller';
-import { emailVerificationSchema, registerUserSchema } from './schema';
+import { completeRegisterUser, registerUser, verifyEmail } from './controller';
+import { completeRegisterSchema, emailVerificationSchema, registerUserSchema } from './schema';
 
 export const authRouter = router({
   login: publicProcedure
@@ -10,7 +10,8 @@ export const authRouter = router({
       return {};
     }),
   register: publicProcedure.input(registerUserSchema).mutation(registerUser),
-  verify: publicProcedure.input(emailVerificationSchema).mutation(verifyEmail)
+  verify: publicProcedure.input(emailVerificationSchema).mutation(verifyEmail),
+  completeRegister: publicProcedure.input(completeRegisterSchema).mutation(completeRegisterUser),
 });
 
 export type AuthRouter = typeof authRouter;

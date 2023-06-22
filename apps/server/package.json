@@ -9,8 +9,8 @@
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "test": "jest",
-    "generate": "drizzle-kit generate:pg --config drizzle.config.ts",
-    "introspect": "drizzle-kit introspect :pg --config drizzle.config.ts"
+    "generate:db": "drizzle-kit generate:pg --config drizzle.config.ts",
+    "introspect:db": "drizzle-kit introspect:pg --config drizzle.config.ts"
   },
   "keywords": [],
   "author": "Suleyman Baris Eser",

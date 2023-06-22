@@ -7,6 +7,16 @@ export const emailSchema = z
   .max(64, {
     message: 'Email must be less than 64 characters long',
   });
+export const passwordSchema = z
+  .string({
+    required_error: 'Password is required',
+  })
+  .min(8, { message: 'Password must be at least 8 characters long' })
+  .max(64, { message: 'Password must be less than 64 characters long' })
+  .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_\-+=.]).*$/, {
+    message:
+      'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character',
+  });
 
 export const registerUserSchema = z.object({
   firstName: z
@@ -35,5 +45,22 @@ export const emailVerificationSchema = z.object({
     }),
 });
 
+export const completeRegisterSchema = z
+  .object({
+    password: passwordSchema,
+    rePassword: passwordSchema,
+    token: z.string({ required_error: 'Token is required' }),
+  })
+  .superRefine((data, ctx) => {
+    if (data.password !== data.rePassword) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Passwords do not match',
+        path: ['rePassword'],
+      });
+    }
+  });
+
 export type RegisterUserInput = z.infer<typeof registerUserSchema>;
 export type EmailVerificationInput = z.infer<typeof emailVerificationSchema>;
+export type CompleteRegisterInput = z.infer<typeof completeRegisterSchema>;

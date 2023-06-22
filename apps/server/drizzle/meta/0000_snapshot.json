@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "c2893ba1-befc-41e7-b19c-6745ada9455e",
+  "id": "f9700a5a-4fad-47c7-96b8-64bf092a8c63",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "user-verification": {
@@ -50,7 +50,7 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "'2023-06-18 11:59:19.136'"
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -85,6 +85,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -100,7 +106,15 @@
           "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "email_idx": {
+          "name": "email_idx",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {}
     }

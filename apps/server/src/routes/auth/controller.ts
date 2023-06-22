@@ -1,9 +1,9 @@
-import { and, eq, lte } from 'drizzle-orm';
+import { and, eq, gte } from 'drizzle-orm';
 import { hash, compare } from 'bcrypt';
 import { db } from '@/config/db';
 import { userVerifications, users } from '@/config/db/schema';
 import { InputOptions } from '@/types/trpc';
-import { EmailVerificationInput, RegisterUserInput } from './schema';
+import { CompleteRegisterInput, EmailVerificationInput, RegisterUserInput } from './schema';
 import { createCode } from '@/utils/nanoid';
 import { resend } from '@/config/resend';
 import jwt from 'jsonwebtoken';
@@ -50,6 +50,7 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
     lastName,
     email,
     code: hashedCode,
+    expiresAt: new Date(Date.now() + 1000 * 60 * 60),
   });
 
   // send email to user and do not wait for it
@@ -78,9 +79,12 @@ export const verifyEmail = async ({ input }: InputOptions<EmailVerificationInput
 
   // find verification row by email
   const verifications = await db
-    .select()
+    .select({
+      id: userVerifications.id,
+      code: userVerifications.code,
+    })
     .from(userVerifications)
-    .where(and(eq(userVerifications.email, email), lte(userVerifications.expiresAt, new Date())))
+    .where(and(eq(userVerifications.email, email), gte(userVerifications.expiresAt, new Date())))
     .limit(1);
 
   // if verification not found then throw error
@@ -106,4 +110,56 @@ export const verifyEmail = async ({ input }: InputOptions<EmailVerificationInput
   });
 
   return { token };
+};
+
+export const completeRegisterUser = async ({ input }: InputOptions<CompleteRegisterInput>) => {
+  const { password, token } = input;
+
+  const { id } = jwt.verify(token, process.env.EMAIL_VERIFICATION_SECRET!) as { id: number };
+
+  const verifications = await db
+    .select()
+    .from(userVerifications)
+    .where(eq(userVerifications.id, id))
+    .limit(1);
+  if (!verifications || verifications.length === 0) throw new Error('Verification not found');
+
+  const verification = verifications[0];
+
+  // if user with given email exits
+  const user = await db
+    .select({ id: users.email })
+    .from(users)
+    .where(eq(users.email, verification.email))
+    .limit(1);
+
+  if (user && user.length > 0) throw new Error('User already exists');
+
+  await db.delete(userVerifications).where(eq(userVerifications.id, verification.id));
+
+  const hashedPassword = await hash(password, 10);
+
+  const newUsers = await db
+    .insert(users)
+    .values({
+      firstName: verification.firstName,
+      lastName: verification.lastName,
+      email: verification.email,
+      password: hashedPassword,
+    })
+    .returning({
+      id: users.id,
+    });
+
+  const authToken = jwt.sign({ id: newUsers[0].id }, process.env.AUTH_SECRET!, { expiresIn: '2d' });
+
+  // send welcome email to user and do not wait for it
+  resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: verification.email,
+    subject: 'Welcome to Social Goal',
+    html: `<div><h1>Dear ${verification.firstName} ${verification.lastName}</h1><p>Thank you for using our application. You can now login with your email and password.</p></div>`,
+  });
+
+  return { token: authToken };
 };
