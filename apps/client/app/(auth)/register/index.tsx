@@ -23,7 +23,15 @@ export default function Register() {
   const router = useRouter();
 
   const onSubmit = async (data: RegisterUserInput) => {
-    await mutate(data, { onSuccess: () => router.push('/register/email-verification') });
+    await mutate(data, {
+      onSuccess: () =>
+        router.push({
+          pathname: '/register/email-verification',
+          params: {
+            email: data.email,
+          },
+        }),
+    });
   };
 
   return (

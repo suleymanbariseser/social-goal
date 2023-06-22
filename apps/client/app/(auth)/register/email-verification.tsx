@@ -1,17 +1,44 @@
-import { useRouter } from 'expo-router';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  EmailVerificationInput,
+  emailVerificationSchema,
+} from '@social-goal/server/src/routes/auth/schema';
+import { useRouter, useSearchParams } from 'expo-router';
+import { useForm } from 'react-hook-form';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRegisterStore } from 'store/auth';
 import { Stack, YStack } from 'tamagui';
 
 import Button from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { ControlledInput } from '@/components/ui/input';
 import Text from '@/components/ui/text';
+import { trpc } from '@/lib/trpc';
 
 export default function EmailVerification() {
   const safeArea = useSafeAreaInsets();
   const router = useRouter();
+  const { email } = useSearchParams<{ email: string }>();
+  const { updateToken } = useRegisterStore();
+  const { mutate, isLoading, error } = trpc.auth.verify.useMutation();
 
-  const handlePress = () => {
-    router.push('/register/password');
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EmailVerificationInput>({
+    resolver: zodResolver(emailVerificationSchema),
+    defaultValues: {
+      email,
+    },
+  });
+
+  const onSubmit = async (data: EmailVerificationInput) => {
+    await mutate(data, {
+      onSuccess: (data) => {
+        updateToken(data.token);
+        router.push('/register/password');
+      },
+    });
   };
 
   return (
@@ -23,11 +50,32 @@ export default function EmailVerification() {
         </Stack>
       </YStack>
       <YStack f={1} gap="$4">
-        <Input value="suleymanbariseser@gmail.com" disabled />
-        <Input placeholder="Verification code" />
+        <ControlledInput
+          control={control}
+          name="email"
+          disabled
+          error={!!errors.email}
+          helperText={errors.email?.message}
+        />
+        <ControlledInput
+          control={control}
+          name="code"
+          placeholder="Verification code"
+          error={!!errors.code}
+          helperText={errors.code?.message}
+        />
+        {error && (
+          <Text variant="body3" color="$errorMain">
+            {error?.message}
+          </Text>
+        )}
       </YStack>
       <YStack ai="center" gap="$2">
-        <Button onPress={handlePress} w="100%">
+        <Button
+          onPress={handleSubmit(onSubmit)}
+          w="100%"
+          isLoading={isLoading}
+          disabled={isLoading}>
           Continue
         </Button>
         <Text>

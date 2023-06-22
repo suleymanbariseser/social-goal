@@ -37,6 +37,7 @@ export const Input = ({ error, helperText, disabled, ...rest }: BaseInputProps) 
         {...rest}
         placeholderTextColor={Color(color).alpha(0.7).toString()}
         disabled={disabled}
+        editable={!disabled}
         borderColor={color}
         focusStyle={{
           borderColor: color,

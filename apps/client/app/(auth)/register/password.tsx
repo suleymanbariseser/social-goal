@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRegisterStore } from 'store/auth';
 import { Stack, YStack } from 'tamagui';
 
 import Button from '@/components/ui/button';
@@ -9,6 +10,9 @@ import Text from '@/components/ui/text';
 export default function Password() {
   const safeArea = useSafeAreaInsets();
   const router = useRouter();
+  const { token } = useRegisterStore();
+
+  console.log(token);
 
   const handlePress = () => {
     router.push('/register/email-verification');
