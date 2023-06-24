@@ -2,15 +2,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginInput, loginSchema } from '@social-goal/server/src/routes/auth/schema';
 import { Link } from 'expo-router';
 import { useForm } from 'react-hook-form';
+import { authTokenState } from 'store/auth';
 import { Stack, YStack } from 'tamagui';
 
 import Button from '@/components/ui/button';
 import { ControlledInput } from '@/components/ui/input';
 import Text from '@/components/ui/text';
+import { useSetStorageItem } from '@/lib/storage';
 import { trpc } from '@/lib/trpc';
 
 export default function Login() {
   const { mutate: login, error } = trpc.auth.login.useMutation();
+  const setAuthToken = useSetStorageItem(authTokenState);
 
   const {
     control,
@@ -23,7 +26,7 @@ export default function Login() {
   const onSubmit = (data: LoginInput) => {
     login(data, {
       onSuccess: ({ token }) => {
-        console.log('success', token);
+        setAuthToken(token);
       },
     });
   };

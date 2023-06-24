@@ -1,13 +1,3 @@
-import { create } from 'zustand';
+import { storageAtom } from '@/lib/storage';
 
-type RegisterStore = {
-  token: string | undefined;
-  updateToken: (token: string) => void;
-  reset: () => void;
-};
-
-export const useRegisterStore = create<RegisterStore>((set) => ({
-  token: undefined,
-  updateToken: (token: string) => set({ token }),
-  reset: () => set({}, true),
-}));
+export const authTokenState = storageAtom<string>('auth_token', true);
