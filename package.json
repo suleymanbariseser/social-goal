@@ -1,7 +1,7 @@
 {
   "name": "social-goal",
   "version": "1.0.0",
-  "description": "",
+  "description": "Social goal is a social platform where people, companies, communities and etc. share their goals for future and the processes of the goal.",
   "main": "index.js",
   "private": true,
   "workspaces": [

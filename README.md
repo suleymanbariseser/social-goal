@@ -1,6 +1,6 @@
-# Project Name
+# Social Goal
 
-Briefly introduce your project and provide a high-level overview.
+Social goal is a social platform where people, companies, communities and etc. share their goals for future and the processes of the goal.
 
 ## Table of Contents
 
