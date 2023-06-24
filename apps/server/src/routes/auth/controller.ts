@@ -3,7 +3,12 @@ import { hash, compare } from 'bcrypt';
 import { db } from '@/config/db';
 import { userVerifications, users } from '@/config/db/schema';
 import { InputOptions } from '@/types/trpc';
-import { CompleteRegisterInput, EmailVerificationInput, RegisterUserInput } from './schema';
+import {
+  CompleteRegisterInput,
+  EmailVerificationInput,
+  LoginInput,
+  RegisterUserInput,
+} from './schema';
 import { createCode } from '@/utils/nanoid';
 import { resend } from '@/config/resend';
 import jwt from 'jsonwebtoken';
@@ -128,7 +133,7 @@ export const completeRegisterUser = async ({ input }: InputOptions<CompleteRegis
 
   // if user with given email exits
   const user = await db
-    .select({ id: users.email })
+    .select({ id: users.id })
     .from(users)
     .where(eq(users.email, verification.email))
     .limit(1);
@@ -162,4 +167,26 @@ export const completeRegisterUser = async ({ input }: InputOptions<CompleteRegis
   });
 
   return { token: authToken };
+};
+
+export const login = async ({ input }: InputOptions<LoginInput>) => {
+  const { email, password } = input;
+
+  // find user by email
+  const user = await db
+    .select({ id: users.id, password: users.password })
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  // if user not found then throw error
+  if (!user || user.length === 0) throw new Error('Invalid email or password');
+
+  // compare the password from database with the password from user
+  const isPasswordMatched = await compare(password, user[0].password);
+
+  // if password not matched then throw error
+  if (!isPasswordMatched) throw new Error('Invalid email or password');
+
+  return { token: jwt.sign({ id: user[0].id }, process.env.AUTH_SECRET!, { expiresIn: '2d' }) };
 };

@@ -64,3 +64,15 @@ export const completeRegisterSchema = z
 export type RegisterUserInput = z.infer<typeof registerUserSchema>;
 export type EmailVerificationInput = z.infer<typeof emailVerificationSchema>;
 export type CompleteRegisterInput = z.infer<typeof completeRegisterSchema>;
+
+export const loginSchema = z.object({
+  email: emailSchema,
+  password: z
+    .string({
+      required_error: 'Password is required',
+    })
+    .min(8, { message: 'Password must be at least 8 characters long' })
+    .max(64, { message: 'Password must be less than 64 characters long' }),
+});
+
+export type LoginInput = z.infer<typeof loginSchema>;

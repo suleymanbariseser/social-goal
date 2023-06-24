@@ -1,27 +1,35 @@
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { YStack } from 'tamagui';
 
 import Button from '@/components/ui/button';
-import Divider from '@/components/ui/divider';
-import { Input } from '@/components/ui/input';
 import Text from '@/components/ui/text';
 
 export default function Auth() {
   const router = useRouter();
 
-  const handlePress = () => {
-    router.push('/register');
+  const handleEmail = () => {
+    router.push('/login');
   };
 
   return (
     <YStack flex={1} gap="$8" px="$6" justifyContent="center">
       <Text variant="headline1">Let’s plan and communicate</Text>
       <YStack gap="$4">
-        <Button>Continue with Google</Button>
-        <Button>Continue with Facebook</Button>
-        <Divider content={<Text variant="subtitle2">OR</Text>} />
-        <Input placeholder="Email" />
-        <Button onPress={handlePress}>Next</Button>
+        <Button startAdornment={<AntDesign name="apple1" size={20} color="black" />}>
+          Continue with Apple
+        </Button>
+        <Button startAdornment={<AntDesign name="google" size={20} color="black" />}>
+          Continue with Google
+        </Button>
+        <Button startAdornment={<AntDesign name="facebook-square" size={24} color="black" />}>
+          Continue with Facebook
+        </Button>
+        <Button
+          onPress={handleEmail}
+          startAdornment={<MaterialIcons name="email" size={24} color="black" />}>
+          Continue with Email
+        </Button>
       </YStack>
     </YStack>
   );

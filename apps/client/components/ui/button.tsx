@@ -7,6 +7,10 @@ export const BaseButton = styled(Stack, {
 
   backgroundColor: '$textPrimary',
   borderRadius: '$12',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '$2',
 
   py: '$4',
   px: '$2.5',
@@ -32,18 +36,34 @@ const ButtonText = styled(Text, {
   variant: 'subtitle2',
 });
 
+interface Props extends StackProps {
+  isLoading?: boolean;
+  textProps?: TextProps;
+  startAdornment?: React.ReactNode;
+  endAdornment?: React.ReactNode;
+}
+
 const Button = ({
   children,
   textProps,
   isLoading,
+  startAdornment,
+  endAdornment,
   ...props
-}: StackProps & {
-  isLoading?: boolean;
-  textProps?: TextProps;
-}) => {
+}: Props) => {
   return (
     <BaseButton {...props}>
+      {startAdornment && (
+        <Stack space="$2" alignItems="center" justifyContent="center">
+          {startAdornment}
+        </Stack>
+      )}
       {isLoading ? <Spinner size="small" /> : <ButtonText {...textProps}>{children}</ButtonText>}
+      {endAdornment && (
+        <Stack space="$2" alignItems="center" justifyContent="center">
+          {endAdornment}
+        </Stack>
+      )}
     </BaseButton>
   );
 };

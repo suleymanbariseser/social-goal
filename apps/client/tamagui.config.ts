@@ -3,7 +3,7 @@ import { createInterFont } from '@tamagui/font-inter';
 import { createMedia } from '@tamagui/react-native-media-driver';
 import { shorthands } from '@tamagui/shorthands';
 import { themes, tokens } from '@tamagui/themes';
-import { createTamagui, createTokens } from 'tamagui';
+import { createTamagui, createTheme, createTokens } from 'tamagui';
 
 const animations = createAnimations({
   bouncy: {
@@ -31,6 +31,7 @@ const headingFont = createInterFont();
 const bodyFont = createInterFont();
 
 const size = {
+  ...tokens.size,
   0.5: 2,
   1: 4,
   1.5: 6,
@@ -42,6 +43,29 @@ const size = {
   7: 28,
   8: 32,
 };
+
+const newTokens = createTokens({
+  color: {
+    ...tokens.color,
+    primaryMain: '#1D4ED8',
+    primaryLight: '#60A5FA',
+    secondaryMain: '#A21CAF',
+    secondaryLight: '#E879F9',
+    successMain: '#05A660',
+    errorMain: '#E53535',
+    warningMain: '#E57A00',
+    infoMain: '#00B7C4',
+    backgroundMain: '#0D0D0D',
+    backgroundPaper: '#D9D9D9',
+    backgroundBox: '#50546B',
+    textPrimary: '#FFFFFF',
+    textSecondary: '#E4E4EB',
+  },
+  size,
+  radius: tokens.radius,
+  space: size,
+  zIndex: tokens.zIndex,
+});
 
 const config = createTamagui({
   animations,
@@ -55,32 +79,7 @@ const config = createTamagui({
   },
 
   themes,
-  tokens: {
-    ...tokens,
-    space: {
-      ...tokens.space,
-      ...size,
-    },
-    size: {
-      ...tokens.size,
-      ...size,
-    },
-    color: {
-      primaryMain: '#1D4ED8',
-      primaryLight: '#60A5FA',
-      secondaryMain: '#A21CAF',
-      secondaryLight: '#E879F9',
-      successMain: '#05A660',
-      errorMain: '#E53535',
-      warningMain: '#E57A00',
-      infoMain: '#00B7C4',
-      backgroundMain: '#0D0D0D',
-      backgroundPaper: '#D9D9D9',
-      backgroundBox: '#50546B',
-      textPrimary: '#FFFFFF',
-      textSecondary: '#E4E4EB',
-    },
-  },
+  tokens: newTokens,
   media: createMedia({
     xs: { maxWidth: 660 },
     sm: { maxWidth: 800 },

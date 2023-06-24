@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterUserInput, registerUserSchema } from '@social-goal/server/src/routes/auth/schema';
 import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack, YStack } from 'tamagui';
 
 import Button from '@/components/ui/button';
@@ -11,7 +10,6 @@ import Text from '@/components/ui/text';
 import { trpc } from '@/lib/trpc';
 
 export default function Register() {
-  const safeArea = useSafeAreaInsets();
   const {
     control,
     handleSubmit,
@@ -35,7 +33,7 @@ export default function Register() {
   };
 
   return (
-    <YStack f={1} pb={safeArea.bottom} gap="$4" px="$6">
+    <YStack f={1} gap="$4" px="$6">
       <YStack gap="$2">
         <Text variant="headline2">Register</Text>
         <Stack maxWidth={220}>

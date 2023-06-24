@@ -4,7 +4,6 @@ import {
   completeRegisterSchema,
 } from '@social-goal/server/src/routes/auth/schema';
 import { useForm } from 'react-hook-form';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRegisterStore } from 'store/auth';
 import { Stack, YStack } from 'tamagui';
 
@@ -14,7 +13,6 @@ import Text from '@/components/ui/text';
 import { trpc } from '@/lib/trpc';
 
 export default function Password() {
-  const safeArea = useSafeAreaInsets();
   const { token } = useRegisterStore();
   const { mutate, isLoading, error } = trpc.auth.completeRegister.useMutation();
 
@@ -34,7 +32,7 @@ export default function Password() {
   };
 
   return (
-    <YStack f={1} pb={safeArea.bottom} gap="$4" px="$6">
+    <YStack f={1} gap="$4" px="$6">
       <YStack gap="$2">
         <Text variant="headline2">Enter Password</Text>
         <Stack>

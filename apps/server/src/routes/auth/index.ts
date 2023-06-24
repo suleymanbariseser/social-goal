@@ -1,14 +1,15 @@
 import { publicProcedure, router } from '@/config/trpc';
 import { z } from 'zod';
-import { completeRegisterUser, registerUser, verifyEmail } from './controller';
-import { completeRegisterSchema, emailVerificationSchema, registerUserSchema } from './schema';
+import { completeRegisterUser, login, registerUser, verifyEmail } from './controller';
+import {
+  completeRegisterSchema,
+  emailVerificationSchema,
+  loginSchema,
+  registerUserSchema,
+} from './schema';
 
 export const authRouter = router({
-  login: publicProcedure
-    .input(z.object({ email: z.string(), password: z.string() }))
-    .mutation(() => {
-      return {};
-    }),
+  login: publicProcedure.input(loginSchema).mutation(login),
   register: publicProcedure.input(registerUserSchema).mutation(registerUser),
   verify: publicProcedure.input(emailVerificationSchema).mutation(verifyEmail),
   completeRegister: publicProcedure.input(completeRegisterSchema).mutation(completeRegisterUser),

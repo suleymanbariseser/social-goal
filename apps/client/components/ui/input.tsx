@@ -1,6 +1,6 @@
 import Color from 'color';
 import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
-import { Stack, Input as TInput, styled } from 'tamagui';
+import { Stack, Input as TInput, getTokens, styled } from 'tamagui';
 
 import Text from './text';
 
@@ -28,8 +28,7 @@ type BaseInputProps = React.ComponentProps<typeof BaseInput> & {
 };
 
 export const Input = ({ error, helperText, disabled, ...rest }: BaseInputProps) => {
-  // TODO replace values with theme colors
-  const color = error ? '#E53535' : '#FFFFFF';
+  const color = error ? getTokens().color.$errorMain.val : getTokens().color.$textPrimary.val;
 
   return (
     <Stack gap="$2" opacity={disabled ? 0.5 : 1}>

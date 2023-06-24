@@ -1,7 +1,5 @@
 import { Stack } from 'expo-router';
-import { getConfig } from 'tamagui';
-
-import Header from '@/components/header';
+import { getTokens } from 'tamagui';
 
 export const unstable_settings = {
   initialRouteName: 'index',
@@ -12,11 +10,9 @@ export default function RegisterLayout() {
     <Stack
       screenOptions={{
         contentStyle: {
-          backgroundColor: getConfig().tokens.color.backgroundMain as string,
+          backgroundColor: getTokens().color.$backgroundMain.val,
         },
-        header: ({ navigation, options }) => (
-          <Header back={navigation.canGoBack()} title={options.title} />
-        ),
+        headerShown: false,
       }}
     />
   );

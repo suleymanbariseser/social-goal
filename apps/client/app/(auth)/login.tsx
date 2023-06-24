@@ -1,16 +1,35 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { LoginInput, loginSchema } from '@social-goal/server/src/routes/auth/schema';
 import { Link } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useForm } from 'react-hook-form';
 import { Stack, YStack } from 'tamagui';
 
 import Button from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { ControlledInput } from '@/components/ui/input';
 import Text from '@/components/ui/text';
+import { trpc } from '@/lib/trpc';
 
 export default function Login() {
-  const safeArea = useSafeAreaInsets();
+  const { mutate: login, error } = trpc.auth.login.useMutation();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = (data: LoginInput) => {
+    login(data, {
+      onSuccess: ({ token }) => {
+        console.log('success', token);
+      },
+    });
+  };
 
   return (
-    <YStack f={1} pb={safeArea.bottom} gap="$4" px="$6">
+    <YStack f={1} gap="$4" px="$6">
       <YStack gap="$2">
         <Text variant="headline2">Welcome Back!</Text>
         <Stack maxWidth={220}>
@@ -18,16 +37,39 @@ export default function Login() {
         </Stack>
       </YStack>
       <YStack f={1} gap="$4">
-        <Input placeholder="Email" />
-        <Input placeholder="Password" />
+        <ControlledInput
+          control={control}
+          name="email"
+          placeholder="Email"
+          error={!!errors.email}
+          helperText={errors.email?.message}
+        />
+        <ControlledInput
+          control={control}
+          name="password"
+          placeholder="Password"
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          secureTextEntry
+        />
         <Link href="/forgot-password">
           <Text color="$primaryMain">Forgot password?</Text>
         </Link>
+        {error && (
+          <Text variant="body3" color="$errorMain">
+            {error?.message}
+          </Text>
+        )}
       </YStack>
       <YStack ai="center" gap="$2">
-        <Button w="100%">Login</Button>
+        <Button onPress={handleSubmit(onSubmit)} w="100%">
+          Login
+        </Button>
         <Text>
-          Do not have an account? <Text color="$primaryMain">Sign up</Text>
+          Do not have an account?{' '}
+          <Link href="/register">
+            <Text color="$primaryMain">Sign up</Text>
+          </Link>
         </Text>
       </YStack>
     </YStack>
