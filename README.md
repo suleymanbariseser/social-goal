@@ -12,22 +12,22 @@ Briefly introduce your project and provide a high-level overview.
 
 To get started with this project, follow these steps:
 
-1. Make sure you have [pnpm](https://pnpm.io/) installed globally. If not, you can install it by running:
+1. Make sure you have [yarn](https://yarnpkg.com/) installed globally. If not, you can install it by running:
 
    ```shell
-   $ npm install -g pnpm
+   $ npm install -g yarn
    ```
 
 2. Clone the repository:
 
    ```shell
-   $ git clone https://github.com/your-username/your-project.git
-   $ cd your-project/
+   $ git clone https://github.com/suleymanbariseser/social-goal.git
+   $ cd social-goal
    ```
 
-3. Install the dependencies using pnpm:
+3. Install the dependencies using yarn:
    ```shell
-   $ pnpm install
+   $ yarn install
    ```
 
 This will install all the required dependencies for all the projects within the workspace.
@@ -39,13 +39,13 @@ To run the project, follow these steps:
 1. You can start the client project by running the following command:
 
    ```shell
-   $ pnpm client:dev
+   $ yarn client:dev
    ```
 
 2. Similarly, you can start the server project by running the following command:
 
    ```shell
-   $ pnpm server:dev
+   $ yarn server:dev
    ```
 
 Make sure you navigate to the appropriate project directory before running the corresponding command.
