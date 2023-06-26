@@ -1,5 +1,6 @@
 import { AppRouter } from '@social-goal/server/src/routes';
 import { httpBatchLink, createTRPCReact } from '@trpc/react-query';
+import { authTokenState } from 'store/auth';
 
 export const trpc = createTRPCReact<AppRouter>();
 
@@ -10,7 +11,7 @@ export const trpcClient = trpc.createClient({
       // You can pass any HTTP headers you wish here
       async headers() {
         return {
-          authorization: '',
+          authorization: authTokenState.get() ? `Bearer ${authTokenState.get()}` : '',
         };
       },
     }),

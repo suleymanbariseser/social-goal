@@ -1,10 +1,24 @@
 import { db } from '@/config/db';
 import { users } from '@/config/db/schema';
-import { publicProcedure, router } from '@/config/trpc';
+import { router } from '@/config/trpc';
+import { protectedProcedure } from '@/middlewares/isAuthed';
+import { eq } from 'drizzle-orm';
 
 export const userRouter = router({
-  list: publicProcedure.query(async () => {
-    const allUsers = await db.select().from(users);
+  info: protectedProcedure.query(async ({ ctx }) => {
+    const user = await db
+      .select({
+        email: users.email,
+        firstName: users.firstName,
+        lastName: users.lastName,
+      })
+      .from(users)
+      .where(eq(users.id, ctx.user.id));
+
+    return user[0];
+  }),
+  list: protectedProcedure.query(async () => {
+    const allUsers = await db.query.users.findFirst({});
 
     return allUsers;
   }),
