@@ -9,10 +9,7 @@ module.exports = function (api) {
         {
           root: ['.'],
           alias: {
-            '@/components': './components',
-            '@/lib': './lib',
-            '@/context': './context',
-            '@/assets': './assets',
+            '@': './',
           },
         },
       ],

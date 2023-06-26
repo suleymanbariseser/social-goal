@@ -3,10 +3,7 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["./components/*"],
-      "@/lib/*": ["./lib/*"],
-      "@/context/*": ["./context/*"],
-      "@/assets/*": ["./assets/*"]
+      "@/*": ["./*"]
     }
   },
   "references": [

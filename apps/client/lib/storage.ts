@@ -31,7 +31,7 @@ type StorageAtom<T> = {
 };
 
 export const storageAtom = <T>(name: string, secure?: boolean): StorageAtom<T> => {
-  let value: T;
+  let value: T = null;
   const listeners = new Set<StorageListener<T>>();
 
   const updateListeners = () => {
@@ -51,6 +51,7 @@ export const storageAtom = <T>(name: string, secure?: boolean): StorageAtom<T> =
       StorageUtil.set<T>(name, value, secure).then(updateListeners);
     },
     reset: () => {
+      value = null;
       StorageUtil.reset(name, secure).then(updateListeners);
     },
     subscribe: (listener: StorageListener<T>) => {

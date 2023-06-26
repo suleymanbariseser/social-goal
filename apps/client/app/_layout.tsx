@@ -1,13 +1,35 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
-import { Slot } from 'expo-router';
+import { Slot, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TamaguiProvider, Theme, YStack } from 'tamagui';
 
 import config from '../tamagui.config';
 
+import { useAuth } from '@/hooks/useAuth';
 import { trpcClient, trpc } from '@/lib/trpc';
+
+const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
+  const rootSegment = useSegments()[0];
+  const router = useRouter();
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (
+      // If the user is not signed in and the initial segment is not anything in the auth group.
+      !user &&
+      rootSegment !== '(auth)'
+    ) {
+      router.replace('/(auth)');
+    } else if (user && rootSegment !== '(main)') {
+      router.replace('/(main)');
+    }
+  }, [user, rootSegment]);
+
+  return <>{children}</>;
+};
 
 export default function RootLayout() {
   const [queryClient] = useState(() => new QueryClient());
@@ -27,7 +49,9 @@ export default function RootLayout() {
         <TamaguiProvider config={config}>
           <Theme name="dark">
             <YStack f={1} bg="$backgroundMain">
-              <Slot />
+              <AuthWrapper>
+                <Slot />
+              </AuthWrapper>
               <StatusBar style="auto" />
             </YStack>
           </Theme>
