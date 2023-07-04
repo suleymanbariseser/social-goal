@@ -57,7 +57,7 @@ const newTokens = createTokens({
     infoMain: '#00B7C4',
     backgroundMain: '#0D0D0D',
     backgroundPaper: '#D9D9D9',
-    backgroundBox: '#50546B',
+    backgroundBox: '#333333',
     textPrimary: '#FFFFFF',
     textSecondary: '#E4E4EB',
   },

@@ -18,7 +18,7 @@ export const userRouter = router({
     return user[0];
   }),
   list: protectedProcedure.query(async () => {
-    const allUsers = await db.query.users.findFirst({});
+    const allUsers = await db.select().from(users);
 
     return allUsers;
   }),

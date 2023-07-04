@@ -1,24 +1,21 @@
+import { FlatList } from 'react-native';
 import { Stack } from 'tamagui';
 
-import Button from '@/components/ui/button';
+import HomeTabs from '@/components/home/home-tabs';
 import Text from '@/components/ui/text';
-import { useAuth } from '@/hooks/useAuth';
-import { trpc } from '@/lib/trpc';
 
 const Home = () => {
-  const { data: user } = trpc.user.info.useQuery();
-  const { logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-  };
-
   return (
-    <Stack gap="$4">
-      <Text variant="headline1">
-        Hello ${user?.firstName} ${user?.lastName}
-      </Text>
-      <Button onPress={handleLogout}>Logout</Button>
+    <Stack pos="relative" f={1}>
+      <FlatList
+        data={Array(20).fill(1)}
+        renderItem={() => (
+          <Stack py="$4">
+            <Text>Feed Item</Text>
+          </Stack>
+        )}
+      />
+      <HomeTabs />
     </Stack>
   );
 };

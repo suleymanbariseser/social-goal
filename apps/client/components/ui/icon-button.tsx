@@ -1,27 +1,41 @@
 import type { ColorTokens } from 'tamagui';
-import { StackProps } from 'tamagui';
+import { styled } from 'tamagui';
 
 import { BaseButton } from './button';
 
-interface Props extends StackProps {
+const IconBaseButton = styled(BaseButton, {
+  variants: {
+    variant: {
+      contained: {
+        bg: '#ffffff10',
+      },
+      text: {
+        bg: '$backgroundTransparent',
+      },
+    },
+  },
+
+  pressStyle: {
+    bg: '#ffffff20',
+  },
+});
+
+interface Props extends React.ComponentProps<typeof IconBaseButton> {
   icon: ({ color }: { color: ColorTokens }) => React.ReactNode;
 }
 
-export default function IconButton({ children, icon, ...props }: Props) {
+export default function IconButton({ icon, variant = 'contained', ...props }: Props) {
   return (
-    <BaseButton
+    <IconBaseButton
       px="$0"
       py="$0"
       w={40}
       h={40}
       ai="center"
       jc="center"
-      bg="#ffffff10"
-      pressStyle={{
-        bg: '#ffffff20',
-      }}
+      variant={variant}
       {...props}>
       {icon({ color: '$textPrimary' })}
-    </BaseButton>
+    </IconBaseButton>
   );
 }
