@@ -12,6 +12,7 @@
     "server:test": "yarn workspace @social-goal/server test",
     "client:dev": "yarn workspace @social-goal/client start",
     "client:test": "yarn workspace @social-goal/client test",
+    "db:preview": "yarn workspace @social-goal/server db:preview",
     "format": "yarn prettier --write ."
   },
   "keywords": [],
