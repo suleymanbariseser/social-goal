@@ -3,7 +3,7 @@ import { createInterFont } from '@tamagui/font-inter';
 import { createMedia } from '@tamagui/react-native-media-driver';
 import { shorthands } from '@tamagui/shorthands';
 import { themes, tokens } from '@tamagui/themes';
-import { createTamagui, createTheme, createTokens } from 'tamagui';
+import { createTamagui, createTokens } from 'tamagui';
 
 const animations = createAnimations({
   bouncy: {
@@ -42,6 +42,8 @@ const size = {
   6: 24,
   7: 28,
   8: 32,
+  9: 36,
+  10: 40,
 };
 
 const newTokens = createTokens({
@@ -59,7 +61,7 @@ const newTokens = createTokens({
     backgroundPaper: '#D9D9D9',
     backgroundBox: '#333333',
     textPrimary: '#FFFFFF',
-    textSecondary: '#E4E4EB',
+    textSecondary: '#97979A',
   },
   size,
   radius: tokens.radius,

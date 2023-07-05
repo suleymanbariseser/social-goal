@@ -1,15 +1,14 @@
-import { Spinner, Stack, StackProps, TextProps, styled } from 'tamagui';
+import { Spinner, Stack, TextProps, styled } from 'tamagui';
 
 import Text from './text';
 
 export const BaseButton = styled(Stack, {
   name: 'ButtonFrame',
 
-  backgroundColor: '$textPrimary',
-  borderRadius: '$12',
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
+  br: '$12',
+  fd: 'row',
+  ai: 'center',
+  jc: 'center',
   gap: '$2',
 
   py: '$4',
@@ -22,21 +21,52 @@ export const BaseButton = styled(Stack, {
         opacity: 0.5,
       },
     },
+
+    variant: {
+      contained: {
+        bg: '$textPrimary',
+
+        pressStyle: {
+          bg: '$textSecondary',
+        },
+      },
+      text: {
+        bg: '$backgroundTransparent',
+
+        pressStyle: {
+          bg: '#ffffff05',
+        },
+      },
+    },
   },
 
-  pressStyle: {
-    backgroundColor: '$textSecondary',
+  defaultVariants: {
+    variant: 'contained',
   },
 });
 
 const ButtonText = styled(Text, {
-  color: '$background',
   textAlign: 'center',
 
-  variant: 'subtitle2',
+  variant: 'subtitle1',
+
+  variants: {
+    variant: {
+      contained: {
+        color: '$background',
+      },
+      text: {
+        color: '$textPrimary',
+      },
+    },
+  },
+
+  defaultVariants: {
+    variant: 'contained',
+  },
 });
 
-interface Props extends StackProps {
+interface Props extends React.ComponentProps<typeof BaseButton> {
   isLoading?: boolean;
   textProps?: TextProps;
   startAdornment?: React.ReactNode;
@@ -49,16 +79,23 @@ const Button = ({
   isLoading,
   startAdornment,
   endAdornment,
+  variant = 'contained',
   ...props
 }: Props) => {
   return (
-    <BaseButton {...props}>
+    <BaseButton variant={variant} {...props}>
       {startAdornment && (
         <Stack space="$2" alignItems="center" justifyContent="center">
           {startAdornment}
         </Stack>
       )}
-      {isLoading ? <Spinner size="small" /> : <ButtonText {...textProps}>{children}</ButtonText>}
+      {isLoading ? (
+        <Spinner size="small" />
+      ) : (
+        <ButtonText variant={variant} {...textProps}>
+          {children}
+        </ButtonText>
+      )}
       {endAdornment && (
         <Stack space="$2" alignItems="center" justifyContent="center">
           {endAdornment}

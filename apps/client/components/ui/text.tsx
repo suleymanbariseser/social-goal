@@ -27,14 +27,14 @@ const Text = styled(RNText, {
         fontWeight: '700',
       },
       subtitle1: {
-        fontSize: 18,
-        lineHeight: 22.5,
+        fontSize: 16,
+        lineHeight: 20,
         fontFamily: '$heading',
         fontWeight: '500',
       },
       subtitle2: {
-        fontSize: 16,
-        lineHeight: 20,
+        fontSize: 14,
+        lineHeight: 17.5,
         fontFamily: '$heading',
         fontWeight: '500',
       },
