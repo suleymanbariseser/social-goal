@@ -16,7 +16,7 @@ const IconBaseButton = styled(BaseButton, {
   },
 
   pressStyle: {
-    bg: '#ffffff20',
+    opacity: 0.7,
   },
 });
 
