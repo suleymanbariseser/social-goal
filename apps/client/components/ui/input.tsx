@@ -7,19 +7,26 @@ import Text from './text';
 const BaseInput = styled(TInput, {
   name: 'Input',
 
-  br: '$12',
   px: '$4',
-  backgroundColor: '$backgroundTransparent',
-  borderColor: '$textPrimary',
-  color: '$textPrimary',
-  borderRadius: '$12',
+  py: '$4',
+
+  brw: 1,
+  bbw: 1,
+  blw: 1,
+  btw: 1,
+  boc: '$backgroundBox',
+  br: '$6',
+  bs: 'solid',
+
+  bg: '$backgroundTransparent',
+  col: '$textPrimary',
   autoCapitalize: 'none',
   autoCorrect: false,
 
-  minHeight: 50,
+  unstyled: true,
 
   focusStyle: {
-    borderColor: '$textPrimary',
+    bc: '$textPrimary',
   },
 });
 type BaseInputProps = React.ComponentProps<typeof BaseInput> & {
@@ -37,9 +44,8 @@ export const Input = ({ error, helperText, disabled, ...rest }: BaseInputProps) 
         placeholderTextColor={Color(color).alpha(0.7).toString()}
         disabled={disabled}
         editable={!disabled}
-        borderColor={color}
         focusStyle={{
-          borderColor: color,
+          bc: color,
         }}
       />
       {helperText && (

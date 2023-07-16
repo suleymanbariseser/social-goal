@@ -12,13 +12,11 @@ const animations = createAnimations({
     mass: 0.9,
     stiffness: 100,
   },
-
   lazy: {
     type: 'spring',
     damping: 20,
     stiffness: 60,
   },
-
   quick: {
     type: 'spring',
     damping: 20,
@@ -26,8 +24,8 @@ const animations = createAnimations({
     stiffness: 250,
   },
 });
-const headingFont = createInterFont();
 
+const headingFont = createInterFont();
 const bodyFont = createInterFont();
 
 const size = {
@@ -70,6 +68,7 @@ const newTokens = createTokens({
 });
 
 const config = createTamagui({
+  onlyAllowShorthands: true,
   animations,
   defaultTheme: 'dark',
   shouldAddPrefersColorThemes: false,

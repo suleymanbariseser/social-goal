@@ -33,6 +33,7 @@ export default function IconButton({ icon, variant = 'contained', ...props }: Pr
       h={40}
       ai="center"
       jc="center"
+      br="$12"
       variant={variant}
       {...props}>
       {icon({ color: '$textPrimary' })}

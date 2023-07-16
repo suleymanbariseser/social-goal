@@ -33,7 +33,6 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 
 export default function RootLayout() {
   const [queryClient] = useState(() => new QueryClient());
-  const [trpcCl] = useState(() => trpcClient);
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
@@ -44,7 +43,7 @@ export default function RootLayout() {
   }
 
   return (
-    <trpc.Provider client={trpcCl} queryClient={queryClient}>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <TamaguiProvider config={config}>
           <Theme name="dark">

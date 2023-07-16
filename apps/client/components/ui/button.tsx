@@ -5,7 +5,7 @@ import Text from './text';
 export const BaseButton = styled(Stack, {
   name: 'ButtonFrame',
 
-  br: '$12',
+  br: '$6',
   fd: 'row',
   ai: 'center',
   jc: 'center',

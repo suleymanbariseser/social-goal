@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { Stack, getTokens } from 'tamagui';
 
 import IconButton from '../ui/icon-button';
@@ -10,6 +11,11 @@ import ProfileIcon from '@/assets/icons/profile.svg';
 import SearchIcon from '@/assets/icons/search.svg';
 
 export default function HomeTabs() {
+  const router = useRouter();
+  const handleCreate = () => {
+    router.push('/create');
+  };
+
   return (
     <SafeAreaView pos="absolute" b={0} l={0} r={0} edges={['bottom']} px="$6">
       <Stack
@@ -31,7 +37,15 @@ export default function HomeTabs() {
         shadowRadius="$1">
         <IconButton variant="text" icon={HomeIcon} />
         <IconButton variant="text" icon={SearchIcon} />
-        <IconButton variant="text" bg="$primaryMain" w={60} h={60} icon={AddIcon} mt={-30} />
+        <IconButton
+          variant="text"
+          onPress={handleCreate}
+          bg="$primaryMain"
+          w={60}
+          h={60}
+          icon={AddIcon}
+          mt={-30}
+        />
         <IconButton variant="text" icon={MessageIcon} />
         <IconButton variant="text" icon={ProfileIcon} />
       </Stack>
