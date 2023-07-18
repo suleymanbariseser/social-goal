@@ -10,11 +10,13 @@ import { useStore } from 'zustand';
 import { Button } from '@/components/ui/button';
 import { ControlledInput } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
+import { useSetStorageItem } from '@/lib/storage';
 import { trpc } from '@/lib/trpc';
-import { authStore } from '@/store/auth';
+import { authStore, authTokenState } from '@/store/auth';
 
 export default function Password() {
   const { emailToken } = useStore(authStore);
+  const setAuthToken = useSetStorageItem(authTokenState);
 
   const { mutate, isLoading, error } = trpc.auth.completeRegister.useMutation();
 
@@ -30,7 +32,11 @@ export default function Password() {
   });
 
   const onSubmit = async (data: CompleteRegisterInput) => {
-    await mutate(data, { onSuccess: (data) => console.log(data) });
+    mutate(data, {
+      onSuccess: (data) => {
+        setAuthToken(data.token);
+      },
+    });
   };
 
   return (
