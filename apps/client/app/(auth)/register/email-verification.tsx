@@ -3,20 +3,21 @@ import {
   EmailVerificationInput,
   emailVerificationSchema,
 } from '@social-goal/server/src/routes/auth/schema';
-import { useRouter, useSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useForm } from 'react-hook-form';
-import { useRegisterStore } from 'store/auth';
 import { Stack, YStack } from 'tamagui';
+import { useStore } from 'zustand';
 
-import Button from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { ControlledInput } from '@/components/ui/input';
-import Text from '@/components/ui/text';
+import { Text } from '@/components/ui/text';
 import { trpc } from '@/lib/trpc';
+import { authStore } from '@/store/auth';
 
 export default function EmailVerification() {
   const router = useRouter();
-  const { email } = useSearchParams<{ email: string }>();
-  const { updateToken } = useRegisterStore();
+  const { email } = useLocalSearchParams<{ email: string }>();
+  const { updateEmailToken } = useStore(authStore);
   const { mutate, isLoading, error } = trpc.auth.verify.useMutation();
 
   const {
@@ -33,7 +34,7 @@ export default function EmailVerification() {
   const onSubmit = async (data: EmailVerificationInput) => {
     await mutate(data, {
       onSuccess: (data) => {
-        updateToken(data.token);
+        updateEmailToken(data.token);
         router.push('/register/password');
       },
     });

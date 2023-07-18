@@ -8,10 +8,8 @@
     "apps/*"
   ],
   "scripts": {
-    "server:dev": "yarn workspace @social-goal/server dev",
-    "server:test": "yarn workspace @social-goal/server test",
-    "client:dev": "yarn workspace @social-goal/client start",
-    "client:test": "yarn workspace @social-goal/client test",
+    "client": "yarn workspace @social-goal/client",
+    "server": "yarn workspace @social-goal/server",
     "db:preview": "yarn workspace @social-goal/server db:preview",
     "format": "yarn prettier --write ."
   },

@@ -2,15 +2,21 @@ import { ScrollView, Sheet, Stack } from 'tamagui';
 
 import ImageIcon from '@/assets/icons/image.svg';
 import LinkIcon from '@/assets/icons/link.svg';
-import IconButton from '@/components/ui/icon-button';
+import { IconButton } from '@/components/ui/icon-button';
 import { Input } from '@/components/ui/input';
-import Select from '@/components/ui/select';
+import { Select } from '@/components/ui/select';
 
 const Home = () => {
   return (
     <ScrollView>
       <Stack f={1} px="$6" gap="$4">
         <Select
+          header={
+            <Select.Header>
+              <Select.Title>Your Goals</Select.Title>
+              <Select.Action onPress={console.log}>Create</Select.Action>
+            </Select.Header>
+          }
           placeholder="Select a category"
           items={[
             {

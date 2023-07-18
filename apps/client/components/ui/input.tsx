@@ -2,9 +2,9 @@ import Color from 'color';
 import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
 import { Stack, Input as TInput, getTokens, styled } from 'tamagui';
 
-import Text from './text';
+import { Text } from './text';
 
-const BaseInput = styled(TInput, {
+export const BaseInput = styled(TInput, {
   name: 'Input',
 
   px: '$4',

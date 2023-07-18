@@ -1,8 +1,8 @@
 import { EvilIcons } from '@expo/vector-icons';
-import { Avatar, Card, Stack, XGroup, getTokens } from 'tamagui';
+import { Avatar, Card, Stack, getTokens } from 'tamagui';
 
-import Button from '../ui/button';
-import Text from '../ui/text';
+import { Button } from '../ui/button';
+import { Text } from '../ui/text';
 
 interface Props {
   admin: {

@@ -2,8 +2,8 @@ import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { YStack } from 'tamagui';
 
-import Button from '@/components/ui/button';
-import Text from '@/components/ui/text';
+import { Button } from '@/components/ui/button';
+import { Text } from '@/components/ui/text';
 
 export default function Auth() {
   const router = useRouter();

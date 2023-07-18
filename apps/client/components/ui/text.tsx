@@ -1,6 +1,6 @@
-import { styled, Text as RNText } from 'tamagui';
+import { styled, Text as TamText } from 'tamagui';
 
-const Text = styled(RNText, {
+export const Text = styled(TamText, {
   name: 'Text',
 
   // default props
@@ -63,11 +63,11 @@ const Text = styled(RNText, {
         fontWeight: '400',
       },
     },
-  },
+  } as const,
 
   defaultVariants: {
     variant: 'body1',
   },
 });
 
-export default Text;
+export type TextProps = React.ComponentProps<typeof Text>;

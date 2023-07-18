@@ -1,6 +1,6 @@
 import { Spinner, Stack, TextProps, styled } from 'tamagui';
 
-import Text from './text';
+import { Text } from './text';
 
 export const BaseButton = styled(Stack, {
   name: 'ButtonFrame',
@@ -51,7 +51,7 @@ const ButtonText = styled(Text, {
   variant: 'subtitle1',
 
   variants: {
-    variant: {
+    buttonVariant: {
       contained: {
         color: '$background',
       },
@@ -62,18 +62,18 @@ const ButtonText = styled(Text, {
   },
 
   defaultVariants: {
-    variant: 'contained',
+    buttonVariant: 'contained',
   },
 });
 
-interface Props extends React.ComponentProps<typeof BaseButton> {
+export interface ButtonProps extends React.ComponentProps<typeof BaseButton> {
   isLoading?: boolean;
   textProps?: TextProps;
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
 }
 
-const Button = ({
+export const Button = ({
   children,
   textProps,
   isLoading,
@@ -81,7 +81,7 @@ const Button = ({
   endAdornment,
   variant = 'contained',
   ...props
-}: Props) => {
+}: ButtonProps) => {
   return (
     <BaseButton variant={variant} {...props}>
       {startAdornment && (
@@ -92,7 +92,7 @@ const Button = ({
       {isLoading ? (
         <Spinner size="small" />
       ) : (
-        <ButtonText variant={variant} {...textProps}>
+        <ButtonText buttonVariant={variant} {...textProps}>
           {children}
         </ButtonText>
       )}
@@ -104,5 +104,3 @@ const Button = ({
     </BaseButton>
   );
 };
-
-export default Button;

@@ -4,16 +4,18 @@ import {
   completeRegisterSchema,
 } from '@social-goal/server/src/routes/auth/schema';
 import { useForm } from 'react-hook-form';
-import { useRegisterStore } from 'store/auth';
 import { Stack, YStack } from 'tamagui';
+import { useStore } from 'zustand';
 
-import Button from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { ControlledInput } from '@/components/ui/input';
-import Text from '@/components/ui/text';
+import { Text } from '@/components/ui/text';
 import { trpc } from '@/lib/trpc';
+import { authStore } from '@/store/auth';
 
 export default function Password() {
-  const { token } = useRegisterStore();
+  const { emailToken } = useStore(authStore);
+
   const { mutate, isLoading, error } = trpc.auth.completeRegister.useMutation();
 
   const {
@@ -23,7 +25,7 @@ export default function Password() {
   } = useForm<CompleteRegisterInput>({
     resolver: zodResolver(completeRegisterSchema),
     defaultValues: {
-      token,
+      token: emailToken,
     },
   });
 

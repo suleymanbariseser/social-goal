@@ -1,8 +1,8 @@
 import { useRouter } from 'expo-router';
 import { Stack, getTokens } from 'tamagui';
 
-import IconButton from '../ui/icon-button';
-import SafeAreaView from '../ui/safe-area-view';
+import { IconButton } from '../ui/icon-button';
+import { SafeAreaView } from '../ui/safe-area-view';
 
 import AddIcon from '@/assets/icons/add.svg';
 import HomeIcon from '@/assets/icons/home.svg';

@@ -4,7 +4,7 @@ interface Props {
   content?: React.ReactNode;
 }
 
-export default function Divider({ content }: Props) {
+export function Divider({ content }: Props) {
   return (
     <XStack w="100%" ai="center">
       <Stack fg={1} h={1} bg="$textSecondary" />

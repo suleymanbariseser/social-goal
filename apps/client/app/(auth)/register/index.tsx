@@ -4,9 +4,9 @@ import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { Stack, YStack } from 'tamagui';
 
-import Button from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { ControlledInput } from '@/components/ui/input';
-import Text from '@/components/ui/text';
+import { Text } from '@/components/ui/text';
 import { trpc } from '@/lib/trpc';
 
 export default function Register() {
