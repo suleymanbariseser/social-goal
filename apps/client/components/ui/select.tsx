@@ -54,6 +54,9 @@ interface Props extends SelectProps {
   items: SelectItem[];
   placeholder?: string;
   header?: React.ReactNode;
+
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function Select({ items = [], placeholder, header, ...props }: Props) {
@@ -66,7 +69,7 @@ export function Select({ items = [], placeholder, header, ...props }: Props) {
   };
 
   return (
-    <TamSelect onValueChange={handleOnChange} {...props}>
+    <TamSelect onValueChange={handleOnChange} open={false} {...props}>
       <TamSelect.Trigger
         transparent
         br="$6"
@@ -82,7 +85,7 @@ export function Select({ items = [], placeholder, header, ...props }: Props) {
       </TamSelect.Trigger>
 
       <Adapt when="sm" platform="touch">
-        <Sheet native modal dismissOnSnapToBottom snapPoints={[50]} zIndex={9999999}>
+        <Sheet native modal dismissOnSnapToBottom snapPoints={[60]} zIndex={9999999}>
           <Sheet.Frame py="$4" br="$8">
             <Stack>{header}</Stack>
             <Sheet.ScrollView>
