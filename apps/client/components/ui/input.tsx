@@ -4,9 +4,7 @@ import { Stack, Input as TInput, getTokens, styled } from 'tamagui';
 
 import { Text } from './text';
 
-export const BaseInput = styled(TInput, {
-  name: 'Input',
-
+export const defaultStyles = {
   px: '$4',
   py: '$4',
 
@@ -19,6 +17,12 @@ export const BaseInput = styled(TInput, {
   bs: 'solid',
 
   bg: '$backgroundTransparent',
+} as const;
+
+export const BaseInput = styled(TInput, {
+  name: 'Input',
+
+  ...defaultStyles,
   col: '$textPrimary',
   autoCapitalize: 'none',
   autoCorrect: false,
@@ -44,6 +48,7 @@ export const Input = ({ error, helperText, disabled, ...rest }: BaseInputProps) 
         placeholderTextColor={Color(color).alpha(0.7).toString()}
         disabled={disabled}
         editable={!disabled}
+        boc={error ? '$errorMain' : defaultStyles.boc}
         focusStyle={{
           bc: color,
         }}
