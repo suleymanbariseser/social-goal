@@ -1,6 +1,7 @@
 import { AppRouter } from '@social-goal/server/src/routes';
 import { httpBatchLink, createTRPCReact } from '@trpc/react-query';
 import { authTokenState } from 'store/auth';
+import superjson from 'superjson';
 
 export const trpc = createTRPCReact<AppRouter>();
 
@@ -16,5 +17,5 @@ export const trpcClient = trpc.createClient({
       },
     }),
   ],
-  transformer: null,
+  transformer: superjson,
 });
