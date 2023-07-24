@@ -1,5 +1,6 @@
-import { InferModel } from 'drizzle-orm';
+import { InferModel, relations } from 'drizzle-orm';
 import { pgTable, serial, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import { goals } from './goal';
 
 export const users = pgTable(
   'users',
@@ -18,5 +19,9 @@ export const users = pgTable(
     };
   }
 );
+
+export const userRelations = relations(users, ({ many }) => ({
+  goals: many(goals),
+}));
 
 export type User = InferModel<typeof users>;
