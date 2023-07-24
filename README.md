@@ -39,13 +39,13 @@ To run the project, follow these steps:
 1. You can start the client project by running the following command:
 
    ```shell
-   $ yarn client:dev
+   $ yarn client start
    ```
 
 2. Similarly, you can start the server project by running the following command:
 
    ```shell
-   $ yarn server:dev
+   $ yarn server dev
    ```
 
 Make sure you navigate to the appropriate project directory before running the corresponding command.

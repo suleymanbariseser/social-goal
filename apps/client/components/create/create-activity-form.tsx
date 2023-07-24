@@ -39,7 +39,7 @@ export default function CreateActivityForm() {
         ]}
       />
       <Input placeholder="Write Something..." rows={5} multiline mih="$12" />
-      <CreateGoal open={createGoalOpen} onOpenChange={setCreateGoalOpen} />
+      <CreateGoal open={createGoalOpen} onOpenChange={setCreateGoalOpen} onSave={console.log} />
     </Stack>
   );
 }

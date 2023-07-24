@@ -49,7 +49,11 @@ function DateSheet(props: DateSheetProps) {
   );
 }
 
-export function CreateGoalForm() {
+interface Props {
+  onSubmit: (data: CreateGoalInput) => void;
+}
+
+export function CreateGoalForm({ onSubmit }: Props) {
   const [calendarOpen, setCalendarOpen] = useState(false);
 
   const {
@@ -67,10 +71,6 @@ export function CreateGoalForm() {
       description: '',
     },
   });
-
-  const onSubmit = (data: CreateGoalInput) => {
-    console.log(data);
-  };
 
   return (
     <Stack gap="$3">
