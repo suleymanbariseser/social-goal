@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Adapt, Select as TamSelect, SelectProps, Sheet, Stack } from 'tamagui';
 
 import { Button, ButtonProps } from './button';
@@ -9,6 +8,7 @@ import ChevronDown from '@/assets/icons/chevron-down.svg';
 
 type SelectItem = {
   name: string;
+  value: string;
 };
 
 type SelectTitleProps = TextProps & {
@@ -60,16 +60,8 @@ interface Props extends SelectProps {
 }
 
 export function Select({ items = [], placeholder, header, ...props }: Props) {
-  const [value, setValue] = useState(props.defaultValue);
-
-  const handleOnChange = (value: string) => {
-    setValue(value);
-
-    props.onValueChange?.(value);
-  };
-
   return (
-    <TamSelect onValueChange={handleOnChange} open={false} {...props}>
+    <TamSelect open={false} {...props}>
       <TamSelect.Trigger
         transparent
         br="$6"
@@ -80,7 +72,7 @@ export function Select({ items = [], placeholder, header, ...props }: Props) {
         onPress={console.log}>
         <TamSelect.Value
           placeholder={placeholder ?? 'Select'}
-          color={!value ? '$placeholderColor' : '$textPrimary'}
+          color={!props.value ? '$placeholderColor' : '$textPrimary'}
         />
       </TamSelect.Trigger>
 
@@ -102,12 +94,7 @@ export function Select({ items = [], placeholder, header, ...props }: Props) {
           <TamSelect.Group space="$0">
             {items.map((item, i) => {
               return (
-                <TamSelect.Item
-                  index={i}
-                  key={item.name}
-                  value={item.name.toLowerCase()}
-                  px="$6"
-                  py="$4">
+                <TamSelect.Item index={i} key={item.name} value={item.value} px="$6" py="$4">
                   <TamSelect.ItemText>{item.name}</TamSelect.ItemText>
 
                   <TamSelect.ItemIndicator marginLeft="auto" />
