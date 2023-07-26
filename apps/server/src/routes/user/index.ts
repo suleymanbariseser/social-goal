@@ -1,6 +1,6 @@
 import { db } from '@/config/db';
 import { users } from '@/config/db/schema';
-import { router } from '@/config/trpc';
+import {  router } from '@/config/trpc';
 import { protectedProcedure } from '@/middlewares/isAuthed';
 import { eq } from 'drizzle-orm';
 
