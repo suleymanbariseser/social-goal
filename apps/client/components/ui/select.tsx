@@ -1,3 +1,4 @@
+import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
 import { Adapt, Select as TamSelect, SelectProps, Sheet, Stack } from 'tamagui';
 
 import { Button, ButtonProps } from './button';
@@ -57,56 +58,93 @@ interface Props extends SelectProps {
 
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+
+  error?: boolean;
+  helperText?: string;
 }
 
-export function Select({ items = [], placeholder, header, ...props }: Props) {
+export function Select({ items = [], placeholder, header, helperText, error, ...props }: Props) {
   return (
-    <TamSelect open={false} {...props}>
-      <TamSelect.Trigger
-        transparent
-        br="$6"
-        boc="$backgroundBox"
-        px="$4"
-        py="$4"
-        iconAfter={<ChevronDown width={16} />}
-        onPress={console.log}>
-        <TamSelect.Value
-          placeholder={placeholder ?? 'Select'}
-          color={!props.value ? '$placeholderColor' : '$textPrimary'}
-        />
-      </TamSelect.Trigger>
+    <Stack w="100%" gap="$2">
+      <TamSelect open={false} {...props}>
+        <TamSelect.Trigger
+          transparent
+          br="$6"
+          boc={error ? '$errorMain' : '$backgroundBox'}
+          px="$4"
+          py="$4"
+          iconAfter={<ChevronDown width={16} />}>
+          <TamSelect.Value
+            placeholder={placeholder ?? 'Select'}
+            color={error ? '$errorMain' : !props.value ? '$placeholderColor' : '$textPrimary'}
+          />
+        </TamSelect.Trigger>
 
-      <Adapt when="sm" platform="touch">
-        <Sheet native modal dismissOnSnapToBottom snapPoints={[60]} zIndex={9999999}>
-          <Sheet.Frame py="$4" br="$8">
-            <Stack>{header}</Stack>
-            <Sheet.ScrollView>
-              <Adapt.Contents />
-            </Sheet.ScrollView>
-          </Sheet.Frame>
+        <Adapt when="sm" platform="touch">
+          <Sheet native modal dismissOnSnapToBottom snapPoints={[60]} zIndex={9999999}>
+            <Sheet.Frame py="$4" br="$8">
+              <Stack>{header}</Stack>
+              <Sheet.ScrollView>
+                <Adapt.Contents />
+              </Sheet.ScrollView>
+            </Sheet.Frame>
 
-          <Sheet.Overlay />
-        </Sheet>
-      </Adapt>
+            <Sheet.Overlay />
+          </Sheet>
+        </Adapt>
 
-      <TamSelect.Content>
-        <TamSelect.Viewport>
-          <TamSelect.Group space="$0">
-            {items.map((item, i) => {
-              return (
-                <TamSelect.Item index={i} key={item.name} value={item.value} px="$6" py="$4">
-                  <TamSelect.ItemText>{item.name}</TamSelect.ItemText>
+        <TamSelect.Content>
+          <TamSelect.Viewport>
+            <TamSelect.Group space="$0">
+              {items.map((item, i) => {
+                return (
+                  <TamSelect.Item index={i} key={item.name} value={item.value} px="$6" py="$4">
+                    <TamSelect.ItemText>{item.name}</TamSelect.ItemText>
 
-                  <TamSelect.ItemIndicator marginLeft="auto" />
-                </TamSelect.Item>
-              );
-            })}
-          </TamSelect.Group>
-        </TamSelect.Viewport>
-      </TamSelect.Content>
-    </TamSelect>
+                    <TamSelect.ItemIndicator marginLeft="auto" />
+                  </TamSelect.Item>
+                );
+              })}
+            </TamSelect.Group>
+          </TamSelect.Viewport>
+        </TamSelect.Content>
+      </TamSelect>
+      {helperText && (
+        <Text variant="body3" col={error ? '$errorMain' : '$textPrimary'}>
+          {helperText}
+        </Text>
+      )}
+    </Stack>
   );
 }
+
+type ControlledSelectProps<T, Context = any> = Omit<Props, 'defaultValue'> & {
+  control: Control<T, Context>;
+  name: Path<T>;
+  defaultValue?: FieldPathValue<T, Path<T>>;
+  transform?: (value: string) => any;
+};
+
+export const ControlledSelect = <T extends object, Context = any>({
+  control,
+  name,
+  transform,
+  ...rest
+}: ControlledSelectProps<T, Context>) => {
+  const { field } = useController({
+    control,
+    name,
+    defaultValue: rest?.defaultValue ?? undefined,
+  });
+
+  return (
+    <Select
+      {...rest}
+      value={field.value}
+      onValueChange={(val) => field.onChange(transform ? transform(val) : val)}
+    />
+  );
+};
 
 Select.Header = SelectHeader;
 Select.Title = SelectTitle;

@@ -1,13 +1,19 @@
-import { ScrollView } from 'tamagui';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ScrollView, getTokens } from 'tamagui';
 
 import CreateActivityForm from '@/components/create/create-activity-form';
-import CreateTools from '@/components/create/create-tools';
 
 const Create = () => {
+  const insets = useSafeAreaInsets();
+
   return (
-    <ScrollView>
+    <ScrollView
+      f={1}
+      pb={Math.max(insets.bottom, getTokens().size[4].val)}
+      contentContainerStyle={{
+        flexGrow: 1,
+      }}>
       <CreateActivityForm />
-      <CreateTools />
     </ScrollView>
   );
 };
