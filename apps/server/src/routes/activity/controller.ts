@@ -15,3 +15,14 @@ export const createActivity = async ({ ctx, input }: InputOptions<CreateActivity
 
   return newActivity;
 };
+
+export const getNetworkActivities = async () => {
+  const allActivities = await db.query.activities.findMany({
+    with: {
+      goal: true,
+      creator: true,
+    },
+  });
+
+  return allActivities;
+};
