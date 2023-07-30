@@ -1,3 +1,4 @@
+import { ToastProvider } from '@tamagui/toast';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Slot, useRouter, useSegments } from 'expo-router';
@@ -7,6 +8,7 @@ import { TamaguiProvider, Theme, YStack } from 'tamagui';
 
 import config from '../tamagui.config';
 
+import { AppToast, AppToastViewport } from '@/components/toast';
 import { useAuth } from '@/hooks/useAuth';
 import { trpcClient, trpc } from '@/lib/trpc';
 
@@ -47,12 +49,19 @@ export default function RootLayout() {
       <QueryClientProvider client={queryClient}>
         <TamaguiProvider config={config}>
           <Theme name="dark">
-            <YStack f={1} bg="$backgroundMain">
-              <AuthWrapper>
-                <Slot />
-              </AuthWrapper>
-              <StatusBar style="auto" />
-            </YStack>
+            <ToastProvider
+              burntOptions={{
+                from: 'top',
+              }}>
+              <YStack f={1} bg="$backgroundMain">
+                <AppToastViewport />
+                <AppToast />
+                <AuthWrapper>
+                  <Slot />
+                </AuthWrapper>
+                <StatusBar style="light" />
+              </YStack>
+            </ToastProvider>
           </Theme>
         </TamaguiProvider>
       </QueryClientProvider>

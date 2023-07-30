@@ -3,6 +3,7 @@ import {
   EmailVerificationInput,
   emailVerificationSchema,
 } from '@social-goal/server/src/routes/auth/schema';
+import { useToastController } from '@tamagui/toast';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { Stack, YStack } from 'tamagui';
@@ -15,6 +16,8 @@ import { trpc } from '@/lib/trpc';
 import { authStore } from '@/store/auth';
 
 export default function EmailVerification() {
+  const toast = useToastController();
+
   const router = useRouter();
   const { email } = useLocalSearchParams<{ email: string }>();
   const { updateEmailToken } = useStore(authStore);
@@ -36,6 +39,11 @@ export default function EmailVerification() {
       onSuccess: (data) => {
         updateEmailToken(data.token);
         router.push('/register/password');
+      },
+      onError: (error) => {
+        toast.show(error.message, {
+          variant: 'error',
+        });
       },
     });
   };

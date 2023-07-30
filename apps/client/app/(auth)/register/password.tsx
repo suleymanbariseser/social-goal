@@ -3,6 +3,7 @@ import {
   CompleteRegisterInput,
   completeRegisterSchema,
 } from '@social-goal/server/src/routes/auth/schema';
+import { useToastController } from '@tamagui/toast';
 import { useForm } from 'react-hook-form';
 import { Stack, YStack } from 'tamagui';
 import { useStore } from 'zustand';
@@ -15,6 +16,8 @@ import { trpc } from '@/lib/trpc';
 import { authStore, authTokenState } from '@/store/auth';
 
 export default function Password() {
+  const toast = useToastController();
+
   const { emailToken } = useStore(authStore);
   const setAuthToken = useSetStorageItem(authTokenState);
 
@@ -35,6 +38,11 @@ export default function Password() {
     mutate(data, {
       onSuccess: (data) => {
         setAuthToken(data.token);
+      },
+      onError: (error) => {
+        toast.show(error.message, {
+          variant: 'error',
+        });
       },
     });
   };

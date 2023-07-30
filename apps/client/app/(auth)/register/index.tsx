@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterUserInput, registerUserSchema } from '@social-goal/server/src/routes/auth/schema';
+import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { Stack, YStack } from 'tamagui';
@@ -10,6 +11,8 @@ import { Text } from '@/components/ui/text';
 import { trpc } from '@/lib/trpc';
 
 export default function Register() {
+  const toast = useToastController();
+
   const {
     control,
     handleSubmit,
@@ -29,6 +32,11 @@ export default function Register() {
             email: data.email,
           },
         }),
+      onError: () => {
+        toast.show(error.message, {
+          variant: 'error',
+        });
+      },
     });
   };
 

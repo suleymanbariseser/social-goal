@@ -4,6 +4,7 @@ import {
   CreateActivityInput,
   createActivitySchema,
 } from '@social-goal/server/src/routes/activity/schema';
+import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -18,12 +19,14 @@ import { ControlledSelect, Select } from '../ui/select';
 import { trpc } from '@/lib/trpc';
 
 export default function CreateActivityForm() {
+  const router = useRouter();
+  const toast = useToastController();
+
   const [goals, { refetch }] = trpc.goal.list.useSuspenseQuery();
   const { mutate: createActivity } = trpc.activity.create.useMutation();
 
   const [selectGoalOpen, setSelectGoalOpen] = useState(false);
   const [createGoalOpen, setCreateGoalOpen] = useState(false);
-  const router = useRouter();
 
   const {
     control,
@@ -50,7 +53,9 @@ export default function CreateActivityForm() {
         router.replace('/');
       },
       onError: (error) => {
-        console.log(error);
+        toast.show(error.message, {
+          variant: 'error',
+        });
       },
     });
   };

@@ -1,5 +1,6 @@
 import { Goal } from '@social-goal/server/src/config/db/schema';
 import { CreateGoalInput } from '@social-goal/server/src/routes/goal/schema';
+import { useToastController } from '@tamagui/toast';
 import { Sheet } from 'tamagui';
 
 import { CreateGoalForm } from './form';
@@ -15,6 +16,7 @@ interface Props {
 }
 export function CreateGoal(props: Props) {
   const { mutate } = trpc.goal.create.useMutation();
+  const toast = useToastController();
 
   const onSubmit = (data: CreateGoalInput) => {
     mutate(data, {
@@ -24,7 +26,9 @@ export function CreateGoal(props: Props) {
         props.onOpenChange(false);
       },
       onError(error) {
-        console.log(error.message);
+        toast.show(error.message, {
+          variant: 'error',
+        });
       },
     });
   };
