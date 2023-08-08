@@ -1,13 +1,14 @@
 import { inferAsyncReturnType } from '@trpc/server';
-import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone';
+import { CreateWSSContextFnOptions } from '@trpc/server/adapters/ws';
+import { verifyUser } from './utils/verify-user';
 
-export async function createContext({ req }: CreateExpressContextOptions) {
+export async function createContext({ req }: CreateHTTPContextOptions | CreateWSSContextFnOptions) {
   async function getUserFromHeader() {
     if (req.headers.authorization) {
       const token = req.headers.authorization.split(' ')[1];
 
-      const user = jwt.decode(token) as JwtPayload & { id: number };
+      const user = verifyUser(token)
 
       if (user) return user;
     }

@@ -1,19 +1,29 @@
 import 'dotenv/config';
 
-import * as trpcExpress from '@trpc/server/adapters/express';
-import express from 'express';
-import { appRouter } from '@/routes';
+import { createHTTPServer } from '@trpc/server/adapters/standalone';
+import { AppRouter, appRouter } from '@/routes';
 import { createContext } from './context';
+import cors from 'cors';
+import { WebSocketServer } from 'ws';
+import { applyWSSHandler } from '@trpc/server/adapters/ws';
 
-const app = express();
-
-app.use(
-  trpcExpress.createExpressMiddleware({
-    router: appRouter,
-    createContext: createContext,
-  })
-);
-
-app.listen(process.env.PORT, () => {
-  console.log(`Listening on port ${process.env.PORT}`);
+const { server, listen } = createHTTPServer({
+  middleware: cors(),
+  router: appRouter,
+  createContext,
 });
+
+const wss = new WebSocketServer({ server });
+applyWSSHandler<AppRouter>({
+  wss,
+  router: appRouter,
+  createContext: () => {
+    return {
+      user: {
+        id: 0,
+      },
+    };
+  },
+});
+
+listen(+process.env.PORT!);
