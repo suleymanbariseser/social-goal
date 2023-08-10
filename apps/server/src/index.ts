@@ -19,9 +19,7 @@ applyWSSHandler<AppRouter>({
   router: appRouter,
   createContext: () => {
     return {
-      user: {
-        id: 0,
-      },
+      token: null,
     };
   },
 });
