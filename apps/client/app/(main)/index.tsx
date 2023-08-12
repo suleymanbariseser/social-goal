@@ -5,10 +5,10 @@ import { Stack } from 'tamagui';
 
 import HomeCard from '@/components/home/home-card';
 import HomeTabs from '@/components/home/home-tabs';
-import { trpc } from '@/lib/trpc';
+import { useActivities } from '@/hooks/activity/use-activities';
 
 const Home = () => {
-  const [data, { refetch }] = trpc.activity.networkList.useSuspenseQuery();
+  const { activities, fetchNextPage, refetch } = useActivities();
 
   const toast = useToastController();
   const [refreshing, setRefreshing] = useState(false);
@@ -30,12 +30,16 @@ const Home = () => {
   return (
     <Stack pos="relative" f={1} px="$2">
       <FlatList
-        data={data}
+        data={activities.flat()}
         refreshing={refreshing}
         onRefresh={handleRefresh}
         refreshControl={
           <RefreshControl tintColor="white" refreshing={refreshing} onRefresh={handleRefresh} />
         }
+        onEndReached={() => {
+          fetchNextPage();
+        }}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <HomeCard
             admin={{

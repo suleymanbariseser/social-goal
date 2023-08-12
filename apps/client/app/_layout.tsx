@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { TamaguiProvider, Theme, YStack } from 'tamagui';
 
 import config from '../tamagui.config';
@@ -56,9 +56,11 @@ export default function RootLayout() {
               <YStack f={1} bg="$backgroundMain">
                 <AppToastViewport />
                 <AppToast />
-                <AuthWrapper>
-                  <Slot />
-                </AuthWrapper>
+                <Suspense>
+                  <AuthWrapper>
+                    <Slot />
+                  </AuthWrapper>
+                </Suspense>
                 <StatusBar style="light" />
               </YStack>
             </ToastProvider>

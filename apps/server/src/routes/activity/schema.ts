@@ -14,4 +14,15 @@ export const createActivitySchema = z.object({
     }),
 });
 
+export const activityInfiniteSchema = z.object({
+  limit: z
+    .number()
+    .min(1, {
+      message: 'Limit must be at least 1',
+    })
+    .nullish(),
+  cursor: z.number().nullish(),
+});
+
 export type CreateActivityInput = z.infer<typeof createActivitySchema>;
+export type ActivityInfiniteInput = z.infer<typeof activityInfiniteSchema>;

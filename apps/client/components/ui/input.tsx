@@ -16,7 +16,7 @@ export const defaultStyles = {
   br: '$6',
   bs: 'solid',
 
-  bg: '$backgroundTransparent',
+  bg: 'transparent',
 } as const;
 
 export const BaseInput = styled(TInput, {
@@ -30,7 +30,7 @@ export const BaseInput = styled(TInput, {
   unstyled: true,
 
   focusStyle: {
-    bc: '$textPrimary',
+    boc: '$textPrimary',
   },
 });
 type BaseInputProps = React.ComponentProps<typeof BaseInput> & {
@@ -50,7 +50,7 @@ export const Input = ({ error, helperText, disabled, ...rest }: BaseInputProps) 
         editable={!disabled}
         boc={error ? '$errorMain' : defaultStyles.boc}
         focusStyle={{
-          bc: color,
+          boc: color,
         }}
       />
       {helperText && (

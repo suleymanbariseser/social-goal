@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { InferModel, relations } from 'drizzle-orm';
 import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 import { goals } from './goal';
 import { users } from './user';
@@ -11,6 +11,8 @@ export const activities = pgTable('activities', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   expiresAt: timestamp('expires_at').defaultNow().notNull(),
 });
+
+export type Activity = InferModel<typeof activities>;
 
 export const activityRelations = relations(activities, ({ one }) => ({
   goal: one(goals, {
