@@ -24,7 +24,7 @@ export default function HomeCard({ admin, content, goal }: Props) {
         <Stack fd="row" gap="$1" ai="center">
           <Text variant="subtitle1">{admin.name}</Text>
           <Text variant="subtitle1" color="$textSecondary">
-            #{goal}
+            #{goal.replace(/[ ]/g, '')}
           </Text>
         </Stack>
       </Card.Header>

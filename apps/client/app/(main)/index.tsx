@@ -43,7 +43,7 @@ const Home = () => {
         renderItem={({ item }) => (
           <HomeCard
             admin={{
-              img: 'https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80',
+              img: item.creator.image,
               name: [item.creator.firstName, item.creator.lastName].join(' '),
             }}
             content={item.content}

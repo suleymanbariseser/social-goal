@@ -3,7 +3,7 @@ import { trpc } from '@/lib/trpc';
 export const useActivities = () => {
   const { data, fetchNextPage, refetch } = trpc.activity.activities.useInfiniteQuery(
     {
-      limit: 4,
+      limit: 15,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

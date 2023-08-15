@@ -12,8 +12,13 @@ import SearchIcon from '@/assets/icons/search.svg';
 
 export default function HomeTabs() {
   const router = useRouter();
+
   const handleCreate = () => {
     router.push('/create');
+  };
+
+  const handleProfile = () => {
+    router.push('/profile');
   };
 
   return (
@@ -47,7 +52,7 @@ export default function HomeTabs() {
           mt={-30}
         />
         <IconButton variant="text" icon={MessageIcon} />
-        <IconButton variant="text" icon={ProfileIcon} />
+        <IconButton onPress={handleProfile} variant="text" icon={ProfileIcon} />
       </Stack>
     </SafeAreaView>
   );
