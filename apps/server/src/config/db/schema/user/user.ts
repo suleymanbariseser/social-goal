@@ -1,7 +1,8 @@
 import { InferModel, relations } from 'drizzle-orm';
 import { pgTable, serial, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
-import { goals } from './goal';
-import { activities } from './activity';
+import { goals } from '../goal';
+import { activities } from '../activity';
+import { userSocialLinks } from './user-social-link';
 
 export const users = pgTable(
   'users',
@@ -11,6 +12,7 @@ export const users = pgTable(
     firstName: text('first_name').notNull(),
     lastName: text('last_name').notNull(),
     email: text('email').notNull(),
+    description: text('description'),
     password: text('password').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -25,6 +27,7 @@ export const users = pgTable(
 export const userRelations = relations(users, ({ many }) => ({
   goals: many(goals),
   activities: many(activities),
+  socialLinks: many(userSocialLinks),
 }));
 
 export type User = InferModel<typeof users>;
