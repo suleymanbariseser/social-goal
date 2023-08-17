@@ -2,6 +2,7 @@
   "name": "@social-goal/client",
   "version": "1.0.0",
   "description": "Client of Social Goal",
+  "main": "index.ts",
   "scripts": {
     "start": "TAMAGUI_TARGET=native expo start",
     "android": "TAMAGUI_TARGET=native expo start --android",
@@ -35,7 +36,7 @@
     "expo-font": "~11.4.0",
     "expo-linear-gradient": "~12.3.0",
     "expo-linking": "~5.0.2",
-    "expo-router": "2.0.0",
+    "expo-router": "1.5.3",
     "expo-secure-store": "~12.3.1",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
