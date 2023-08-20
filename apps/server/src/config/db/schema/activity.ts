@@ -5,8 +5,12 @@ import { users } from './user';
 
 export const activities = pgTable('activities', {
   id: serial('id').primaryKey(),
-  creatorId: integer('creator_id').notNull(),
-  goalId: integer('goal_id').notNull(),
+  creatorId: integer('creator_id')
+    .notNull()
+    .references(() => users.id),
+  goalId: integer('goal_id')
+    .notNull()
+    .references(() => goals.id),
   content: text('content').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   expiresAt: timestamp('expires_at').defaultNow().notNull(),

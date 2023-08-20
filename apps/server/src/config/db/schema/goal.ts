@@ -5,7 +5,7 @@ import { activities } from './activity';
 
 export const goals = pgTable('goals', {
   id: serial('id').primaryKey(),
-  creatorId: integer('creator_id').notNull(),
+  creatorId: integer('creator_id').notNull().references(() => users.id),
   title: text('title').notNull(),
   description: text('description').notNull(),
   startDate: timestamp('start_date').notNull(),
@@ -18,7 +18,7 @@ export const goalRelations = relations(goals, ({ one, many }) => ({
     fields: [goals.creatorId],
     references: [users.id],
   }),
-  activities: many(activities)
+  activities: many(activities),
 }));
 
 export type Goal = InferModel<typeof goals>;
