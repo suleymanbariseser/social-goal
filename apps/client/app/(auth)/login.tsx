@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginInput, loginSchema } from '@social-goal/server/src/routes/auth/schema';
 import { useToastController } from '@tamagui/toast';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { Stack, YStack } from 'tamagui';
 
@@ -14,6 +14,7 @@ import { authTokenState } from '@/store/auth';
 
 export default function Login() {
   const toast = useToastController();
+  const router = useRouter();
 
   const { mutate: login, error } = trpc.auth.login.useMutation();
   const setAuthToken = useSetStorageItem(authTokenState);
@@ -30,6 +31,7 @@ export default function Login() {
     login(data, {
       onSuccess: ({ token }) => {
         setAuthToken(token);
+        router.push('/(main)/');
       },
       onError: (error) => {
         toast.show(error.message, {

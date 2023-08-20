@@ -4,6 +4,7 @@ import {
   completeRegisterSchema,
 } from '@social-goal/server/src/routes/auth/schema';
 import { useToastController } from '@tamagui/toast';
+import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { Stack, YStack } from 'tamagui';
 import { useStore } from 'zustand';
@@ -17,6 +18,7 @@ import { authStore, authTokenState } from '@/store/auth';
 
 export default function Password() {
   const toast = useToastController();
+  const router = useRouter();
 
   const { emailToken } = useStore(authStore);
   const setAuthToken = useSetStorageItem(authTokenState);
@@ -38,6 +40,7 @@ export default function Password() {
     mutate(data, {
       onSuccess: (data) => {
         setAuthToken(data.token);
+        router.push('/(main)/');
       },
       onError: (error) => {
         toast.show(error.message, {
