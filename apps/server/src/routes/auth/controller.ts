@@ -59,12 +59,17 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
   });
 
   // send email to user and do not wait for it
-  resend.emails.send({
-    from: 'onboarding@resend.dev',
-    to: email,
-    subject: 'Email Verification',
-    html: `<div><h1>Dear ${firstName} ${lastName}</h1><p>Thank you for using our application. Please verify your email by entering the following code: <strong>${code}</strong></p></div>`,
-  });
+  resend.emails
+    .send({
+      from: 'onboarding@resend.dev',
+      to: email,
+      subject: 'Email Verification',
+      html: `<div><h1>Dear ${firstName} ${lastName}</h1><p>Thank you for using our application. Please verify your email by entering the following code: <strong>${code}</strong></p></div>`,
+    })
+    .catch(() => {
+      // TODO resend email
+      return null;
+    });
 };
 
 export const verifyEmail = async ({ input }: InputOptions<EmailVerificationInput>) => {
@@ -159,12 +164,14 @@ export const completeRegisterUser = async ({ input }: InputOptions<CompleteRegis
   const authToken = jwt.sign({ id: newUsers[0].id }, process.env.AUTH_SECRET!, { expiresIn: '2d' });
 
   // send welcome email to user and do not wait for it
-  resend.emails.send({
-    from: 'onboarding@resend.dev',
-    to: verification.email,
-    subject: 'Welcome to Social Goal',
-    html: `<div><h1>Dear ${verification.firstName} ${verification.lastName}</h1><p>Thank you for using our application. You can now login with your email and password.</p></div>`,
-  });
+  resend.emails
+    .send({
+      from: 'onboarding@resend.dev',
+      to: verification.email,
+      subject: 'Welcome to Social Goal',
+      html: `<div><h1>Dear ${verification.firstName} ${verification.lastName}</h1><p>Thank you for using our application. You can now login with your email and password.</p></div>`,
+    })
+    .catch(() => null);
 
   return { token: authToken };
 };
