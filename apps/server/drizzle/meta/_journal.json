@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1687463259186,
-      "tag": "0000_huge_ben_grimm",
-      "breakpoints": false
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1690224059605,
-      "tag": "0001_omniscient_invaders",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1690630862657,
-      "tag": "0002_chubby_phantom_reporter",
+      "when": 1692530637589,
+      "tag": "0000_illegal_husk",
       "breakpoints": true
     }
   ]

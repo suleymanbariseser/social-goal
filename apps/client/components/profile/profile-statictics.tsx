@@ -18,14 +18,20 @@ const ProfileLink = ({ count, text }: ProfileLinkProps) => {
   );
 };
 
-export const ProfileStatistics = () => {
+interface Props {
+  goals: number;
+  followers: number;
+  following: number;
+}
+
+export const ProfileStatistics = ({ followers, following, goals }: Props) => {
   return (
     <Stack fd="row" gap="$2">
-      <ProfileLink count={2} text="goals" />
+      <ProfileLink count={goals} text="goals" />
       <Text variant="body3">-</Text>
-      <ProfileLink count={4} text="followers" />
+      <ProfileLink count={followers} text="followers" />
       <Text variant="body3">-</Text>
-      <ProfileLink count={8} text="following" />
+      <ProfileLink count={following} text="following" />
     </Stack>
   );
 };

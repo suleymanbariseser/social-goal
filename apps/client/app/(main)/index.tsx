@@ -1,4 +1,5 @@
 import { useToastController } from '@tamagui/toast';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
@@ -9,6 +10,7 @@ import { useActivities } from '@/hooks/activity/use-activities';
 
 const Home = () => {
   const { activities, fetchNextPage, refetch } = useActivities();
+  const router = useRouter();
 
   const toast = useToastController();
   const [refreshing, setRefreshing] = useState(false);
@@ -25,6 +27,10 @@ const Home = () => {
         variant: 'error',
       });
     }
+  };
+
+  const handlePressAvatar = (userId: number) => {
+    router.push(`/profile/${userId}`);
   };
 
   return (
@@ -48,6 +54,7 @@ const Home = () => {
             }}
             content={item.content}
             goal={item.goal.title}
+            onPressAvatar={() => handlePressAvatar(item.creator.id)}
           />
         )}
         contentContainerStyle={{

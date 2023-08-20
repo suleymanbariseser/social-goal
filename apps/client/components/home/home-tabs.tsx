@@ -9,16 +9,25 @@ import HomeIcon from '@/assets/icons/home.svg';
 import MessageIcon from '@/assets/icons/message.svg';
 import ProfileIcon from '@/assets/icons/profile.svg';
 import SearchIcon from '@/assets/icons/search.svg';
+import { useAuth } from '@/hooks/useAuth';
+import { trpc } from '@/lib/trpc';
 
 export default function HomeTabs() {
   const router = useRouter();
+  const { data: userInfo } = trpc.user.info.useQuery();
+  const { logout } = useAuth();
 
   const handleCreate = () => {
     router.push('/create');
   };
 
   const handleProfile = () => {
-    router.push('/profile');
+    router.push(`/profile/${userInfo.id}`);
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push('/(auth)/');
   };
 
   return (
@@ -51,7 +60,7 @@ export default function HomeTabs() {
           icon={AddIcon}
           mt={-30}
         />
-        <IconButton variant="text" icon={MessageIcon} />
+        <IconButton onPress={handleLogout} variant="text" icon={MessageIcon} />
         <IconButton onPress={handleProfile} variant="text" icon={ProfileIcon} />
       </Stack>
     </SafeAreaView>
