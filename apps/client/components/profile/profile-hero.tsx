@@ -27,7 +27,7 @@ export const ProfileHero = ({ userId }: Props) => {
         following={profile.followings}
         goals={profile.goals}
       />
-      <ProfileAction />
+      <ProfileAction userId={userId} />
     </Stack>
   );
 };
