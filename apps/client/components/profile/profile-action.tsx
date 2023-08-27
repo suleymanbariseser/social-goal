@@ -10,12 +10,14 @@ interface Props {
 
 const FollowButton = ({ userId }: Props) => {
   const toast = useToastController();
-  const [settings] = trpc.user.settings.useSuspenseQuery({ id: userId });
-  const { mutate, isLoading } = trpc.user.relations.follow.useMutation();
+  const [settings] = trpc.user.relations.settings.useSuspenseQuery({ id: userId });
+  const { mutate: follow, isLoading: isFollowLoading } = trpc.user.relations.follow.useMutation();
+  const { mutate: unfollow, isLoading: isUnfollowLoading } =
+    trpc.user.relations.unfollow.useMutation();
 
-  const handlePress = () => {
-    mutate(
-      { userId },
+  const handleFollow = () => {
+    follow(
+      { id: userId },
       {
         onError: (error) => {
           toast.show(error.message, {
@@ -30,18 +32,43 @@ const FollowButton = ({ userId }: Props) => {
     );
   };
 
-  const handleUnfollow = () => {};
+  const handleUnfollow = () => {
+    unfollow(
+      { id: userId },
+      {
+        onError: (error) => {
+          toast.show(error.message, {
+            variant: 'error',
+          });
+        },
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      }
+    );
+  };
 
+  console.log(settings);
   if (settings.following) {
     return (
-      <Button py="$3" variant="outlined" onPress={handleUnfollow} disabled={isLoading}>
+      <Button
+        py="$3"
+        variant="outlined"
+        onPress={handleUnfollow}
+        disabled={isUnfollowLoading}
+        loading={isUnfollowLoading}>
         Following
       </Button>
     );
   }
 
   return (
-    <Button py="$3" variant="contained" onPress={handlePress} disabled={isLoading}>
+    <Button
+      py="$3"
+      variant="contained"
+      onPress={handleFollow}
+      disabled={isFollowLoading}
+      loading={isFollowLoading}>
       Follow
     </Button>
   );

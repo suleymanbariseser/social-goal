@@ -86,7 +86,7 @@ export default function Password() {
           onPress={handleSubmit(onSubmit)}
           w="100%"
           disabled={isLoading}
-          isLoading={isLoading}>
+          loading={isLoading}>
           Register
         </Button>
         <Text>

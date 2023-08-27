@@ -81,7 +81,7 @@ export default function EmailVerification() {
         <Button
           onPress={handleSubmit(onSubmit)}
           w="100%"
-          isLoading={isLoading}
+          loading={isLoading}
           disabled={isLoading}>
           Continue
         </Button>

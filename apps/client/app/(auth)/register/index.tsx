@@ -80,7 +80,7 @@ export default function Register() {
         <Button
           onPress={handleSubmit(onSubmit)}
           w="100%"
-          isLoading={isLoading}
+          loading={isLoading}
           disabled={isLoading}>
           Continue
         </Button>

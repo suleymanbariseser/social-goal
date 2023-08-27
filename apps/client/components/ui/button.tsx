@@ -81,7 +81,7 @@ const ButtonText = styled(Text, {
 });
 
 export interface ButtonProps extends React.ComponentProps<typeof BaseButton> {
-  isLoading?: boolean;
+  loading?: boolean;
   textProps?: TextProps;
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
@@ -90,7 +90,7 @@ export interface ButtonProps extends React.ComponentProps<typeof BaseButton> {
 export const Button = ({
   children,
   textProps,
-  isLoading,
+  loading,
   startAdornment,
   endAdornment,
   variant = 'contained',
@@ -103,7 +103,7 @@ export const Button = ({
           {startAdornment}
         </Stack>
       )}
-      {isLoading ? (
+      {loading ? (
         <Spinner size="small" />
       ) : (
         <ButtonText buttonVariant={variant} {...textProps}>
