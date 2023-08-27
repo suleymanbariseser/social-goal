@@ -10,6 +10,9 @@ export const BaseButton = styled(Stack, {
   ai: 'center',
   jc: 'center',
   gap: '$2',
+  boc: '$backgroundTransparent',
+  bw: 1,
+  bs: 'solid',
 
   py: '$4',
   px: '$2.5',
@@ -28,6 +31,14 @@ export const BaseButton = styled(Stack, {
 
         pressStyle: {
           bg: '$textSecondary',
+        },
+      },
+      outlined: {
+        boc: '$textPrimary',
+        bg: '$backgroundTransparent',
+
+        pressStyle: {
+          bg: '#ffffff05',
         },
       },
       text: {
@@ -54,6 +65,9 @@ const ButtonText = styled(Text, {
     buttonVariant: {
       contained: {
         color: '$background',
+      },
+      outlined: {
+        color: '$textPrimary',
       },
       text: {
         color: '$textPrimary',

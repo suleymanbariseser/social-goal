@@ -1,8 +1,8 @@
 import { db } from '@/config/db';
-import { users } from '@/config/db/schema';
+import { userRelationships, users } from '@/config/db/schema';
 import { ProtectedInputOptions } from '@/types/trpc';
-import { eq } from 'drizzle-orm';
-import { ProfileSummaryInput } from './schema';
+import { and, eq } from 'drizzle-orm';
+import { ProfileSummaryInput, UserSettingsInput } from './schema';
 
 export const getUserInfo = async ({ ctx }: ProtectedInputOptions<any>) => {
   const user = await db
@@ -55,4 +55,39 @@ export const getProfileSummary = async ({ input }: ProtectedInputOptions<Profile
     followers: userSummary?.followers.length ?? 0,
     followings: userSummary?.followings.length ?? 0,
   };
+};
+
+export const getUserSettings = async ({ ctx, input }: ProtectedInputOptions<UserSettingsInput>) => {
+  const response = {
+    blockedBy: false,
+    blocking: false,
+    followedBy: false,
+    following: false,
+    protected: false,
+  };
+
+  if (ctx.user.id === input.id) {
+    return response;
+  }
+  const following = await db.query.userRelationships.findFirst({
+    columns: { id: true },
+    where: and(
+      eq(userRelationships.followerId, ctx.user.id),
+      eq(userRelationships.followingId, input.id)
+    ),
+  });
+
+  if (following) response.following = true;
+
+  const followedBy = await db.query.userRelationships.findFirst({
+    columns: { id: true },
+    where: and(
+      eq(userRelationships.followingId, ctx.user.id),
+      eq(userRelationships.followerId, input.id)
+    ),
+  });
+
+  if (followedBy) response.followedBy = true;
+
+  return response;
 };
