@@ -20,6 +20,7 @@ import { trpc } from '@/lib/trpc';
 
 export default function CreateActivityForm() {
   const router = useRouter();
+  const utils = trpc.useContext();
   const toast = useToastController();
 
   const [goals, { refetch }] = trpc.goal.list.useSuspenseQuery();
@@ -50,6 +51,7 @@ export default function CreateActivityForm() {
   const onSubmit = (data: CreateActivityInput) => {
     createActivity(data, {
       onSuccess: () => {
+        utils.activity.activities.invalidate();
         router.replace('/');
       },
       onError: (error) => {

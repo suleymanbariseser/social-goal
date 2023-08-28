@@ -74,6 +74,18 @@ const FollowButton = ({ userId }: Props) => {
   );
 };
 
+export const EditButton = () => {
+  return (
+    <Button py="$3" variant="outlined">
+      Edit
+    </Button>
+  );
+};
+
 export const ProfileAction = ({ userId }: Props) => {
+  const [user] = trpc.user.info.useSuspenseQuery();
+
+  if (user.id === userId) return <EditButton />;
+
   return <FollowButton userId={userId} />;
 };
