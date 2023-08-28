@@ -13,17 +13,9 @@ export const followUser = async ({ ctx, input }: ProtectedInputOptions<FollowUse
     });
   }
 
-  const relation = await db.query.userRelationships.findFirst({
-    columns: {
-      id: true,
-    },
-    where: and(
-      eq(userRelationships.followerId, ctx.user.id),
-      eq(userRelationships.followingId, input.id)
-    ),
-  });
+  const settings = await getUserSettings({ ctx, input });
 
-  if (relation) return relation;
+  if (settings.following) return settings;
 
   const newRelations = await db
     .insert(userRelationships)
@@ -35,7 +27,9 @@ export const followUser = async ({ ctx, input }: ProtectedInputOptions<FollowUse
       id: userRelationships.id,
     });
 
-  return newRelations[0];
+  if (newRelations) settings.following = true;
+
+  return settings;
 };
 
 export const unfollowUser = async ({ ctx, input }: ProtectedInputOptions<FollowUserInput>) => {
@@ -46,25 +40,40 @@ export const unfollowUser = async ({ ctx, input }: ProtectedInputOptions<FollowU
     });
   }
 
-  const relation = await db.query.userRelationships.findFirst({
-    columns: {
-      id: true,
-    },
-    where: and(
-      eq(userRelationships.followerId, ctx.user.id),
-      eq(userRelationships.followingId, input.id)
-    ),
-  });
+  const settings = await getUserSettings({ ctx, input });
 
-  if (!relation) return null;
+  if (!settings.following) return settings;
 
-  await db.delete(userRelationships).where(eq(userRelationships.id, relation.id));
+  const relation = await db
+    .delete(userRelationships)
+    .where(
+      and(
+        eq(userRelationships.followerId, ctx.user.id),
+        eq(userRelationships.followingId, input.id)
+      )
+    )
+    .returning({
+      id: userRelationships.id,
+    });
 
-  return relation;
+  if (relation) settings.following = false;
+
+  return settings;
 };
 
-export const getUserSettings = async ({ ctx, input }: ProtectedInputOptions<UserSettingsInput>) => {
-  const response = {
+export type UserSettings = {
+  blockedBy: boolean;
+  blocking: boolean;
+  followedBy: boolean;
+  following: boolean;
+  protected: boolean;
+};
+
+export const getUserSettings = async ({
+  ctx,
+  input,
+}: ProtectedInputOptions<UserSettingsInput>): Promise<UserSettings> => {
+  const response: UserSettings = {
     blockedBy: false,
     blocking: false,
     followedBy: false,
@@ -75,6 +84,7 @@ export const getUserSettings = async ({ ctx, input }: ProtectedInputOptions<User
   if (ctx.user.id === input.id) {
     return response;
   }
+
   const following = await db.query.userRelationships.findFirst({
     columns: { id: true },
     where: and(
@@ -82,7 +92,6 @@ export const getUserSettings = async ({ ctx, input }: ProtectedInputOptions<User
       eq(userRelationships.followingId, input.id)
     ),
   });
-
   if (following) response.following = true;
 
   const followedBy = await db.query.userRelationships.findFirst({
@@ -92,7 +101,6 @@ export const getUserSettings = async ({ ctx, input }: ProtectedInputOptions<User
       eq(userRelationships.followerId, input.id)
     ),
   });
-
   if (followedBy) response.followedBy = true;
 
   return response;

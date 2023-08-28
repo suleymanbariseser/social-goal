@@ -1,3 +1,4 @@
+import type { UserSettings } from '@social-goal/server/src/routes/user/relationship/controller';
 import { useToastController } from '@tamagui/toast';
 
 import { Button } from '../ui/button';
@@ -10,10 +11,24 @@ interface Props {
 
 const FollowButton = ({ userId }: Props) => {
   const toast = useToastController();
+  const utils = trpc.useContext();
+
   const [settings] = trpc.user.relations.settings.useSuspenseQuery({ id: userId });
   const { mutate: follow, isLoading: isFollowLoading } = trpc.user.relations.follow.useMutation();
   const { mutate: unfollow, isLoading: isUnfollowLoading } =
     trpc.user.relations.unfollow.useMutation();
+
+  const updateSettings = (newData: Partial<UserSettings>) => {
+    utils.user.relations.settings.setData(
+      {
+        id: userId,
+      },
+      (data) => ({
+        ...data,
+        ...newData,
+      })
+    );
+  };
 
   const handleFollow = () => {
     follow(
@@ -25,8 +40,9 @@ const FollowButton = ({ userId }: Props) => {
           });
         },
         onSuccess: (data) => {
-          // update the get call
-          console.log(data);
+          updateSettings({
+            ...data,
+          });
         },
       }
     );
@@ -42,13 +58,14 @@ const FollowButton = ({ userId }: Props) => {
           });
         },
         onSuccess: (data) => {
-          console.log(data);
+          updateSettings({
+            ...data,
+          });
         },
       }
     );
   };
 
-  console.log(settings);
   if (settings.following) {
     return (
       <Button
