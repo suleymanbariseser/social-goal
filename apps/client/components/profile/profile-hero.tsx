@@ -23,6 +23,7 @@ export const ProfileHero = ({ userId }: Props) => {
       />
       <ProfileDescription description={profile.description} />
       <ProfileStatistics
+        id={profile.id}
         followers={profile.followers}
         following={profile.followings}
         goals={profile.goals}
