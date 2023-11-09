@@ -13,8 +13,8 @@ import { Stack } from 'tamagui';
 import { CreateGoal } from './create-goal';
 import CreateTools from './create-tools';
 import { Button } from '../ui/button';
-import { ControlledInput } from '../ui/input';
-import { ControlledSelect, Select } from '../ui/select';
+import { Input } from '../ui/form/input';
+import { Select } from '../ui/form/select';
 
 import { trpc } from '@/lib/trpc';
 
@@ -65,7 +65,7 @@ export default function CreateActivityForm() {
   return (
     <Stack f={1} px="$6" gap="$6">
       <Stack f={1} gap="$4">
-        <ControlledSelect
+        <Select
           open={selectGoalOpen}
           onOpenChange={setSelectGoalOpen}
           control={control}
@@ -85,7 +85,7 @@ export default function CreateActivityForm() {
           helperText={errors.goalId?.message}
           transform={(val) => +val}
         />
-        <ControlledInput
+        <Input
           control={control}
           name="content"
           placeholder="Write Something..."

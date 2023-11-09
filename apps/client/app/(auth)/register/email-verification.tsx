@@ -10,7 +10,7 @@ import { Stack, YStack } from 'tamagui';
 import { useStore } from 'zustand';
 
 import { Button } from '@/components/ui/button';
-import { ControlledInput } from '@/components/ui/input';
+import { Input } from '@/components/ui/form/input';
 import { Text } from '@/components/ui/text';
 import { trpc } from '@/lib/trpc';
 import { authStore } from '@/store/auth';
@@ -57,14 +57,14 @@ export default function EmailVerification() {
         </Stack>
       </YStack>
       <YStack f={1} gap="$4">
-        <ControlledInput
+        <Input
           control={control}
           name="email"
           disabled
           error={!!errors.email}
           helperText={errors.email?.message}
         />
-        <ControlledInput
+        <Input
           control={control}
           name="code"
           placeholder="Verification code"

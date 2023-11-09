@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
 import { Sheet, Stack, getTokens } from 'tamagui';
 
-import { Calendar } from './calendar';
+import { Calendar } from '../calendar';
 import { defaultStyles } from './input';
-import { Text } from './text';
+import { Text } from '../text';
 
-interface Props {
+interface BaseDatePickerProps {
   value: Date | null;
   onChange: (date: Date) => void;
 
@@ -19,7 +19,7 @@ interface Props {
   helperText?: string;
   error?: boolean;
 }
-export function DatePicker(props: Props) {
+export function BaseDatePicker(props: BaseDatePickerProps) {
   const [open, setOpen] = useState(false);
   const placeholderColor = Color(getTokens().color.$textPrimary.val).alpha(0.7).toString();
 
@@ -62,22 +62,23 @@ export function DatePicker(props: Props) {
   );
 }
 
-interface ControlledDatePickerProps<T, Context = any> extends Omit<Props, 'value' | 'onChange'> {
+interface DatePickerProps<T, Context = any>
+  extends Omit<BaseDatePickerProps, 'value' | 'onChange'> {
   control: Control<T, Context>;
   name: Path<T>;
   defaultValue?: FieldPathValue<T, Path<T>>;
 }
 
-export const ControlledDatePicker = <T extends object, Context = any>({
+export const DatePicker = <T extends object, Context = any>({
   control,
   name,
   ...rest
-}: ControlledDatePickerProps<T, Context>) => {
+}: DatePickerProps<T, Context>) => {
   const { field } = useController({
     control,
     name,
     defaultValue: rest?.defaultValue ?? undefined,
   });
 
-  return <DatePicker value={field.value} onChange={field.onChange} {...rest} />;
+  return <BaseDatePicker value={field.value} onChange={field.onChange} {...rest} />;
 };

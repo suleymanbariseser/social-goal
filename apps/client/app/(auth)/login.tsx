@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Stack, YStack } from 'tamagui';
 
 import { Button } from '@/components/ui/button';
-import { ControlledInput } from '@/components/ui/input';
+import { Input } from '@/components/ui/form/input';
 import { Text } from '@/components/ui/text';
 import { useSetStorageItem } from '@/lib/storage';
 import { trpc } from '@/lib/trpc';
@@ -50,14 +50,14 @@ export default function Login() {
         </Stack>
       </YStack>
       <YStack f={1} gap="$4">
-        <ControlledInput
+        <Input
           control={control}
           name="email"
           placeholder="Email"
           error={!!errors.email}
           helperText={errors.email?.message}
         />
-        <ControlledInput
+        <Input
           control={control}
           name="password"
           placeholder="Password"

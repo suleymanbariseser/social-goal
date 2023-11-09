@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Stack, YStack } from 'tamagui';
 
 import { Button } from '@/components/ui/button';
-import { ControlledInput } from '@/components/ui/input';
+import { Input } from '@/components/ui/form/input';
 import { Text } from '@/components/ui/text';
 import { trpc } from '@/lib/trpc';
 
@@ -49,21 +49,21 @@ export default function Register() {
         </Stack>
       </YStack>
       <YStack f={1} gap="$6">
-        <ControlledInput
+        <Input
           control={control}
           name="firstName"
           placeholder="First name"
           error={!!errors.firstName}
           helperText={errors.firstName?.message}
         />
-        <ControlledInput
+        <Input
           control={control}
           name="lastName"
           placeholder="Last name"
           error={!!errors.lastName}
           helperText={errors.lastName?.message}
         />
-        <ControlledInput
+        <Input
           control={control}
           name="email"
           placeholder="Email"

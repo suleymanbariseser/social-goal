@@ -2,7 +2,7 @@ import Color from 'color';
 import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
 import { Stack, Input as TInput, getTokens, styled } from 'tamagui';
 
-import { Text } from './text';
+import { Text } from '../text';
 
 export const defaultStyles = {
   px: '$4',
@@ -19,7 +19,7 @@ export const defaultStyles = {
   bg: 'transparent',
 } as const;
 
-export const BaseInput = styled(TInput, {
+export const StyledInput = styled(TInput, {
   name: 'Input',
 
   ...defaultStyles,
@@ -33,17 +33,18 @@ export const BaseInput = styled(TInput, {
     boc: '$textPrimary',
   },
 });
-type BaseInputProps = React.ComponentProps<typeof BaseInput> & {
+
+type BaseInputProps = React.ComponentProps<typeof StyledInput> & {
   error?: boolean;
   helperText?: string;
 };
 
-export const Input = ({ error, helperText, disabled, ...rest }: BaseInputProps) => {
+export const BaseInput = ({ error, helperText, disabled, ...rest }: BaseInputProps) => {
   const color = error ? getTokens().color.$errorMain.val : getTokens().color.$textPrimary.val;
 
   return (
     <Stack gap="$2" opacity={disabled ? 0.5 : 1}>
-      <BaseInput
+      <StyledInput
         {...rest}
         placeholderTextColor={Color(color).alpha(0.7).toString()}
         disabled={disabled}
@@ -62,17 +63,17 @@ export const Input = ({ error, helperText, disabled, ...rest }: BaseInputProps) 
   );
 };
 
-type ControlledInputProps<T, Context = any> = Omit<BaseInputProps, 'defaultValue'> & {
+type InputProps<T, Context = any> = Omit<BaseInputProps, 'defaultValue'> & {
   control: Control<T, Context>;
   name: Path<T>;
   defaultValue?: FieldPathValue<T, Path<T>>;
 };
 
-export const ControlledInput = <T extends object, Context = any>({
+export const Input = <T extends object, Context = any>({
   control,
   name,
   ...rest
-}: ControlledInputProps<T, Context>) => {
+}: InputProps<T, Context>) => {
   const { field } = useController({
     control,
     name,
@@ -80,6 +81,6 @@ export const ControlledInput = <T extends object, Context = any>({
   });
 
   return (
-    <Input {...rest} value={field.value} onChangeText={field.onChange} onBlur={field.onBlur} />
+    <BaseInput {...rest} value={field.value} onChangeText={field.onChange} onBlur={field.onBlur} />
   );
 };

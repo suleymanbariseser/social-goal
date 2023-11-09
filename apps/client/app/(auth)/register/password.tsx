@@ -10,7 +10,7 @@ import { Stack, YStack } from 'tamagui';
 import { useStore } from 'zustand';
 
 import { Button } from '@/components/ui/button';
-import { ControlledInput } from '@/components/ui/input';
+import { Input } from '@/components/ui/form/input';
 import { Text } from '@/components/ui/text';
 import { useSetStorageItem } from '@/lib/storage';
 import { trpc } from '@/lib/trpc';
@@ -59,7 +59,7 @@ export default function Password() {
         </Stack>
       </YStack>
       <YStack f={1} gap="$4">
-        <ControlledInput
+        <Input
           control={control}
           name="password"
           placeholder="Password"
@@ -67,7 +67,7 @@ export default function Password() {
           helperText={errors.password?.message}
           secureTextEntry
         />
-        <ControlledInput
+        <Input
           control={control}
           name="rePassword"
           placeholder="Confirm password"

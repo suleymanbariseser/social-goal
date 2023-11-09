@@ -1,9 +1,9 @@
 import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
-import { Adapt, Select as TamSelect, SelectProps, Sheet, Stack } from 'tamagui';
+import { Adapt, Select as TamSelect, SelectProps as TamSelectProps, Sheet, Stack } from 'tamagui';
 
-import { Button, ButtonProps } from './button';
-import { Divider } from './divider';
-import { Text, TextProps } from './text';
+import { Button, ButtonProps } from '../button';
+import { Divider } from '../divider';
+import { Text, TextProps } from '../text';
 
 import ChevronDown from '@/assets/icons/chevron-down.svg';
 
@@ -51,7 +51,7 @@ const SelectHeader = ({ children }: SelectHeaderProps) => {
   );
 };
 
-interface Props extends SelectProps {
+interface BaseSelectProps extends TamSelectProps {
   items: SelectItem[];
   placeholder?: string;
   header?: React.ReactNode;
@@ -63,7 +63,7 @@ interface Props extends SelectProps {
   helperText?: string;
 }
 
-export function Select({ items = [], placeholder, header, helperText, error, ...props }: Props) {
+export function BaseSelect({ items = [], placeholder, header, helperText, error, ...props }: BaseSelectProps) {
   return (
     <Stack w="100%" gap="$2">
       <TamSelect open={false} {...props}>
@@ -118,19 +118,19 @@ export function Select({ items = [], placeholder, header, helperText, error, ...
   );
 }
 
-type ControlledSelectProps<T, Context = any> = Omit<Props, 'defaultValue'> & {
+type SelectProps<T, Context = any> = Omit<BaseSelectProps, 'defaultValue'> & {
   control: Control<T, Context>;
   name: Path<T>;
   defaultValue?: FieldPathValue<T, Path<T>>;
   transform?: (value: string) => any;
 };
 
-export const ControlledSelect = <T extends object, Context = any>({
+export const Select = <T extends object, Context = any>({
   control,
   name,
   transform,
   ...rest
-}: ControlledSelectProps<T, Context>) => {
+}: SelectProps<T, Context>) => {
   const { field } = useController({
     control,
     name,
@@ -138,7 +138,7 @@ export const ControlledSelect = <T extends object, Context = any>({
   });
 
   return (
-    <Select
+    <BaseSelect
       {...rest}
       value={field.value}
       onValueChange={(val) => field.onChange(transform ? transform(val) : val)}

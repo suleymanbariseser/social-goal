@@ -8,8 +8,8 @@ import { XStack, Stack, Sheet } from 'tamagui';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { ControlledDatePicker } from '@/components/ui/date-picker';
-import { ControlledInput } from '@/components/ui/input';
+import { DatePicker } from '@/components/ui/form/date-picker';
+import { Input } from '@/components/ui/form/input';
 import { Text } from '@/components/ui/text';
 
 interface DateSheetProps {
@@ -74,7 +74,7 @@ export function CreateGoalForm({ onSubmit }: Props) {
 
   return (
     <Stack gap="$3">
-      <ControlledInput
+      <Input
         control={control}
         name="title"
         placeholder="Title"
@@ -84,7 +84,7 @@ export function CreateGoalForm({ onSubmit }: Props) {
       <Stack gap="$2">
         <XStack ai="center" jc="space-between" gap="$3">
           <Stack f={1}>
-            <ControlledDatePicker
+            <DatePicker
               control={control}
               name="startDate"
               placeholder="Start Date"
@@ -93,7 +93,7 @@ export function CreateGoalForm({ onSubmit }: Props) {
             />
           </Stack>
           <Stack f={1}>
-            <ControlledDatePicker
+            <DatePicker
               control={control}
               name="endDate"
               placeholder="End Date"
@@ -108,7 +108,7 @@ export function CreateGoalForm({ onSubmit }: Props) {
           </Text>
         )}
       </Stack>
-      <ControlledInput
+      <Input
         control={control}
         name="description"
         placeholder="description"
