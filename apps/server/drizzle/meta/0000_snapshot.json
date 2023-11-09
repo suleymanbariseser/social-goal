@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "a48c4ac4-2afc-4fb3-8322-db7b18b18de1",
+  "id": "3541b0ac-f19e-46ef-bfb8-462f0d5c178f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "activities": {
@@ -79,8 +79,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "user-verification": {
-      "name": "user-verification",
+    "user_verification": {
+      "name": "user_verification",
       "schema": "",
       "columns": {
         "id": {

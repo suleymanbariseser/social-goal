@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "activities" (
 	"expires_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "user-verification" (
+CREATE TABLE IF NOT EXISTS "user_verification" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"first_name" text NOT NULL,
 	"last_name" text NOT NULL,

@@ -1,7 +1,7 @@
 import { InferModel } from 'drizzle-orm';
 import { pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
-export const userVerifications = pgTable('user-verification', {
+export const userVerifications = pgTable('user_verification', {
   id: serial('id').primaryKey(),
   firstName: text('first_name').notNull(),
   lastName: text('last_name').notNull(),
