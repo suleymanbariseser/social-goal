@@ -1,7 +1,8 @@
 import { InferModel, relations } from 'drizzle-orm';
 import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
-import { goals } from './goal';
-import { users } from './user';
+import { goals } from '../goal';
+import { users } from '../user';
+import { activityLikes } from './activity-likes';
 
 export const activities = pgTable('activities', {
   id: serial('id').primaryKey(),
@@ -18,7 +19,7 @@ export const activities = pgTable('activities', {
 
 export type Activity = InferModel<typeof activities>;
 
-export const activityRelations = relations(activities, ({ one }) => ({
+export const activityRelations = relations(activities, ({ one, many }) => ({
   goal: one(goals, {
     fields: [activities.goalId],
     references: [goals.id],
@@ -27,4 +28,5 @@ export const activityRelations = relations(activities, ({ one }) => ({
     fields: [activities.creatorId],
     references: [users.id],
   }),
+  likedBy: many(activityLikes),
 }));
