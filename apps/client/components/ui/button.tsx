@@ -10,7 +10,7 @@ export const BaseButton = styled(Stack, {
   ai: 'center',
   jc: 'center',
   gap: '$2',
-  boc: '$backgroundTransparent',
+  boc: '$transparent',
   bw: 1,
   bs: 'solid',
 
@@ -35,17 +35,19 @@ export const BaseButton = styled(Stack, {
       },
       outlined: {
         boc: '$textPrimary',
-        bg: '$backgroundTransparent',
+        bg: '$transparent',
 
         pressStyle: {
           bg: '#ffffff05',
         },
       },
       text: {
-        bg: '$backgroundTransparent',
+        bg: '$transparent',
+        boc: '$transparent',
 
         pressStyle: {
-          bg: '#ffffff05',
+          bg: '$transparent',
+          opacity: 0.5,
         },
       },
     },

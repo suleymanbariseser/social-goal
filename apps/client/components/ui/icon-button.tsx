@@ -10,7 +10,7 @@ export const IconBaseButton = styled(BaseButton, {
         bg: '#ffffff10',
       },
       text: {
-        bg: '$backgroundTransparent',
+        bg: '$transparent',
       },
     },
   },

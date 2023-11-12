@@ -47,6 +47,7 @@ const size = {
 const newTokens = createTokens({
   color: {
     ...tokens.color,
+    transparent: 'transparent',
     primaryMain: '#1D4ED8',
     primaryLight: '#60A5FA',
     secondaryMain: '#A21CAF',
