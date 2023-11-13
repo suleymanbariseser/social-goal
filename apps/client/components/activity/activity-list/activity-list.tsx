@@ -2,7 +2,7 @@ import { useToastController } from '@tamagui/toast';
 import { useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 
-import ActivityCard from './activity-card';
+import { ActivityListItem } from './activity-list-item';
 
 import { useActivities } from '@/hooks/activity/use-activities';
 
@@ -35,15 +35,7 @@ export const ActivityList = ({ onPressAvatar }: Props) => {
   };
 
   const renderItem = ({ item }) => (
-    <ActivityCard
-      admin={{
-        img: item.creator.image,
-        name: [item.creator.firstName, item.creator.lastName].join(' '),
-      }}
-      content={item.content}
-      goal={item.goal.title}
-      onPressAvatar={() => onPressAvatar(item.creator.id)}
-    />
+    <ActivityListItem activity={item} onPressAvatar={() => onPressAvatar(item.creator.id)} />
   );
 
   const refreshControl = (

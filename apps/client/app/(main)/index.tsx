@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { Stack } from 'tamagui';
 
-import { ActivityList } from '@/components/activity/activity-list';
+import { ActivityList } from '@/components/activity/activity-list/activity-list';
 import HomeTabs from '@/components/home/home-tabs';
 
 const Home = () => {
