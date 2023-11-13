@@ -15,6 +15,13 @@
       "when": 1699813983292,
       "tag": "0001_demonic_steve_rogers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1699901445609,
+      "tag": "0002_plain_shaman",
+      "breakpoints": true
     }
   ]
 }

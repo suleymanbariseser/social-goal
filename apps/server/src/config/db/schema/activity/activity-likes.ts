@@ -16,8 +16,7 @@ export const activityLikes = pgTable(
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
   (table) => ({
-    userIdx: uniqueIndex('user_idx').on(table.userId),
-    activityIdx: uniqueIndex('activity_idx').on(table.activityId),
+    userActivityIdx: uniqueIndex('user_activity_idx').on(table.userId, table.activityId),
   })
 );
 

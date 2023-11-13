@@ -45,3 +45,5 @@ export const getNetworkActivities = async ({
     nextCursor,
   };
 };
+
+export type NetworkActivity = Awaited<ReturnType<typeof getNetworkActivities>>['items'][0];
