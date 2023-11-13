@@ -14,7 +14,7 @@ interface Props {
   onPressAvatar: () => void;
 }
 
-export default function HomeCard({ admin, content, goal, onPressAvatar }: Props) {
+export default function ActivityCard({ admin, content, goal, onPressAvatar }: Props) {
   return (
     <Card p="$3" gap="$3" bordered transparent>
       <Card.Header fd="row" gap="$2" p="$0">
