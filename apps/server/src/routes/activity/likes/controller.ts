@@ -13,7 +13,10 @@ export const likeActivityById = async ({ ctx, input }: ProtectedInputOptions<Lik
     where: and(eq(activityLikes.userId, ctx.user.id), eq(activityLikes.activityId, input.id)),
   });
 
-  if (like) return like;
+  if (like)
+    return {
+      success: true,
+    };
 
   const newLike = await db
     .insert(activityLikes)
@@ -32,5 +35,27 @@ export const likeActivityById = async ({ ctx, input }: ProtectedInputOptions<Lik
       message: 'Failed to create like',
     });
 
-  return newLike[0];
+  return {
+    success: true,
+  };
+};
+
+export const unlikeActivityById = async ({ ctx, input }: ProtectedInputOptions<LikeByIdInput>) => {
+  const like = await db.query.activityLikes.findFirst({
+    columns: {
+      id: true,
+    },
+    where: and(eq(activityLikes.userId, ctx.user.id), eq(activityLikes.activityId, input.id)),
+  });
+
+  if (!like)
+    return {
+      success: true,
+    };
+
+  await db.delete(activityLikes).where(eq(activityLikes.id, like.id));
+
+  return {
+    success: true,
+  };
 };
