@@ -7,8 +7,8 @@ export const userVerifications = pgTable('user_verification', {
   lastName: text('last_name').notNull(),
   email: text('email').notNull(),
   code: varchar('code').notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  expiresAt: timestamp('expires_at').defaultNow().notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
 export type UserVerification = InferModel<typeof userVerifications>;

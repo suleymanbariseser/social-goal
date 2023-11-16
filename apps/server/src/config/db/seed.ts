@@ -2,11 +2,13 @@ import 'dotenv/config';
 import { faker } from '@faker-js/faker';
 import { Activity, Goal, User, activities, goals, users } from './schema';
 import { db } from './index';
-import { hash, hashSync } from 'bcrypt';
+import { hashSync } from 'bcrypt';
 
 type FakeUser = Omit<User, 'id' | 'createdAt' | 'updatedAt'>;
 type FakeGoal = Omit<Goal, 'id' | 'createdAt'>;
 type FakeActivity = Omit<Activity, 'id' | 'createdAt' | 'expiresAt'>;
+
+const FAKE_PASSWORD = 'Qwerty123!';
 
 const createUsers = async () => {
   console.log('Creating users');
@@ -15,7 +17,7 @@ const createUsers = async () => {
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     email: faker.internet.email(),
-    password: hashSync(faker.internet.password(), 10),
+    password: hashSync(FAKE_PASSWORD, 10),
     image: faker.image.avatar(),
     description: faker.person.bio(),
   }));

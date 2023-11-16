@@ -2,6 +2,7 @@ import { ProtectedInputOptions } from '@/types/trpc';
 import { ActivityInfiniteInput, CreateActivityInput } from './schema';
 import { db } from '@/config/db';
 import { activities } from '@/config/db/schema';
+import { lte } from 'drizzle-orm';
 
 export const createActivity = async ({
   ctx,
@@ -31,6 +32,7 @@ export const getNetworkActivities = async ({
     },
     limit: limit + 1,
     offset: input.cursor ? input.cursor * limit : undefined,
+    where: lte(activities.createdAt, input.timestamp),
     orderBy: (acts, { desc }) => [desc(acts.createdAt)],
   });
 

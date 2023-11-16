@@ -13,8 +13,8 @@ export const activities = pgTable('activities', {
     .notNull()
     .references(() => goals.id),
   content: text('content').notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  expiresAt: timestamp('expires_at').defaultNow().notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
 export type Activity = InferModel<typeof activities>;

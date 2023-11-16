@@ -22,6 +22,7 @@ export const activityInfiniteSchema = z.object({
     })
     .nullish(),
   cursor: z.number().nullish(),
+  timestamp: z.date(),
 });
 
 export type CreateActivityInput = z.infer<typeof createActivitySchema>;

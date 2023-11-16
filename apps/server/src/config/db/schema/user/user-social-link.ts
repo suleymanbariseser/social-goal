@@ -5,14 +5,16 @@ import { users } from './user';
 export const userSocialLinks = pgTable('user_social_link', {
   id: serial('id').primaryKey(),
   link: text('link').notNull(),
-  userId: integer('user_id').notNull().references(() => users.id),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
 export const userSocialLinksRelations = relations(userSocialLinks, ({ one }) => ({
-    user: one(users, {
-      fields: [userSocialLinks.userId],
-      references: [users.id],
-    }),
-  }));
+  user: one(users, {
+    fields: [userSocialLinks.userId],
+    references: [users.id],
+  }),
+}));

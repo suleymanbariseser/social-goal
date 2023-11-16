@@ -13,7 +13,7 @@ export const activityLikes = pgTable(
     activityId: integer('activity_id')
       .notNull()
       .references(() => activities.id),
-    createdAt: timestamp('created_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => ({
     userActivityIdx: uniqueIndex('user_activity_idx').on(table.userId, table.activityId),
