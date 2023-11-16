@@ -1,6 +1,8 @@
+import { FlashList } from '@shopify/flash-list';
 import { useToastController } from '@tamagui/toast';
-import { useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import { useCallback, useState } from 'react';
+import { RefreshControl } from 'react-native';
+import { Stack } from 'tamagui';
 
 import { ActivityListItem } from './activity-list-item';
 
@@ -34,8 +36,11 @@ export const ActivityList = ({ onPressAvatar }: Props) => {
     fetchNextPage();
   };
 
-  const renderItem = ({ item }) => (
-    <ActivityListItem activity={item} onPressAvatar={() => onPressAvatar(item.creator.id)} />
+  const renderItem = useCallback(
+    ({ item }) => (
+      <ActivityListItem activity={item} onPressAvatar={() => onPressAvatar(item.creator.id)} />
+    ),
+    []
   );
 
   const refreshControl = (
@@ -47,15 +52,16 @@ export const ActivityList = ({ onPressAvatar }: Props) => {
   };
 
   return (
-    <FlatList
+    <FlashList
       data={activities}
       refreshing={refreshing}
       onRefresh={handleRefresh}
       refreshControl={refreshControl}
       onEndReached={handleEndReached}
       keyExtractor={(item) => item.id.toString()}
+      ItemSeparatorComponent={() => <Stack py="$2" />}
       renderItem={renderItem}
-      contentContainerStyle={contentContainerStyle}
+      estimatedItemSize={152}
     />
   );
 };
