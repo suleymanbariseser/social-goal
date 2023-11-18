@@ -34,12 +34,12 @@ export const ActivityListItem = ({ activity, onPressAvatar }: Props) => {
     <ActivityCard
       admin={{
         img: activity.creator.image,
-        name: [activity.creator.firstName, activity.creator.lastName].join(' '),
+        name: activity.creator.fullName,
       }}
       content={activity.content}
       goal={activity.goal.title}
       comments={5}
-      likes={2}
+      likes={activity.likes}
       shares={3}
       onPressAvatar={onPressAvatar}
       onPressComment={() => {}}

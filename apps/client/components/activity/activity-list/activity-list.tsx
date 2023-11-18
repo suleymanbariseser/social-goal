@@ -47,10 +47,6 @@ export const ActivityList = ({ onPressAvatar }: Props) => {
     <RefreshControl tintColor="white" refreshing={refreshing} onRefresh={handleRefresh} />
   );
 
-  const contentContainerStyle = {
-    gap: 16,
-  };
-
   return (
     <FlashList
       data={activities}

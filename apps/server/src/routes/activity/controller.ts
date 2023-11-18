@@ -28,7 +28,18 @@ export const getNetworkActivities = async ({
   const allActivities = await db.query.activities.findMany({
     with: {
       goal: true,
-      creator: true,
+      creator: {
+        extras: (table, { sql }) => ({
+          fullName: sql<string>`concat(${table.firstName} || ' ' || ${table.lastName})`.as(
+            'creator_full_name'
+          ),
+        }),
+      },
+      likedBy: {
+        columns: {
+          id: true,
+        },
+      },
     },
     limit: limit + 1,
     offset: input.cursor ? input.cursor * limit : undefined,
@@ -43,7 +54,11 @@ export const getNetworkActivities = async ({
   }
 
   return {
-    items: allActivities,
+    // TODO: get count of likes with SQL
+    items: allActivities.map(({ likedBy, ...activity }) => ({
+      ...activity,
+      likes: likedBy.length,
+    })),
     nextCursor,
   };
 };
