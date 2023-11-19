@@ -1,8 +1,11 @@
-import { ProtectedInputOptions } from '@/types/trpc';
-import { ActivityInfiniteInput, CreateActivityInput } from './schema';
+import { InputOptions, ProtectedInputOptions } from '@/types/trpc';
+import { ActivityInfiniteInput, CreateActivityInput, FeedEventInput } from './schema';
 import { db } from '@/config/db';
 import { activities } from '@/config/db/schema';
 import { lte } from 'drizzle-orm';
+import { observable } from '@trpc/server/observable';
+import { FeedEvent, feedEmitter } from './constants';
+import { getUserFromToken } from '@/middlewares/isAuthed';
 
 export const createActivity = async ({
   ctx,
@@ -61,6 +64,22 @@ export const getNetworkActivities = async ({
     })),
     nextCursor,
   };
+};
+
+export const feedEvents = async ({ input }: InputOptions<FeedEventInput>) => {
+  const user = await getUserFromToken(input.token);
+
+  return observable<FeedEvent>((emit) => {
+    const onAdd = (data: FeedEvent) => {
+      emit.next(data);
+    };
+
+    feedEmitter.on(onAdd);
+
+    return () => {
+      feedEmitter.off(onAdd);
+    };
+  });
 };
 
 export type NetworkActivity = Awaited<ReturnType<typeof getNetworkActivities>>['items'][0];

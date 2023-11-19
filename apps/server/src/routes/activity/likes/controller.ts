@@ -4,6 +4,7 @@ import { LikeByIdInput } from './schema';
 import { ProtectedInputOptions } from '@/types/trpc';
 import { and, eq } from 'drizzle-orm';
 import { TRPCError } from '@trpc/server';
+import { feedEmitter } from '../constants';
 
 export const likeActivityById = async ({ ctx, input }: ProtectedInputOptions<LikeByIdInput>) => {
   const like = await db.query.activityLikes.findFirst({
@@ -35,6 +36,12 @@ export const likeActivityById = async ({ ctx, input }: ProtectedInputOptions<Lik
       message: 'Failed to create like',
     });
 
+  feedEmitter.emit({
+    activityId: input.id,
+    type: 'like',
+    payload: 10,
+  });
+
   return {
     success: true,
   };
@@ -54,6 +61,12 @@ export const unlikeActivityById = async ({ ctx, input }: ProtectedInputOptions<L
     };
 
   await db.delete(activityLikes).where(eq(activityLikes.id, like.id));
+
+  feedEmitter.emit({
+    activityId: input.id,
+    type: 'like',
+    payload: 9,
+  });
 
   return {
     success: true,

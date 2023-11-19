@@ -5,11 +5,10 @@ import { verifyUser } from '@/utils/verify-user';
 import { TRPCError } from '@trpc/server';
 import { eq } from 'drizzle-orm';
 
-export const isAuthed = middleware(async (opts) => {
-  const { ctx } = opts;
-  if (!ctx.token) throw new TRPCError({ code: 'UNAUTHORIZED' });
+export const getUserFromToken = async (token: string | null) => {
+  if (!token) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
-  const userId = verifyUser(ctx.token)?.id;
+  const userId = verifyUser(token)?.id;
 
   if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
@@ -23,9 +22,15 @@ export const isAuthed = middleware(async (opts) => {
 
   if (!user || user.length === 0) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
+  return user[0];
+};
+
+export const isAuthed = middleware(async (opts) => {
+  const user = await getUserFromToken(opts.ctx.token);
+
   return opts.next({
     ctx: {
-      user: user[0],
+      user,
     },
   });
 });

@@ -1,10 +1,13 @@
 import moment from 'moment';
 import { useRef } from 'react';
 
+import { useStorageItemValue } from '@/lib/storage';
 import { trpc } from '@/lib/trpc';
+import { authTokenState } from '@/store/auth';
 
 export const useActivities = () => {
   const timestamp = useRef(moment().utc().toDate());
+  const authToken = useStorageItemValue(authTokenState);
 
   const {
     data,
@@ -17,6 +20,20 @@ export const useActivities = () => {
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
+
+  trpc.activity.feedEvents.useSubscription(
+    {
+      token: authToken,
+    },
+    {
+      onData: (data) => {
+        console.log('data', data);
+      },
+      onError: (err) => {
+        console.log('err', err);
+      },
     }
   );
 

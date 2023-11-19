@@ -25,5 +25,12 @@ export const activityInfiniteSchema = z.object({
   timestamp: z.date(),
 });
 
+export const feedEventSchema = z.object({
+  token: z.string({
+    required_error: 'Token is required',
+  }),
+});
+
 export type CreateActivityInput = z.infer<typeof createActivitySchema>;
 export type ActivityInfiniteInput = z.infer<typeof activityInfiniteSchema>;
+export type FeedEventInput = z.infer<typeof feedEventSchema>;
