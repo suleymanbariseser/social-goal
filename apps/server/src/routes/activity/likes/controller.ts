@@ -4,7 +4,7 @@ import { LikeByIdInput } from './schema';
 import { ProtectedInputOptions } from '@/types/trpc';
 import { and, eq } from 'drizzle-orm';
 import { TRPCError } from '@trpc/server';
-import { feedEmitter } from '../constants';
+import { decrementLikeCount, incrementLikeCount } from './utils';
 
 export const likeActivityById = async ({ ctx, input }: ProtectedInputOptions<LikeByIdInput>) => {
   const like = await db.query.activityLikes.findFirst({
@@ -14,10 +14,11 @@ export const likeActivityById = async ({ ctx, input }: ProtectedInputOptions<Lik
     where: and(eq(activityLikes.userId, ctx.user.id), eq(activityLikes.activityId, input.id)),
   });
 
-  if (like)
+  if (like) {
     return {
       success: true,
     };
+  }
 
   const newLike = await db
     .insert(activityLikes)
@@ -36,11 +37,7 @@ export const likeActivityById = async ({ ctx, input }: ProtectedInputOptions<Lik
       message: 'Failed to create like',
     });
 
-  feedEmitter.emit({
-    activityId: input.id,
-    type: 'like',
-    payload: 10,
-  });
+  incrementLikeCount(input.id);
 
   return {
     success: true,
@@ -55,18 +52,15 @@ export const unlikeActivityById = async ({ ctx, input }: ProtectedInputOptions<L
     where: and(eq(activityLikes.userId, ctx.user.id), eq(activityLikes.activityId, input.id)),
   });
 
-  if (!like)
+  if (!like) {
     return {
       success: true,
     };
+  }
 
   await db.delete(activityLikes).where(eq(activityLikes.id, like.id));
 
-  feedEmitter.emit({
-    activityId: input.id,
-    type: 'like',
-    payload: 9,
-  });
+  decrementLikeCount(input.id);
 
   return {
     success: true,

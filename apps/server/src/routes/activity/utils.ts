@@ -1,5 +1,6 @@
 import { ZodEmitter } from '@/utils/emitter';
 import { z } from 'zod';
+import { FeedCache } from './feed-cache';
 
 export const feedEvent = z.object({
   type: z.enum(['like', 'comment', 'share']),
@@ -10,3 +11,5 @@ export const feedEvent = z.object({
 export type FeedEvent = z.infer<typeof feedEvent>;
 
 export const feedEmitter = new ZodEmitter(feedEvent);
+
+export const feedCache = new FeedCache();

@@ -4,7 +4,7 @@ import { db } from '@/config/db';
 import { activities } from '@/config/db/schema';
 import { lte } from 'drizzle-orm';
 import { observable } from '@trpc/server/observable';
-import { FeedEvent, feedEmitter } from './constants';
+import { FeedEvent, feedCache, feedEmitter } from './utils';
 import { getUserFromToken } from '@/middlewares/isAuthed';
 
 export const createActivity = async ({
@@ -56,12 +56,16 @@ export const getNetworkActivities = async ({
     nextCursor = (input.cursor ?? 0) + 1;
   }
 
+  // TODO: get count of likes with SQL
+  const activitiesWithLikes = allActivities.map(({ likedBy, ...activity }) => ({
+    ...activity,
+    likes: likedBy.length,
+  }));
+
+  feedCache.sync(activitiesWithLikes);
+
   return {
-    // TODO: get count of likes with SQL
-    items: allActivities.map(({ likedBy, ...activity }) => ({
-      ...activity,
-      likes: likedBy.length,
-    })),
+    items: activitiesWithLikes,
     nextCursor,
   };
 };
