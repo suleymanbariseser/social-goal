@@ -38,7 +38,7 @@ export const getNetworkActivities = async ({
           ),
         }),
       },
-      likedBy: {
+      likes: {
         columns: {
           id: true,
         },
@@ -57,9 +57,9 @@ export const getNetworkActivities = async ({
   }
 
   // TODO: get count of likes with SQL
-  const activitiesWithLikes = allActivities.map(({ likedBy, ...activity }) => ({
+  const activitiesWithLikes = allActivities.map(({ likes, ...activity }) => ({
     ...activity,
-    likes: likedBy.length,
+    likes: likes.length,
   }));
 
   feedCache.sync(activitiesWithLikes);

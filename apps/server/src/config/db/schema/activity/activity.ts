@@ -3,6 +3,7 @@ import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 import { goals } from '../goal';
 import { users } from '../user';
 import { activityLikes } from './activity-likes';
+import { activityComments } from './activity-comments';
 
 export const activities = pgTable('activities', {
   id: serial('id').primaryKey(),
@@ -28,5 +29,6 @@ export const activityRelations = relations(activities, ({ one, many }) => ({
     fields: [activities.creatorId],
     references: [users.id],
   }),
-  likedBy: many(activityLikes),
+  likes: many(activityLikes),
+  comments: many(activityComments),
 }));
