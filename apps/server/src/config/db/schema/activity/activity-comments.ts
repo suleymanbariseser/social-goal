@@ -9,7 +9,7 @@ import {
 } from 'drizzle-orm/pg-core';
 import { users } from '../user';
 import { activities } from './activity';
-import { relations } from 'drizzle-orm';
+import { InferInsertModel, InferSelectModel, relations } from 'drizzle-orm';
 
 export const activityComments = pgTable(
   'activity_comments',
@@ -34,6 +34,9 @@ export const activityComments = pgTable(
     }),
   })
 );
+
+export type ActivityComment = InferSelectModel<typeof activityComments>;
+export type InsertActivityComment = InferInsertModel<typeof activityComments>;
 
 export const activityCommentRelations = relations(activityComments, ({ one, many }) => ({
   user: one(users, {

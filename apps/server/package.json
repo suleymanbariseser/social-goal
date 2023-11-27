@@ -12,7 +12,7 @@
     "db:generate": "drizzle-kit generate:pg --config drizzle.config.ts",
     "db:introspect": "drizzle-kit introspect:pg --config drizzle.config.ts",
     "db:preview": "drizzle-kit studio --config drizzle.config.ts",
-    "db:seed": "ts-node src/config/db/seed.ts"
+    "db:seed": "ts-node src/config/db/seed/index.ts"
   },
   "keywords": [],
   "author": "Suleyman Baris Eser",
