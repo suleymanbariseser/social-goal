@@ -43,6 +43,11 @@ export const getNetworkActivities = async ({
           id: true,
         },
       },
+      comments: {
+        columns: {
+          id: true,
+        },
+      },
     },
     limit: limit + 1,
     offset: input.cursor ? input.cursor * limit : undefined,
@@ -57,15 +62,16 @@ export const getNetworkActivities = async ({
   }
 
   // TODO: get count of likes with SQL
-  const activitiesWithLikes = allActivities.map(({ likes, ...activity }) => ({
+  const modifiedActivities = allActivities.map(({ likes, ...activity }) => ({
     ...activity,
     likes: likes.length,
+    comments: activity.comments.length,
   }));
 
-  feedCache.sync(activitiesWithLikes);
+  feedCache.sync(modifiedActivities);
 
   return {
-    items: activitiesWithLikes,
+    items: modifiedActivities,
     nextCursor,
   };
 };

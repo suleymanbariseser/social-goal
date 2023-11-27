@@ -38,7 +38,7 @@ export const ActivityListItem = ({ activity, onPressAvatar }: Props) => {
       }}
       content={activity.content}
       goal={activity.goal.title}
-      comments={5}
+      comments={activity.comments}
       likes={activity.likes}
       shares={3}
       onPressAvatar={onPressAvatar}
