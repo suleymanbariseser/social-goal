@@ -4,7 +4,12 @@ import { ActivityCardContent, ActivityCardContentProps } from './activity-card-c
 import { ActivityCardFooter, ActivityCardFooterProps } from './activity-card-footer';
 import { ActivityCardHeader, ActivityCardHeaderProps } from './activity-card-header';
 
-type Props = ActivityCardHeaderProps & ActivityCardContentProps & ActivityCardFooterProps;
+type Props = ActivityCardHeaderProps &
+  ActivityCardContentProps &
+  ActivityCardFooterProps & {
+    onPress: () => void;
+    bordered?: boolean;
+  };
 
 export default function ActivityCard({
   admin,
@@ -14,12 +19,14 @@ export default function ActivityCard({
   comments,
   likes,
   shares,
+  onPress,
   onPressComment,
   onPressLike,
   onPressShare,
+  bordered = false,
 }: Props) {
   return (
-    <Card p="$3" gap="$3" bordered transparent>
+    <Card p="$3" gap="$3" bordered={bordered} transparent onPress={onPress}>
       <ActivityCardHeader admin={admin} goal={goal} onPressAvatar={onPressAvatar} />
       <ActivityCardContent content={content} />
       <ActivityCardFooter

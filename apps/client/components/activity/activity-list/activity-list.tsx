@@ -1,4 +1,5 @@
-import { FlashList } from '@shopify/flash-list';
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { NetworkActivity } from '@social-goal/server/src/routes/activity/controller';
 import { useToastController } from '@tamagui/toast';
 import { useCallback, useState } from 'react';
 import { RefreshControl } from 'react-native';
@@ -10,10 +11,11 @@ import { useActivities } from '@/hooks/activity/use-activities';
 
 type Props = {
   onPressAvatar: (userId: number) => void;
+  onPress: (activityId: number) => void;
 };
 
 // TODO - accept more props to filter activities for reusing this component in other screens
-export const ActivityList = ({ onPressAvatar }: Props) => {
+export const ActivityList = ({ onPressAvatar, onPress }: Props) => {
   const { activities, fetchNextPage, refetch } = useActivities();
   const [refreshing, setRefreshing] = useState(false);
   const toast = useToastController();
@@ -37,8 +39,12 @@ export const ActivityList = ({ onPressAvatar }: Props) => {
   };
 
   const renderItem = useCallback(
-    ({ item }) => (
-      <ActivityListItem activity={item} onPressAvatar={() => onPressAvatar(item.creator.id)} />
+    ({ item }: ListRenderItemInfo<NetworkActivity>) => (
+      <ActivityListItem
+        activity={item}
+        onPress={() => onPress(item.id)}
+        onPressAvatar={() => onPressAvatar(item.creator.id)}
+      />
     ),
     []
   );

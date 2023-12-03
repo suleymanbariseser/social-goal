@@ -1,8 +1,13 @@
 import { InputOptions, ProtectedInputOptions } from '@/types/trpc';
-import { ActivityInfiniteInput, CreateActivityInput, FeedEventInput } from './schema';
+import {
+  ActivityInfiniteInput,
+  ActivityWithIdInput,
+  CreateActivityInput,
+  FeedEventInput,
+} from './schema';
 import { db } from '@/config/db';
 import { activities } from '@/config/db/schema';
-import { lte } from 'drizzle-orm';
+import { eq, lte } from 'drizzle-orm';
 import { observable } from '@trpc/server/observable';
 import { FeedEvent, feedCache, feedEmitter } from './utils';
 import { getUserFromToken } from '@/middlewares/isAuthed';
@@ -62,10 +67,10 @@ export const getNetworkActivities = async ({
   }
 
   // TODO: get count of likes with SQL
-  const modifiedActivities = allActivities.map(({ likes, ...activity }) => ({
+  const modifiedActivities = allActivities.map(({ likes, comments, ...activity }) => ({
     ...activity,
     likes: likes.length,
-    comments: activity.comments.length,
+    comments: comments.length,
   }));
 
   feedCache.sync(modifiedActivities);
@@ -74,6 +79,47 @@ export const getNetworkActivities = async ({
     items: modifiedActivities,
     nextCursor,
   };
+};
+
+export const getActivityWithId = async ({
+  input,
+}: ProtectedInputOptions<ActivityWithIdInput>) => {
+  const activity = await db.query.activities.findFirst({
+    where: eq(activities.id, input.id),
+    with: {
+      goal: true,
+      creator: {
+        extras: (table, { sql }) => ({
+          fullName: sql<string>`concat(${table.firstName} || ' ' || ${table.lastName})`.as(
+            'creator_full_name'
+          ),
+        }),
+      },
+      likes: {
+        columns: {
+          id: true,
+        },
+      },
+      comments: {
+        columns: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  if (!activity) {
+    throw new Error('Activity not found');
+  }
+
+  // TODO: get count of likes with SQL
+  const modifiedActivity = {
+    ...activity,
+    likes: activity.likes.length,
+    comments: activity.comments.length,
+  };
+
+  return modifiedActivity;
 };
 
 export const feedEvents = async ({ input }: InputOptions<FeedEventInput>) => {

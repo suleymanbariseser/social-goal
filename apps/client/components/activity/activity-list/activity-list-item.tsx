@@ -1,37 +1,21 @@
 import { NetworkActivity } from '@social-goal/server/src/routes/activity/controller';
-import { useToastController } from '@tamagui/toast';
 
 import ActivityCard from '../activity-card/activity-card';
 
-import { trpc } from '@/lib/trpc';
+import { useLikeActivity } from '@/hooks/activity/use-like-activity';
 
 type Props = {
   activity: NetworkActivity;
   onPressAvatar: () => void;
+  onPress: () => void;
 };
 
-export const ActivityListItem = ({ activity, onPressAvatar }: Props) => {
-  const { mutate: like } = trpc.activity.likes.likeById.useMutation();
-  const toast = useToastController();
-
-  const handlePressLike = () => {
-    like(
-      { id: activity.id },
-      {
-        onSuccess: () => {
-          // TODO sync state and show like animation
-        },
-        onError: (error) => {
-          toast.show(error.message, {
-            variant: 'error',
-          });
-        },
-      }
-    );
-  };
+export const ActivityListItem = ({ activity, onPressAvatar, onPress }: Props) => {
+  const likeActivity = useLikeActivity({ id: activity.id });
 
   return (
     <ActivityCard
+      bordered
       admin={{
         img: activity.creator.image,
         name: activity.creator.fullName,
@@ -41,9 +25,10 @@ export const ActivityListItem = ({ activity, onPressAvatar }: Props) => {
       comments={activity.comments}
       likes={activity.likes}
       shares={3}
+      onPress={onPress}
       onPressAvatar={onPressAvatar}
       onPressComment={() => {}}
-      onPressLike={handlePressLike}
+      onPressLike={likeActivity}
       onPressShare={() => {}}
     />
   );
