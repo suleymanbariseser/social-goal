@@ -1,6 +1,6 @@
 import { NetworkActivity } from '@social-goal/server/src/routes/activity/controller';
 
-import ActivityCard from '../activity-card/activity-card';
+import ActivityCard from './activity-card/activity-card';
 
 import { useLikeActivity } from '@/hooks/activity/use-like-activity';
 
