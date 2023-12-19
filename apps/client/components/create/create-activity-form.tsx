@@ -11,14 +11,14 @@ import { useForm } from 'react-hook-form';
 import { Stack } from 'tamagui';
 
 import { CreateGoal } from './create-goal';
-import CreateTools from './create-tools';
+import { CreateTools } from './create-tools';
 import { Button } from '../ui/button';
 import { Input } from '../ui/form/input';
 import { Select } from '../ui/form/select';
 
 import { trpc } from '@/lib/trpc';
 
-export default function CreateActivityForm() {
+export const CreateActivityForm = () => {
   const router = useRouter();
   const utils = trpc.useContext();
   const toast = useToastController();
@@ -101,4 +101,4 @@ export default function CreateActivityForm() {
       <CreateGoal open={createGoalOpen} onOpenChange={setCreateGoalOpen} onSave={handleSave} />
     </Stack>
   );
-}
+};

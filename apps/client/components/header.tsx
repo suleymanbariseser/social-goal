@@ -11,7 +11,7 @@ interface Props {
   title: string;
 }
 
-export default function Header({ back, title }: Props) {
+export const Header = ({ back, title }: Props) => {
   const safeArea = useSafeAreaInsets();
 
   const router = useRouter();
@@ -29,4 +29,4 @@ export default function Header({ back, title }: Props) {
       </XStack>
     </XStack>
   );
-}
+};

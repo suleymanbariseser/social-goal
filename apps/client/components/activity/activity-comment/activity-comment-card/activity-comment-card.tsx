@@ -25,7 +25,7 @@ export const ActivityCommentCard = ({
   onPressComment,
   onPressLike,
 }: Props) => (
-  <Card p="$3" gap="$3" transparent borderColor="$transparent" onPress={console.log}>
+  <Card p="$3" gap="$3" transparent boc="$transparent" onPress={console.log}>
     <ActivityCommentCardHeader admin={admin} />
     <ActivityCommentCardContent content={content} />
     <ActivityCommentCardFooter

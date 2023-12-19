@@ -1,8 +1,8 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Stack } from 'tamagui';
 
-import { ActivityCommentList } from '@/components/activity/activity-comment/activity-comment-list';
-import ActivityCard from '@/components/activity/activity-list/activity-card/activity-card';
+import { ActivityCard, ActivityCommentInput, ActivityCommentList } from '@/components/activity';
+import { Divider } from '@/components/ui/divider';
 import { useLikeActivity } from '@/hooks/activity/use-like-activity';
 import { trpc } from '@/lib/trpc';
 
@@ -25,25 +25,29 @@ export default function Activity() {
   if (!activity) return null;
 
   return (
-    <Stack f={1}>
+    <Stack f={1} px="$2">
       <ActivityCommentList
         header={
-          <ActivityCard
-            goal={activity.goal.title}
-            admin={{
-              name: activity.creator.fullName,
-              img: activity.creator.image,
-            }}
-            comments={activity.comments}
-            content={activity.content}
-            likes={activity.likes}
-            shares={3}
-            onPressAvatar={handlePressAvatar}
-            onPressLike={likeActivity}
-          />
+          <Stack>
+            <ActivityCard
+              goal={activity.goal.title}
+              admin={{
+                name: activity.creator.fullName,
+                img: activity.creator.image,
+              }}
+              comments={activity.comments}
+              content={activity.content}
+              likes={activity.likes}
+              shares={3}
+              onPressAvatar={handlePressAvatar}
+              onPressLike={likeActivity}
+            />
+            <Divider />
+          </Stack>
         }
         activityId={+id}
       />
+      <ActivityCommentInput />
     </Stack>
   );
 }

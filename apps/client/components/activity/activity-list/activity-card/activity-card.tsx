@@ -11,7 +11,7 @@ type Props = ActivityCardHeaderProps &
     bordered?: boolean;
   };
 
-export default function ActivityCard({
+export function ActivityCard({
   admin,
   content,
   goal,
@@ -26,7 +26,13 @@ export default function ActivityCard({
   bordered = false,
 }: Props) {
   return (
-    <Card p="$3" gap="$3" bordered={bordered} transparent onPress={onPress}>
+    <Card
+      p="$3"
+      gap="$3"
+      transparent
+      bordered={bordered}
+      boc={bordered ? '$borderColor' : '$transparent'}
+      onPress={onPress}>
       <ActivityCardHeader admin={admin} goal={goal} onPressAvatar={onPressAvatar} />
       <ActivityCardContent content={content} />
       <ActivityCardFooter

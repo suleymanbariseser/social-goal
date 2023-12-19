@@ -1,7 +1,7 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScrollView, getTokens } from 'tamagui';
 
-import CreateActivityForm from '@/components/create/create-activity-form';
+import { CreateActivityForm } from '@/components/create/create-activity-form';
 
 const Create = () => {
   const insets = useSafeAreaInsets();

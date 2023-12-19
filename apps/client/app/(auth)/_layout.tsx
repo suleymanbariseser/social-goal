@@ -2,7 +2,7 @@ import { Stack as RouterStack } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack, getTokens } from 'tamagui';
 
-import Header from '@/components/header';
+import { Header } from '@/components/header';
 
 export const unstable_settings = {
   initialRouteName: 'index',

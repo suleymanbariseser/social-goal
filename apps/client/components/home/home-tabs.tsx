@@ -12,7 +12,7 @@ import SearchIcon from '@/assets/icons/search.svg';
 import { useAuth } from '@/hooks/useAuth';
 import { trpc } from '@/lib/trpc';
 
-export default function HomeTabs() {
+export const HomeTabs = () => {
   const router = useRouter();
   const { data: userInfo } = trpc.user.info.useQuery();
   const { logout } = useAuth();
@@ -65,4 +65,4 @@ export default function HomeTabs() {
       </Stack>
     </SafeAreaView>
   );
-}
+};
