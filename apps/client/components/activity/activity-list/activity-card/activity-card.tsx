@@ -7,7 +7,7 @@ import { ActivityCardHeader, ActivityCardHeaderProps } from './activity-card-hea
 type Props = ActivityCardHeaderProps &
   ActivityCardContentProps &
   ActivityCardFooterProps & {
-    onPress: () => void;
+    onPress?: () => void;
     bordered?: boolean;
   };
 

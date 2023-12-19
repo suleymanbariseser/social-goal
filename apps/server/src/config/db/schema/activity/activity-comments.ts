@@ -48,8 +48,11 @@ export const activityCommentRelations = relations(activityComments, ({ one, many
     references: [activities.id],
   }),
   parentComment: one(activityComments, {
+    relationName: 'parentComment',
     fields: [activityComments.parentCommentId],
     references: [activityComments.id],
   }),
-  childComments: many(activityComments),
+  childComments: many(activityComments, {
+    relationName: 'parentComment',
+  }),
 }));

@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Stack } from 'tamagui';
 
 import { ActivityCommentList } from '@/components/activity/activity-comment/activity-comment-list';
@@ -9,6 +9,7 @@ import { trpc } from '@/lib/trpc';
 export default function Activity() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const likeActivity = useLikeActivity({ id: +id });
+  const router = useRouter();
 
   const { data: activity } = trpc.activity.activityWithId.useQuery(
     { id: +id },
@@ -16,6 +17,10 @@ export default function Activity() {
       enabled: !!id,
     }
   );
+
+  const handlePressAvatar = () => {
+    router.push(`/profile/${activity?.creator.id}`);
+  };
 
   if (!activity) return null;
 
@@ -33,11 +38,8 @@ export default function Activity() {
             content={activity.content}
             likes={activity.likes}
             shares={3}
-            onPress={console.log}
-            onPressAvatar={console.log}
-            onPressComment={console.log}
+            onPressAvatar={handlePressAvatar}
             onPressLike={likeActivity}
-            onPressShare={console.log}
           />
         }
         activityId={+id}

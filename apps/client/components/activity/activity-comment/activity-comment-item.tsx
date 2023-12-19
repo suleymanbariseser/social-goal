@@ -13,7 +13,7 @@ export const ActivityCommentItem = ({ comment }: Props) => {
         img: comment.user.image,
         name: comment.user.fullName,
       }}
-      comments={1}
+      comments={comment.childComments}
       content={comment.content}
       likes={2}
       onPressLike={console.log}
