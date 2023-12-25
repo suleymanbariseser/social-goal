@@ -7,7 +7,7 @@ import {
 } from './schema';
 import { db } from '@/config/db';
 import { activities } from '@/config/db/schema';
-import { eq, lte } from 'drizzle-orm';
+import { and, eq, lte } from 'drizzle-orm';
 import { observable } from '@trpc/server/observable';
 import { FeedEvent, feedCache, feedEmitter } from './utils';
 import { getUserFromToken } from '@/middlewares/isAuthed';
@@ -56,7 +56,10 @@ export const getNetworkActivities = async ({
     },
     limit: limit + 1,
     offset: input.cursor ? input.cursor * limit : undefined,
-    where: lte(activities.createdAt, input.timestamp),
+    where: and(
+      lte(activities.createdAt, input.timestamp),
+      input.userId ? eq(activities.creatorId, input.userId) : undefined
+    ),
     orderBy: (acts, { desc }) => [desc(acts.createdAt)],
   });
 
@@ -81,9 +84,7 @@ export const getNetworkActivities = async ({
   };
 };
 
-export const getActivityWithId = async ({
-  input,
-}: ProtectedInputOptions<ActivityWithIdInput>) => {
+export const getActivityWithId = async ({ input }: ProtectedInputOptions<ActivityWithIdInput>) => {
   const activity = await db.query.activities.findFirst({
     where: eq(activities.id, input.id),
     with: {

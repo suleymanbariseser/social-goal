@@ -7,16 +7,18 @@ import { Stack } from 'tamagui';
 
 import { ActivityListItem } from './activity-list-item';
 
-import { useActivities } from '@/hooks/activity/use-activities';
+import { ActivityOptions, useActivities } from '@/hooks/activity/use-activities';
 
 type Props = {
   onPressAvatar: (userId: number) => void;
   onPress: (activityId: number) => void;
+  filters?: ActivityOptions;
+  header: React.ReactNode;
 };
 
 // TODO - accept more props to filter activities for reusing this component in other screens
-export const ActivityList = ({ onPressAvatar, onPress }: Props) => {
-  const { activities, fetchNextPage, refetch } = useActivities();
+export const ActivityList = ({ filters, onPressAvatar, onPress, header }: Props) => {
+  const { activities, fetchNextPage, refetch } = useActivities(filters);
   const [refreshing, setRefreshing] = useState(false);
   const toast = useToastController();
 
@@ -62,6 +64,8 @@ export const ActivityList = ({ onPressAvatar, onPress }: Props) => {
       onEndReached={handleEndReached}
       keyExtractor={(item) => item.id.toString()}
       ItemSeparatorComponent={() => <Stack py="$2" />}
+      ListHeaderComponent={header ? () => <Stack mb="$2">{header}</Stack> : undefined}
+      ListHeaderComponentStyle={{ paddingBottom: 16 }}
       renderItem={renderItem}
       estimatedItemSize={152}
     />

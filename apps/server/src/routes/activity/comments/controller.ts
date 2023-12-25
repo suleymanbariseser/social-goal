@@ -1,10 +1,10 @@
 import { ProtectedInputOptions } from '@/types/trpc';
-import { CreateCommentInput } from './schema';
+import { CreateCommentInput, GetCommentsInput } from './schema';
 import { db } from '@/config/db';
 import { and, desc, eq, isNull } from 'drizzle-orm';
 import { activityComments } from '@/config/db/schema';
 
-export const getComments = async ({ input }: ProtectedInputOptions<CreateCommentInput>) => {
+export const getComments = async ({ input }: ProtectedInputOptions<GetCommentsInput>) => {
   const allComments = await db.query.activityComments.findMany({
     where: and(
       eq(activityComments.activityId, input.activityId),
@@ -40,3 +40,17 @@ export const getComments = async ({ input }: ProtectedInputOptions<CreateComment
 };
 
 export type NetworkActivityComment = Awaited<ReturnType<typeof getComments>>[0];
+
+export const createComment = async ({ input, ctx }: ProtectedInputOptions<CreateCommentInput>) => {
+  const comment = await db
+    .insert(activityComments)
+    .values({
+      activityId: input.activityId,
+      content: input.content,
+      parentCommentId: input.parentCommentId,
+      userId: ctx.user.id,
+    })
+    .returning();
+
+  return comment;
+};

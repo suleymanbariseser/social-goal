@@ -21,6 +21,7 @@ export const activityInfiniteSchema = z.object({
       message: 'Limit must be at least 1',
     })
     .nullish(),
+  userId: z.number().nullish(),
   cursor: z.number().nullish(),
   timestamp: z.date(),
 });

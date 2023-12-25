@@ -1,3 +1,4 @@
+import { ActivityInfiniteInput } from '@social-goal/server/src/routes/activity/schema';
 import moment from 'moment';
 import { useRef } from 'react';
 
@@ -5,7 +6,9 @@ import { useStorageItemValue } from '@/lib/storage';
 import { trpc } from '@/lib/trpc';
 import { authTokenState } from '@/store/auth';
 
-export const useActivities = () => {
+export type ActivityOptions = Partial<ActivityInfiniteInput>;
+
+export const useActivities = (opts?: ActivityOptions) => {
   const timestamp = useRef(moment().utc().toDate());
   const authToken = useStorageItemValue(authTokenState);
 
@@ -17,6 +20,7 @@ export const useActivities = () => {
     {
       limit: 15,
       timestamp: timestamp.current,
+      ...opts,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
