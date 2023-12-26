@@ -5,12 +5,14 @@
   "main": "index.js",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
-    "client": "yarn workspace @social-goal/client",
-    "server": "yarn workspace @social-goal/server",
-    "db:preview": "yarn workspace @social-goal/server db:preview",
+    "build:helpers": "yarn workspace @packages/helpers build",
+    "client": "yarn build:helpers && yarn workspace @app/client",
+    "server": "yarn build:helpers && yarn workspace @app/server",
+    "db:preview": "yarn workspace @app/server db:preview",
     "format": "yarn prettier --write ."
   },
   "keywords": [],

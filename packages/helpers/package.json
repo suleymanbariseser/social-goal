@@ -1,0 +1,16 @@
+{
+  "name": "@packages/helpers",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "nanoid": "^5.0.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
