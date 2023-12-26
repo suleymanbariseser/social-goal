@@ -1,4 +1,4 @@
-import { ActivityInfiniteInput } from '@social-goal/server/src/routes/activity/schema';
+import { ActivityInfiniteInput } from '@app/server/src/routes/activity/schema';
 import moment from 'moment';
 import { useRef } from 'react';
 

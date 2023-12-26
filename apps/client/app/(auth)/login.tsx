@@ -1,5 +1,5 @@
+import { LoginInput, loginSchema } from '@app/server/src/routes/auth/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginInput, loginSchema } from '@social-goal/server/src/routes/auth/schema';
 import { useToastController } from '@tamagui/toast';
 import { Link, useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';

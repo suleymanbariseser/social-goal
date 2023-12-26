@@ -1,6 +1,6 @@
+import { CreateGoalInput, createGoalSchema } from '@app/server/src/routes/goal/schema';
 import { FocusedInput, START_DATE } from '@datepicker-react/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateGoalInput, createGoalSchema } from '@social-goal/server/src/routes/goal/schema';
 import moment from 'moment';
 import { useRef, useState } from 'react';
 import { UseFormSetValue, UseFormWatch, useForm } from 'react-hook-form';

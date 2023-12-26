@@ -1,5 +1,5 @@
+import { NetworkActivity } from '@app/server/src/routes/activity/controller';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
-import { NetworkActivity } from '@social-goal/server/src/routes/activity/controller';
 import { useToastController } from '@tamagui/toast';
 import { useCallback, useState } from 'react';
 import { RefreshControl } from 'react-native';
@@ -13,7 +13,7 @@ type Props = {
   onPressAvatar: (userId: number) => void;
   onPress: (activityId: number) => void;
   filters?: ActivityOptions;
-  header: React.ReactNode;
+  header?: React.ReactNode;
 };
 
 // TODO - accept more props to filter activities for reusing this component in other screens

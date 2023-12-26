@@ -1,4 +1,4 @@
-import type { UserSettings } from '@social-goal/server/src/routes/user/relationship/controller';
+import type { UserSettings } from '@app/server/src/routes/user/relationship/controller';
 import { useToastController } from '@tamagui/toast';
 
 import { Button } from '../ui/button';

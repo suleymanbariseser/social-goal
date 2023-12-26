@@ -1,4 +1,4 @@
-import { NetworkActivityComment } from '@social-goal/server/src/routes/activity/comments/controller';
+import { NetworkActivityComment } from '@app/server/src/routes/activity/comments/controller';
 
 import { ActivityCommentCard } from './activity-comment-card/activity-comment-card';
 

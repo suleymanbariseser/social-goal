@@ -1,5 +1,5 @@
+import { NetworkActivityComment } from '@app/server/src/routes/activity/comments/controller';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
-import { NetworkActivityComment } from '@social-goal/server/src/routes/activity/comments/controller';
 import { useToastController } from '@tamagui/toast';
 import { useCallback, useState } from 'react';
 import { RefreshControl } from 'react-native';

@@ -1,8 +1,5 @@
+import { CompleteRegisterInput, completeRegisterSchema } from '@app/server/src/routes/auth/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  CompleteRegisterInput,
-  completeRegisterSchema,
-} from '@social-goal/server/src/routes/auth/schema';
 import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
@@ -82,11 +79,7 @@ export default function Password() {
         )}
       </YStack>
       <YStack ai="center" gap="$2">
-        <Button
-          onPress={handleSubmit(onSubmit)}
-          w="100%"
-          disabled={isLoading}
-          loading={isLoading}>
+        <Button onPress={handleSubmit(onSubmit)} w="100%" disabled={isLoading} loading={isLoading}>
           Register
         </Button>
         <Text>

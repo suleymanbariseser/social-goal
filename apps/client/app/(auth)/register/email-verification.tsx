@@ -1,8 +1,8 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   EmailVerificationInput,
   emailVerificationSchema,
-} from '@social-goal/server/src/routes/auth/schema';
+} from '@app/server/src/routes/auth/schema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useToastController } from '@tamagui/toast';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useForm } from 'react-hook-form';
@@ -78,11 +78,7 @@ export default function EmailVerification() {
         )}
       </YStack>
       <YStack ai="center" gap="$2">
-        <Button
-          onPress={handleSubmit(onSubmit)}
-          w="100%"
-          loading={isLoading}
-          disabled={isLoading}>
+        <Button onPress={handleSubmit(onSubmit)} w="100%" loading={isLoading} disabled={isLoading}>
           Continue
         </Button>
         <Text>

@@ -1,4 +1,4 @@
-import { AppRouter } from '@social-goal/server/src/routes';
+import { AppRouter } from '@app/server/src/routes';
 import {
   httpBatchLink,
   createTRPCReact,

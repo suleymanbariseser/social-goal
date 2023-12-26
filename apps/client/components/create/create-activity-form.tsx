@@ -1,9 +1,6 @@
+import { Goal } from '@app/server/src/config/db/schema';
+import { CreateActivityInput, createActivitySchema } from '@app/server/src/routes/activity/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Goal } from '@social-goal/server/src/config/db/schema';
-import {
-  CreateActivityInput,
-  createActivitySchema,
-} from '@social-goal/server/src/routes/activity/schema';
 import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';

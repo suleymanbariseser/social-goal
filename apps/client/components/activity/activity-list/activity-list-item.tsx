@@ -1,4 +1,4 @@
-import { NetworkActivity } from '@social-goal/server/src/routes/activity/controller';
+import { NetworkActivity } from '@app/server/src/routes/activity/controller';
 
 import { ActivityCard } from './activity-card';
 

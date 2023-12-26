@@ -1,11 +1,30 @@
 import { customAlphabet } from 'nanoid';
 
 type CreateCodeOptions = {
+  /**
+   * @default true
+   */
   includeNumbers?: boolean;
+
+  /**
+   * @default true
+   */
   includeSymbols?: boolean;
-  length?: number;
+
+  /**
+   * @default true
+   */
   includeUppercase?: boolean;
+
+  /**
+   * @default true
+   */
   includeLowercase?: boolean;
+
+  /**
+   * @default 10
+   */
+  length?: number;
 };
 
 const UPPERCASES = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -13,15 +32,21 @@ const LOWERCASES = 'abcdefghijklmnopqrstuvwxyz';
 const NUMBERS = '0123456789';
 const SYMBOLS = '!@#$%^&*()_+-=[]{};:,./<>?';
 
-export const nanoid = (options: CreateCodeOptions) => {
+export const nanoid = ({
+  includeLowercase = true,
+  includeNumbers = true,
+  includeSymbols = true,
+  includeUppercase = true,
+  length = 10,
+}: CreateCodeOptions = {}) => {
   let alphabet = '';
 
-  if (options.includeNumbers) alphabet += NUMBERS;
-  if (options.includeLowercase) alphabet += LOWERCASES;
-  if (options.includeUppercase) alphabet += UPPERCASES;
-  if (options.includeSymbols) alphabet += SYMBOLS;
+  if (includeNumbers) alphabet += NUMBERS;
+  if (includeLowercase) alphabet += LOWERCASES;
+  if (includeUppercase) alphabet += UPPERCASES;
+  if (includeSymbols) alphabet += SYMBOLS;
 
-  const _nanoid = customAlphabet(alphabet, options.length || 10);
+  const _nanoid = customAlphabet(alphabet, length);
 
   return _nanoid();
 };

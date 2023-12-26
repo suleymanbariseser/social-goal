@@ -1,5 +1,5 @@
-import { Goal } from '@social-goal/server/src/config/db/schema';
-import { CreateGoalInput } from '@social-goal/server/src/routes/goal/schema';
+import { Goal } from '@app/server/src/config/db/schema';
+import { CreateGoalInput } from '@app/server/src/routes/goal/schema';
 import { useToastController } from '@tamagui/toast';
 import { Sheet } from 'tamagui';
 

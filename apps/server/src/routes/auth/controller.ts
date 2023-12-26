@@ -1,6 +1,7 @@
 import { and, eq, gte } from 'drizzle-orm';
 import { hash, compare } from 'bcrypt';
 import { db } from '@/config/db';
+import { nanoid } from '@packages/helpers';
 import { userVerifications, users } from '@/config/db/schema';
 import { InputOptions } from '@/types/trpc';
 import {
@@ -9,7 +10,6 @@ import {
   LoginInput,
   RegisterUserInput,
 } from './schema';
-import { createCode } from '@/utils/nanoid';
 import { resend } from '@/config/resend';
 import jwt from 'jsonwebtoken';
 
@@ -41,10 +41,10 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
     await db.delete(userVerifications).where(eq(userVerifications.id, verifications[0].id));
 
   // create an alpha numeric code
-  const code = createCode({
+  const code = nanoid({
     length: 5,
-    includeUppercase: true,
-    includeNumbers: true,
+    includeLowercase: false,
+    includeSymbols: false,
   });
   // encrypt the code to save it in database
   const hashedCode = await hash(code, 10);
