@@ -1,30 +1,25 @@
-import { Image, Stack } from 'tamagui';
+import { Image, Spinner, Stack } from 'tamagui';
 
 import ProfileIcon from '@/assets/icons/profile.svg';
 import { IconButton } from '@/components/ui/icon-button';
 
 type Props = {
   uri: string;
+  loading: boolean;
 };
 
-export const UploadedImage = ({ uri }: Props) => {
+export const UploadedImage = ({ uri, loading }: Props) => {
   return (
-    <Stack w="100%" pos="relative">
-      <Stack
-        fd="row"
-        gap="$2"
-        w="100%"
-        h="100%"
-        ai="center"
-        jc="center"
-        pos="absolute"
-        zi={5}
-        l={0}
-        t={0}>
-        <IconButton icon={() => <ProfileIcon />} />
+    <Stack pos="relative" r="$5" w={100} h={100} ov="hidden">
+      <Stack pos="absolute" zi={5} r={5} t={5}>
         <IconButton icon={() => <ProfileIcon />} />
       </Stack>
-      <Image source={{ uri }} w="100%" h={200} />
+      {loading && (
+        <Stack pos="absolute" l={0} t={0} w="100%" h="100%" zi={6} ai="center" jc="center">
+          <Spinner />
+        </Stack>
+      )}
+      <Image source={{ uri }} w={100} h={100} />
     </Stack>
   );
 };

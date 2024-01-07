@@ -1,7 +1,7 @@
 import { Control, Path, useController } from 'react-hook-form';
 import { XStack, YStack } from 'tamagui';
 
-import { UploadedImage } from './uploaded-images/uploaded-image';
+import { UploadedImages } from './uploaded-images/uploaded-images';
 import { IconButton } from '../ui/icon-button';
 
 import ImageIcon from '@/assets/icons/image.svg';
@@ -31,9 +31,7 @@ export const CreateTools = <T, Context>({ name, control }: Props<T, Context>) =>
         <IconButton icon={ImageIcon} variant="text" onPress={pickImage} />
         <IconButton icon={LinkIcon} variant="text" />
       </XStack>
-      {assets.map((asset) => (
-        <UploadedImage key={asset.id} uri={asset.uri} />
-      ))}
+      <UploadedImages assets={assets} />
     </YStack>
   );
 };

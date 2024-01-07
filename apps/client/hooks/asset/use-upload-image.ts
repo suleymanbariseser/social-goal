@@ -8,20 +8,20 @@ export const useUploadImage = () => {
   const { data, mutateAsync } = trpc.upload.image.useMutation();
 
   const uploadImage = async (input: UploadImageInput) => {
-    const result = await mutateAsync({
-      data: input.data,
-      category: input.category,
-    });
-
-    if (!result) {
-      toast.show('Image uploaded', {
-        variant: 'success',
+    try {
+      const result = await mutateAsync({
+        data: input.data,
+        category: input.category,
       });
 
+      return result;
+    } catch (err: any) {
+      console.log('err', err);
+      toast.show('Image upload failed', {
+        variant: 'error',
+      });
       return undefined;
     }
-
-    return result;
   };
 
   return {

@@ -3,9 +3,10 @@ import { useToastController } from '@tamagui/toast';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 
-type Asset = {
+export type Asset = {
   id: string;
   uri: string;
+  loading: boolean;
 };
 
 type Options = {
@@ -36,17 +37,32 @@ export const useImagePicker = ({ uploader }: Options) => {
       return;
     }
 
-    const image = await uploader(result.assets[0].base64);
-
-    if (!image) return;
+    const baseImage = result.assets[0];
+    const imageId = nanoid();
 
     setAssets((s) => [
       ...s,
       {
-        id: nanoid(),
-        uri: image,
+        id: imageId,
+        uri: baseImage.uri,
+        loading: false,
       },
     ]);
+
+    const image = await uploader(baseImage.base64);
+
+    if (!image) return;
+
+    setAssets((s) => {
+      const index = s.findIndex((a) => a.id === imageId);
+      if (index < 0) return s;
+
+      const newAssets = [...s];
+      newAssets[index].loading = false;
+      newAssets[index].uri = image;
+
+      return newAssets;
+    });
   };
 
   const removeAsset = (id: string) => {
