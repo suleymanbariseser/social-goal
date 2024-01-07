@@ -92,7 +92,7 @@ export const CreateActivityForm = () => {
           multiline
           mih="$12"
         />
-        <CreateTools />
+        <CreateTools name="content" control={control} />
       </Stack>
       <Button onPress={handleSubmit(onSubmit)}>Create</Button>
       <CreateGoal open={createGoalOpen} onOpenChange={setCreateGoalOpen} onSave={handleSave} />
