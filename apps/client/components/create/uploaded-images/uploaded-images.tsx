@@ -12,7 +12,7 @@ export const UploadedImages = ({ assets }: Props) => {
   if (assets.length === 0) return null;
 
   return (
-    <Stack fd="row" gap="$2" ai="center">
+    <Stack fd="row" gap="$4" ai="center">
       {assets.map((asset) => (
         <UploadedImage key={asset.id} uri={asset.uri} loading={asset.loading} />
       ))}

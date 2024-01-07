@@ -3892,6 +3892,13 @@
     "@tamagui/use-controllable-state" "1.79.11"
     reforest "^0.13.0"
 
+"@tamagui/helpers-icon@1.79.11":
+  version "1.79.11"
+  resolved "https://registry.yarnpkg.com/@tamagui/helpers-icon/-/helpers-icon-1.79.11.tgz#5edf722027f183a70ad66eb6311560b11c0a6906"
+  integrity sha512-rOFgdDt3YcUY1R51FTEns1VItCGg5LQCwSk5UP8XYcrMI3hJMG3g5aJq2ZuTP/ZHnn7J7am1moHOG59TnxW6Mg==
+  dependencies:
+    "@tamagui/core" "1.79.11"
+
 "@tamagui/helpers-node@1.79.11":
   version "1.79.11"
   resolved "https://registry.yarnpkg.com/@tamagui/helpers-node/-/helpers-node-1.79.11.tgz#429221183ee301f099423c40021094fa6fc4c935"
@@ -3955,6 +3962,14 @@
     "@tamagui/stacks" "1.79.11"
     "@tamagui/text" "1.79.11"
     "@tamagui/web" "1.79.11"
+
+"@tamagui/lucide-icons@1.79.11":
+  version "1.79.11"
+  resolved "https://registry.yarnpkg.com/@tamagui/lucide-icons/-/lucide-icons-1.79.11.tgz#53ee62b5f11a7ead53174005eb01647da7f04861"
+  integrity sha512-T4CgOpAAstPDMBeknbqaZpPdRax8PS00CUiHHHVK9yMAoNZxy5iDpH/ookOukzC9wzTHzUkNTBDmeSj/RduBZg==
+  dependencies:
+    "@tamagui/core" "1.79.11"
+    "@tamagui/helpers-icon" "1.79.11"
 
 "@tamagui/normalize-css-color@1.79.11":
   version "1.79.11"
@@ -11264,10 +11279,10 @@ react-native-svg-transformer@^1.0.0:
     "@svgr/plugin-svgo" "^6.1.2"
     path-dirname "^1.0.2"
 
-react-native-svg@13.9.0:
-  version "13.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.9.0.tgz#8df8a690dd00362601f074dec5d3a86dd0f99c7f"
-  integrity sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==
+react-native-svg@^14.1.0:
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-14.1.0.tgz#7903bddd3c71bf3a8a503918253c839e6edaa724"
+  integrity sha512-HeseElmEk+AXGwFZl3h56s0LtYD9HyGdrpg8yd9QM26X+d7kjETrRQ9vCjtxuT5dCZEIQ5uggU1dQhzasnsCWA==
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"
