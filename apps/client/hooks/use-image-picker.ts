@@ -7,6 +7,7 @@ export type Asset = {
   id: string;
   uri: string;
   loading: boolean;
+  failed: boolean;
 };
 
 type Options = {
@@ -45,13 +46,27 @@ export const useImagePicker = ({ uploader }: Options) => {
       {
         id: imageId,
         uri: baseImage.uri,
-        loading: false,
+        loading: true,
+        failed: false,
       },
     ]);
 
     const image = await uploader(baseImage.base64);
 
-    if (!image) return;
+    if (!image) {
+      setAssets((s) => {
+        const index = s.findIndex((a) => a.id === imageId);
+        if (index < 0) return s;
+
+        const newAssets = [...s];
+        newAssets[index].loading = false;
+        newAssets[index].failed = true;
+
+        return newAssets;
+      });
+
+      return;
+    }
 
     setAssets((s) => {
       const index = s.findIndex((a) => a.id === imageId);

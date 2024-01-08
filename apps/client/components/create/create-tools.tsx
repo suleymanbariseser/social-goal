@@ -21,17 +21,17 @@ export const CreateTools = <T, Context>({ name, control }: Props<T, Context>) =>
   });
 
   const { uploadImage } = useUploadImage();
-  const { assets, pickImage } = useImagePicker({
+  const { assets, pickImage, removeAsset } = useImagePicker({
     uploader: (base64) => uploadImage({ data: base64, category: 'activity' }),
   });
 
   return (
-    <YStack>
+    <YStack gap="$2">
       <XStack gap="$3">
         <IconButton icon={ImageIcon} variant="text" onPress={pickImage} />
         <IconButton icon={LinkIcon} variant="text" />
       </XStack>
-      <UploadedImages assets={assets} />
+      <UploadedImages assets={assets} onRemove={removeAsset} />
     </YStack>
   );
 };
