@@ -2,6 +2,8 @@
 
 Social goal is a social platform where people, companies, communities and etc. share their goals for future and the processes of the goal.
 
+![Home Screen](./apps/client/assets/docs/home_screen.png)
+
 ## Table of Contents
 
 - [Installation](#installation)
