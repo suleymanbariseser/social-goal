@@ -4,6 +4,7 @@ import { goals } from '../goal';
 import { users } from '../user';
 import { activityLikes } from './activity-likes';
 import { activityComments } from './activity-comments';
+import { activityAssets } from './activity-assets';
 
 export const activities = pgTable('activities', {
   id: serial('id').primaryKey(),
@@ -30,5 +31,6 @@ export const activityRelations = relations(activities, ({ one, many }) => ({
     references: [users.id],
   }),
   likes: many(activityLikes),
+  assets: many(activityAssets),
   comments: many(activityComments),
 }));

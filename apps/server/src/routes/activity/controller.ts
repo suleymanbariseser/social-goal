@@ -11,12 +11,13 @@ import { and, eq, lte } from 'drizzle-orm';
 import { observable } from '@trpc/server/observable';
 import { FeedEvent, feedCache, feedEmitter } from './utils';
 import { getUserFromToken } from '@/middlewares/isAuthed';
+import { activityAssets } from '@/config/db/schema/activity/activity-assets';
 
 export const createActivity = async ({
   ctx,
   input,
 }: ProtectedInputOptions<CreateActivityInput>) => {
-  const newActivity = await db
+  const newActivities = await db
     .insert(activities)
     .values({
       content: input.content,
@@ -25,7 +26,18 @@ export const createActivity = async ({
     })
     .returning();
 
-  return newActivity[0];
+  const activity = newActivities[0];
+
+  if (input.assets && input.assets?.length > 0) {
+    await db.insert(activityAssets).values(
+      input.assets.map((uri) => ({
+        activityId: activity.id,
+        uri,
+      }))
+    );
+  }
+
+  return activity;
 };
 
 export const getNetworkActivities = async ({
@@ -51,6 +63,11 @@ export const getNetworkActivities = async ({
       comments: {
         columns: {
           id: true,
+        },
+      },
+      assets: {
+        columns: {
+          uri: true,
         },
       },
     },

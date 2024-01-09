@@ -12,6 +12,7 @@ export const createActivitySchema = z.object({
     .max(256, {
       message: 'Content must be less than 256 characters',
     }),
+  assets: z.string().array().nullable(),
 });
 
 export const activityInfiniteSchema = z.object({

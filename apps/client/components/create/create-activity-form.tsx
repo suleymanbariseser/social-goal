@@ -1,5 +1,4 @@
 import { Goal } from '@app/server/src/config/db/schema';
-import { CreateActivityInput, createActivitySchema } from '@app/server/src/routes/activity/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'expo-router';
@@ -7,6 +6,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Stack } from 'tamagui';
 
+import { CreateActivityFormSchema, createActivityFormSchema } from './create-activity-form-schema';
 import { CreateGoal } from './create-goal';
 import { CreateTools } from './create-tools';
 import { Button } from '../ui/button';
@@ -31,8 +31,8 @@ export const CreateActivityForm = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<CreateActivityInput>({
-    resolver: zodResolver(createActivitySchema),
+  } = useForm<CreateActivityFormSchema>({
+    resolver: zodResolver(createActivityFormSchema),
   });
 
   const handePressCreate = () => {
@@ -45,8 +45,13 @@ export const CreateActivityForm = () => {
     setValue('goalId', goal.id);
   };
 
-  const onSubmit = (data: CreateActivityInput) => {
-    createActivity(data, {
+  const onSubmit = (data: CreateActivityFormSchema) => {
+    const input = {
+      ...data,
+      assets: data.assets.map((a) => a.uri),
+    };
+
+    createActivity(input, {
       onSuccess: () => {
         utils.activity.activities.invalidate();
         router.replace('/');
@@ -58,6 +63,8 @@ export const CreateActivityForm = () => {
       },
     });
   };
+
+  const assetError = errors.assets?.[0];
 
   return (
     <Stack f={1} px="$6" gap="$6">
@@ -92,7 +99,12 @@ export const CreateActivityForm = () => {
           multiline
           mih="$12"
         />
-        <CreateTools name="content" control={control} />
+        <CreateTools
+          name="assets"
+          control={control}
+          error={!!assetError}
+          helperText={assetError?.loading?.message || assetError?.failed?.message}
+        />
       </Stack>
       <Button onPress={handleSubmit(onSubmit)}>Create</Button>
       <CreateGoal open={createGoalOpen} onOpenChange={setCreateGoalOpen} onSave={handleSave} />
