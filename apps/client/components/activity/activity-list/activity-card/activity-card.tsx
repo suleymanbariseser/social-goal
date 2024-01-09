@@ -15,11 +15,12 @@ export function ActivityCard({
   admin,
   content,
   goal,
-  onPressAvatar,
   comments,
   likes,
   shares,
+  assets,
   onPress,
+  onPressAvatar,
   onPressComment,
   onPressLike,
   onPressShare,
@@ -34,7 +35,7 @@ export function ActivityCard({
       boc={bordered ? '$borderColor' : '$transparent'}
       onPress={onPress}>
       <ActivityCardHeader admin={admin} goal={goal} onPressAvatar={onPressAvatar} />
-      <ActivityCardContent content={content} />
+      <ActivityCardContent content={content} assets={assets} />
       <ActivityCardFooter
         comments={comments}
         likes={likes}

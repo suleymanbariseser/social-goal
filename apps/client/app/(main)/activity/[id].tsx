@@ -39,6 +39,7 @@ export default function Activity() {
               content={activity.content}
               likes={activity.likes}
               shares={3}
+              assets={[]}
               onPressAvatar={handlePressAvatar}
               onPressLike={likeActivity}
             />
