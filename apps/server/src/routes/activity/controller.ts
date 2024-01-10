@@ -123,6 +123,11 @@ export const getActivityWithId = async ({ input }: ProtectedInputOptions<Activit
           id: true,
         },
       },
+      assets: {
+        columns: {
+          uri: true,
+        },
+      },
     },
   });
 
