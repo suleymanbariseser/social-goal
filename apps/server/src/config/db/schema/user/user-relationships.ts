@@ -17,8 +17,7 @@ export const userRelationships = pgTable(
   },
   (table) => {
     return {
-      followerIdx: uniqueIndex('follower_idx').on(table.followerId),
-      followingIdx: uniqueIndex('following_idx').on(table.followingId),
+      relationIdx: uniqueIndex('user_relation_idx').on(table.followerId, table.followingId),
     };
   }
 );

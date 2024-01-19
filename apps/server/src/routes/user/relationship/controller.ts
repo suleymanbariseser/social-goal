@@ -1,9 +1,99 @@
 import { ProtectedInputOptions } from '@/types/trpc';
-import { FollowUserInput, UserSettingsInput } from './schema';
+import { FollowUserInput, UserRelationshipInput, UserSettingsInput } from './schema';
 import { TRPCError } from '@trpc/server';
 import { db } from '@/config/db';
 import { userRelationships } from '@/config/db/schema';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, lte } from 'drizzle-orm';
+import { UserSettings, isUserAllowedToGetRelationships } from './utils';
+import { getInfiniteQuery } from '@/utils/infinity';
+
+export const followerList = async ({
+  ctx,
+  input,
+}: ProtectedInputOptions<UserRelationshipInput>) => {
+  const settings = await getUserSettings({
+    ctx,
+    input,
+  });
+
+  if (!isUserAllowedToGetRelationships(settings)) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'User is not allowed to get relationships',
+    });
+  }
+
+  return getInfiniteQuery(
+    'userRelationships',
+    {
+      columns: {
+        id: true,
+      },
+      with: {
+        follower: {
+          columns: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            image: true,
+          },
+        },
+      },
+      where: and(
+        eq(userRelationships.followingId, ctx.user.id),
+        lte(userRelationships.createdAt, input.timestamp)
+      ),
+    },
+    {
+      limit: input.limit,
+      cursor: input.cursor,
+    }
+  );
+};
+
+export const followingList = async ({
+  ctx,
+  input,
+}: ProtectedInputOptions<UserRelationshipInput>) => {
+  const settings = await getUserSettings({
+    ctx,
+    input,
+  });
+
+  if (!isUserAllowedToGetRelationships(settings)) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'User is not allowed to get relationships',
+    });
+  }
+
+  return getInfiniteQuery(
+    'userRelationships',
+    {
+      columns: {
+        id: true,
+      },
+      with: {
+        following: {
+          columns: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            image: true,
+          },
+        },
+      },
+      where: and(
+        eq(userRelationships.followerId, ctx.user.id),
+        lte(userRelationships.createdAt, input.timestamp)
+      ),
+    },
+    {
+      limit: input.limit,
+      cursor: input.cursor,
+    }
+  );
+};
 
 export const followUser = async ({ ctx, input }: ProtectedInputOptions<FollowUserInput>) => {
   if (ctx.user.id === input.id) {
@@ -59,14 +149,6 @@ export const unfollowUser = async ({ ctx, input }: ProtectedInputOptions<FollowU
   if (relation) settings.following = false;
 
   return settings;
-};
-
-export type UserSettings = {
-  blockedBy: boolean;
-  blocking: boolean;
-  followedBy: boolean;
-  following: boolean;
-  protected: boolean;
 };
 
 export const getUserSettings = async ({
