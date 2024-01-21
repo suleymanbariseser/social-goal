@@ -1,4 +1,6 @@
 import { db } from '@/config/db';
+import { userRelationships } from '@/config/db/schema';
+import { DBQueryConfig } from 'drizzle-orm';
 import { z } from 'zod';
 
 const DEFAULT_LIMIT = 10;
@@ -14,9 +16,14 @@ type Options = {
   cursor?: number | null;
 };
 
-export const getInfiniteQuery = async <T extends DbTable>(
-  table: T,
-  queries: Parameters<(typeof db.query)[T]['findMany']>[0],
+
+// TODO fix return type
+export const getInfiniteQuery = async <
+  Table extends DbTable,
+  Query extends Parameters<typeof db.query[Table]['findMany']>[0]
+>(
+  table: Table,
+  queries: Query,
   { limit: defaultLimit, cursor }: Options
 ) => {
   const limit = Math.min(Math.max(defaultLimit || DEFAULT_LIMIT, MIN_LIMIT), MAX_LIMIT);

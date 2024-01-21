@@ -6,6 +6,7 @@ import { userRelationships } from '@/config/db/schema';
 import { and, eq, lte } from 'drizzle-orm';
 import { UserSettings, isUserAllowedToGetRelationships } from './utils';
 import { getInfiniteQuery } from '@/utils/infinity';
+import { RelationShipListItemUser, RelationShipListResponse } from './types';
 
 export const followerList = async ({
   ctx,
@@ -54,7 +55,7 @@ export const followerList = async ({
 export const followingList = async ({
   ctx,
   input,
-}: ProtectedInputOptions<UserRelationshipInput>) => {
+}: ProtectedInputOptions<UserRelationshipInput>): Promise<RelationShipListResponse> => {
   const settings = await getUserSettings({
     ctx,
     input,
@@ -67,7 +68,7 @@ export const followingList = async ({
     });
   }
 
-  return getInfiniteQuery(
+  const data = await getInfiniteQuery(
     'userRelationships',
     {
       columns: {
@@ -93,6 +94,17 @@ export const followingList = async ({
       cursor: input.cursor,
     }
   );
+
+  const newData = {
+    ...data,
+    result: data.result.map((item) => ({
+      id: item.id,
+      // TODO remove this after type improvement
+      user: (item as any).following as RelationShipListItemUser,
+    })),
+  };
+
+  return newData;
 };
 
 export const followUser = async ({ ctx, input }: ProtectedInputOptions<FollowUserInput>) => {
