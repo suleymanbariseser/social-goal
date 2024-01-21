@@ -1,4 +1,4 @@
-import type { UserSettings } from '@app/server/src/routes/user/relationship/controller';
+import { UserSettings } from '@app/server/src/routes/user/relationship/utils';
 import { useToastController } from '@tamagui/toast';
 
 import { Button } from '../ui/button';
@@ -81,7 +81,6 @@ const FollowButton = ({ userId }: Props) => {
 
   return (
     <Button
-      py="$3"
       variant="contained"
       onPress={handleFollow}
       disabled={isFollowLoading}
@@ -92,11 +91,7 @@ const FollowButton = ({ userId }: Props) => {
 };
 
 export const EditButton = () => {
-  return (
-    <Button py="$3" variant="outlined">
-      Edit
-    </Button>
-  );
+  return <Button variant="outlined">Edit</Button>;
 };
 
 export const ProfileAction = ({ userId }: Props) => {

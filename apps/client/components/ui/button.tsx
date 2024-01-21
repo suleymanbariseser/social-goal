@@ -14,14 +14,26 @@ export const BaseButton = styled(Stack, {
   bw: 1,
   bs: 'solid',
 
-  py: '$4',
-  px: '$2.5',
-
   variants: {
     // style for disabled button
     disabled: {
       true: {
         opacity: 0.5,
+      },
+    },
+
+    size: {
+      small: {
+        py: '$1.5',
+        px: '$2',
+      },
+      medium: {
+        py: '$3',
+        px: '$2',
+      },
+      large: {
+        py: '$4',
+        px: '$2.5',
       },
     },
 
@@ -55,6 +67,7 @@ export const BaseButton = styled(Stack, {
 
   defaultVariants: {
     variant: 'contained',
+    size: 'medium',
   },
 });
 
