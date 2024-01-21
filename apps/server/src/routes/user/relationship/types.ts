@@ -3,6 +3,7 @@ export type RelationShipListItemUser = {
   firstName: string;
   lastName: string;
   image: string;
+  followedByMe: boolean;
 };
 
 export type RelationShipListItem = {

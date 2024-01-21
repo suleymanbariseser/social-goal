@@ -4,7 +4,7 @@ import { TRPCError } from '@trpc/server';
 import { db } from '@/config/db';
 import { userRelationships } from '@/config/db/schema';
 import { and, eq, lte } from 'drizzle-orm';
-import { UserSettings, isUserAllowedToGetRelationships } from './utils';
+import { UserSettings, getFollowingIdsFromUserIds, isUserAllowedToGetRelationships } from './utils';
 import { getInfiniteQuery } from '@/utils/infinity';
 import { RelationShipListItemUser, RelationShipListResponse } from './types';
 
@@ -95,13 +95,23 @@ export const followingList = async ({
     }
   );
 
+  const ids = data.result.map((item) => ((item as any).following as RelationShipListItemUser).id);
+
+  const followedByMeIds = await getFollowingIdsFromUserIds(ctx.user.id, ids);
+
   const newData = {
     ...data,
-    result: data.result.map((item) => ({
-      id: item.id,
-      // TODO remove this after type improvement
-      user: (item as any).following as RelationShipListItemUser,
-    })),
+    result: data.result.map((item) => {
+      const following = (item as any).following as RelationShipListItemUser;
+      return {
+        id: item.id,
+        // TODO remove this after type improvement
+        user: {
+          ...following,
+          followedByMe: followedByMeIds.includes(following.id),
+        },
+      };
+    }),
   };
 
   return newData;
