@@ -24,7 +24,7 @@ export default function ProfileFollowings() {
 
   return (
     <Stack f={1} px="$4">
-      <RelationList users={users} />
+      <RelationList users={users} emptyText="No followings found" />
     </Stack>
   );
 }

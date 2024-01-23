@@ -24,7 +24,7 @@ export const followerList = async ({
     });
   }
 
-  return getInfiniteQuery(
+  const data = await getInfiniteQuery(
     'userRelationships',
     {
       columns: {
@@ -50,6 +50,27 @@ export const followerList = async ({
       cursor: input.cursor,
     }
   );
+  
+  const ids = data.result.map((item) => ((item as any).follower as RelationShipListItemUser).id);
+
+  const followedByMeIds = await getFollowingIdsFromUserIds(ctx.user.id, ids);
+
+  const newData = {
+    ...data,
+    result: data.result.map((item) => {
+      const follower = (item as any).follower as RelationShipListItemUser;
+      return {
+        id: item.id,
+        // TODO remove this after type improvement
+        user: {
+          ...follower,
+          followedByMe: followedByMeIds.includes(follower.id),
+        },
+      };
+    }),
+  };
+
+  return newData;
 };
 
 export const followingList = async ({
