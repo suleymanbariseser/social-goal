@@ -11,7 +11,7 @@ import { RelationShipListItemUser, RelationShipListResponse } from './types';
 export const followerList = async ({
   ctx,
   input,
-}: ProtectedInputOptions<UserRelationshipInput>) => {
+}: ProtectedInputOptions<UserRelationshipInput>): Promise<RelationShipListResponse> => {
   const settings = await getUserSettings({
     ctx,
     input,
@@ -50,14 +50,14 @@ export const followerList = async ({
       cursor: input.cursor,
     }
   );
-  
-  const ids = data.result.map((item) => ((item as any).follower as RelationShipListItemUser).id);
+
+  const ids = data.items.map((item) => ((item as any).follower as RelationShipListItemUser).id);
 
   const followedByMeIds = await getFollowingIdsFromUserIds(ctx.user.id, ids);
 
   const newData = {
     ...data,
-    result: data.result.map((item) => {
+    items: data.items.map((item) => {
       const follower = (item as any).follower as RelationShipListItemUser;
       return {
         id: item.id,
@@ -116,13 +116,13 @@ export const followingList = async ({
     }
   );
 
-  const ids = data.result.map((item) => ((item as any).following as RelationShipListItemUser).id);
+  const ids = data.items.map((item) => ((item as any).following as RelationShipListItemUser).id);
 
   const followedByMeIds = await getFollowingIdsFromUserIds(ctx.user.id, ids);
 
   const newData = {
     ...data,
-    result: data.result.map((item) => {
+    items: data.items.map((item) => {
       const following = (item as any).following as RelationShipListItemUser;
       return {
         id: item.id,

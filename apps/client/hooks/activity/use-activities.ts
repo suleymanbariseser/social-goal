@@ -16,6 +16,7 @@ export const useActivities = (opts?: ActivityOptions) => {
     data,
     fetchNextPage,
     refetch: _refetch,
+    isRefetching,
   } = trpc.activity.activities.useInfiniteQuery(
     {
       limit: 15,
@@ -48,6 +49,7 @@ export const useActivities = (opts?: ActivityOptions) => {
 
   return {
     activities: data?.pages.flatMap((page) => page.items) ?? [],
+    isRefetching,
     fetchNextPage,
     refetch,
   };

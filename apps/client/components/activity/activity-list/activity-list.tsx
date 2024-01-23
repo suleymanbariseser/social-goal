@@ -18,17 +18,12 @@ type Props = {
 
 // TODO - accept more props to filter activities for reusing this component in other screens
 export const ActivityList = ({ filters, onPressAvatar, onPress, header }: Props) => {
-  const { activities, fetchNextPage, refetch } = useActivities(filters);
-  const [refreshing, setRefreshing] = useState(false);
+  const { activities, fetchNextPage, refetch, isRefetching } = useActivities(filters);
   const toast = useToastController();
 
-  const handleRefresh = async () => {
+  const handleRefresh = () => {
     try {
-      setRefreshing(true);
-
-      await refetch?.();
-
-      setRefreshing(false);
+      refetch?.();
     } catch (error) {
       toast.show(error.message, {
         variant: 'error',
@@ -52,13 +47,13 @@ export const ActivityList = ({ filters, onPressAvatar, onPress, header }: Props)
   );
 
   const refreshControl = (
-    <RefreshControl tintColor="white" refreshing={refreshing} onRefresh={handleRefresh} />
+    <RefreshControl tintColor="white" refreshing={isRefetching} onRefresh={handleRefresh} />
   );
 
   return (
     <FlashList
       data={activities}
-      refreshing={refreshing}
+      refreshing={isRefetching}
       onRefresh={handleRefresh}
       refreshControl={refreshControl}
       onEndReached={handleEndReached}

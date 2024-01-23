@@ -13,5 +13,5 @@ export type RelationShipListItem = {
 
 export type RelationShipListResponse = {
   nextCursor: number | undefined;
-  result: RelationShipListItem[];
+  items: RelationShipListItem[];
 };

@@ -28,20 +28,20 @@ export const getInfiniteQuery = async <
 ) => {
   const limit = Math.min(Math.max(defaultLimit || DEFAULT_LIMIT, MIN_LIMIT), MAX_LIMIT);
 
-  const result = await db.query[table].findMany({
+  const items = await db.query[table].findMany({
     ...queries,
     limit: limit + 1,
     offset: cursor ? cursor * limit : undefined,
   });
 
   let nextCursor: number | undefined = undefined;
-  if (result.length > limit) {
-    result.pop();
+  if (items.length > limit) {
+    items.pop();
     nextCursor = (cursor ?? 0) + 1;
   }
 
   return {
-    result,
+    items,
     nextCursor,
   };
 };
