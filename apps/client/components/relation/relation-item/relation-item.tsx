@@ -20,11 +20,13 @@ export const RelationItem = ({ relation }: Props) => {
       </XStack>
       <XStack>
         {user.followedByMe ? (
-          <Button size="small" variant="outlined">
+          <Button size="small" variant="outlined" w="$16">
             Unfollow
           </Button>
         ) : (
-          <Button size="small">Follow</Button>
+          <Button size="small" w="$16">
+            Follow
+          </Button>
         )}
       </XStack>
     </XStack>
