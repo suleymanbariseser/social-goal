@@ -16,6 +16,12 @@ export default function ProfileFollowings() {
         onEndReached={fetchNextPage}
         onRefresh={refetch}
         refreshing={isRefetching}
+        onFollow={() => {
+          console.log('follow');
+        }}
+        onUnfollow={() => {
+          console.log('unfollow');
+        }}
       />
     </Stack>
   );

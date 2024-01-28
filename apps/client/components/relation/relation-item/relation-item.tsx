@@ -1,15 +1,18 @@
 import { RelationShipListItem } from '@app/server/src/routes/user/relationship/types';
 import { XStack } from 'tamagui';
 
+import { RelationItemButton } from './relation-item-button';
+
 import { Avatar } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 
 type Props = {
   relation: RelationShipListItem;
+  onFollow: () => void;
+  onUnfollow: () => void;
 };
 
-export const RelationItem = ({ relation }: Props) => {
+export const RelationItem = ({ relation, onFollow, onUnfollow }: Props) => {
   const { user } = relation;
 
   return (
@@ -19,15 +22,11 @@ export const RelationItem = ({ relation }: Props) => {
         <Text>{user.firstName}</Text>
       </XStack>
       <XStack>
-        {user.followedByMe ? (
-          <Button size="small" variant="outlined" w="$16">
-            Unfollow
-          </Button>
-        ) : (
-          <Button size="small" w="$16">
-            Follow
-          </Button>
-        )}
+        <RelationItemButton
+          followedByMe={user.followedByMe}
+          onFollow={onFollow}
+          onUnfollow={onUnfollow}
+        />
       </XStack>
     </XStack>
   );

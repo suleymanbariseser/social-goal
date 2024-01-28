@@ -13,13 +13,29 @@ type Props = {
   onEndReached: () => void;
   onRefresh: () => void;
   refreshing?: boolean;
+  onFollow: (userId: number) => void;
+  onUnfollow: (userId: number) => void;
 };
 
-export const RelationList = ({ users, emptyText, onEndReached, onRefresh, refreshing }: Props) => {
+export const RelationList = ({
+  users,
+  emptyText,
+  onEndReached,
+  onRefresh,
+  refreshing,
+  onFollow,
+  onUnfollow,
+}: Props) => {
   const toast = useToastController();
 
   const renderItem = ({ item }: ListRenderItemInfo<RelationShipListItem>) => {
-    return <RelationItem relation={item} />;
+    return (
+      <RelationItem
+        relation={item}
+        onFollow={() => onFollow(item.user.id)}
+        onUnfollow={() => onUnfollow(item.user.id)}
+      />
+    );
   };
 
   const handleRefresh = async () => {

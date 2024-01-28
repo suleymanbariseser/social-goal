@@ -6,7 +6,9 @@ import { useFollowerList } from '@/hooks/relation/useFollowerList';
 
 export default function ProfileFollowers() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { users, fetchNextPage, refetch, isRefetching } = useFollowerList({ id: Number(id) });
+  const { users, fetchNextPage, refetch, isRefetching, follow } = useFollowerList({
+    id: Number(id),
+  });
 
   return (
     <Stack f={1} px="$4">
@@ -16,6 +18,8 @@ export default function ProfileFollowers() {
         onEndReached={fetchNextPage}
         onRefresh={refetch}
         refreshing={isRefetching}
+        onFollow={follow}
+        onUnfollow={() => {}}
       />
     </Stack>
   );
