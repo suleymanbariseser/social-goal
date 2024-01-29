@@ -6,7 +6,9 @@ import { useFollowingList } from '@/hooks/relation/use-following-list';
 
 export default function ProfileFollowings() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { users, fetchNextPage, refetch, isRefetching } = useFollowingList({ id: Number(id) });
+  const { users, fetchNextPage, refetch, isRefetching, follow, unFollow } = useFollowingList({
+    id: Number(id),
+  });
 
   return (
     <Stack f={1} px="$4">
@@ -16,12 +18,8 @@ export default function ProfileFollowings() {
         onEndReached={fetchNextPage}
         onRefresh={refetch}
         refreshing={isRefetching}
-        onFollow={() => {
-          console.log('follow');
-        }}
-        onUnfollow={() => {
-          console.log('unfollow');
-        }}
+        onFollow={follow}
+        onUnfollow={unFollow}
       />
     </Stack>
   );

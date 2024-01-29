@@ -1,12 +1,15 @@
 import { UserRelationshipInput } from '@app/server/src/routes/user/relationship/schema';
+import { RelationShipListItem } from '@app/server/src/routes/user/relationship/types';
+import { merge } from 'lodash';
 import moment from 'moment';
 import { useRef } from 'react';
+import { DeepPartial } from 'react-hook-form';
 
 import { useFollow } from './use-follow';
-import { useUnfollow } from './useUnfollow';
+import { useUnfollow } from './use-unfollow';
 
 import { trpc } from '@/lib/trpc';
-import { findItemInPages } from '@/utils/findItemInPages';
+import { findItemInPages } from '@/utils/infinity/find-item-in-pages';
 
 export type FollowerListOptions = Partial<UserRelationshipInput>;
 
@@ -30,7 +33,7 @@ export const useFollowerList = (opts?: FollowerListOptions) => {
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
 
-  const updateUser = (id: number, value: boolean) => {
+  const updateUser = (id: number, value: DeepPartial<RelationShipListItem>) => {
     const [pageIndex, itemIndex] = findItemInPages(data.pages, 'user.id', id);
     if (pageIndex !== -1 && itemIndex !== -1) {
       utils.user.relations.followerList.setInfiniteData(queryOptions, (oldData) => {
@@ -40,7 +43,10 @@ export const useFollowerList = (opts?: FollowerListOptions) => {
         if (page) {
           const item = page.items[itemIndex];
           if (item) {
-            item.user.followedByMe = value;
+            page.items[itemIndex] = merge<RelationShipListItem, DeepPartial<RelationShipListItem>>(
+              item,
+              value
+            );
           }
         }
 
@@ -52,7 +58,11 @@ export const useFollowerList = (opts?: FollowerListOptions) => {
   const follow = (id: number) => {
     _follow(id, {
       onSuccess: () => {
-        updateUser(id, true);
+        updateUser(id, {
+          user: {
+            followedByMe: true,
+          },
+        });
       },
     });
   };
@@ -60,7 +70,11 @@ export const useFollowerList = (opts?: FollowerListOptions) => {
   const unFollow = (id: number) => {
     _unfollow(id, {
       onSuccess: () => {
-        updateUser(id, false);
+        updateUser(id, {
+          user: {
+            followedByMe: false,
+          },
+        });
       },
     });
   };

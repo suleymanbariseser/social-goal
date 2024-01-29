@@ -9,7 +9,7 @@ import { TamaguiProvider, Theme, YStack } from 'tamagui';
 import config from '../tamagui.config';
 
 import { AppToast, AppToastViewport } from '@/components/toast';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/use-auth';
 import { trpcClient, trpc } from '@/lib/trpc';
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {

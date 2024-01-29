@@ -1,16 +1,4 @@
-type GenNode<K extends string | number, IsRoot extends boolean> = IsRoot extends true
-  ? `${K}`
-  : `.${K}` | (K extends number ? `[${K}]` | `.[${K}]` : never);
-
-type ObjectKeyPaths<
-  T extends object,
-  IsRoot extends boolean = true,
-  K extends keyof T = keyof T
-> = K extends string | number
-  ?
-      | GenNode<K, IsRoot>
-      | (T[K] extends object ? `${GenNode<K, IsRoot>}${ObjectKeyPaths<T[K], false>}` : never)
-  : never;
+import { ObjectKeyPaths } from '@/types/object-key-paths';
 
 function findValueByPath(obj: Record<string, any>, path: string) {
   // Split the path into individual keys
@@ -36,11 +24,11 @@ function findValueByPath(obj: Record<string, any>, path: string) {
 }
 
 export const findItemInPages = <
-  T extends { items: any[] }[],
-  K extends ObjectKeyPaths<T[0]['items'][0]>
+  PageList extends { items: any[] }[],
+  Key extends ObjectKeyPaths<PageList[0]['items'][0]>
 >(
-  pages: T,
-  key: K,
+  pages: PageList,
+  key: Key,
   // TODO support type
   value: any
 ): [number, number] => {

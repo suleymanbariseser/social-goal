@@ -9,7 +9,7 @@ import HomeIcon from '@/assets/icons/home.svg';
 import MessageIcon from '@/assets/icons/message.svg';
 import ProfileIcon from '@/assets/icons/profile.svg';
 import SearchIcon from '@/assets/icons/search.svg';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/use-auth';
 import { trpc } from '@/lib/trpc';
 
 export const HomeTabs = () => {
