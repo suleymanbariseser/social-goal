@@ -2,7 +2,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'tamagui';
 
 import { RelationList } from '@/components/relation/relation-list';
-import { useFollowerList } from '@/hooks/relation/useFollowerList';
+import { useFollowerList } from '@/hooks/relation/use-follower-list';
 
 export default function ProfileFollowers() {
   const { id } = useLocalSearchParams<{ id: string }>();

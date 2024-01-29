@@ -2,7 +2,7 @@ import { UserRelationshipInput } from '@app/server/src/routes/user/relationship/
 import moment from 'moment';
 import { useRef } from 'react';
 
-import { useFollow } from './useFollow';
+import { useFollow } from './use-follow';
 
 import { trpc } from '@/lib/trpc';
 import { findItemInPages } from '@/utils/findItemInPages';
