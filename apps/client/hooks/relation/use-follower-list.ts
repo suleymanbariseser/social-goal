@@ -3,6 +3,7 @@ import moment from 'moment';
 import { useRef } from 'react';
 
 import { useFollow } from './use-follow';
+import { useUnfollow } from './useUnfollow';
 
 import { trpc } from '@/lib/trpc';
 import { findItemInPages } from '@/utils/findItemInPages';
@@ -12,7 +13,7 @@ export type FollowerListOptions = Partial<UserRelationshipInput>;
 export const useFollowerList = (opts?: FollowerListOptions) => {
   const timestamp = useRef(moment().utc().toDate());
   const _follow = useFollow();
-  // const _unfollow = useUnfollow();
+  const _unfollow = useUnfollow();
   const utils = trpc.useContext();
 
   const queryOptions = {
@@ -29,7 +30,7 @@ export const useFollowerList = (opts?: FollowerListOptions) => {
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
 
-  const validateUser = (id: number) => {
+  const updateUser = (id: number, value: boolean) => {
     const [pageIndex, itemIndex] = findItemInPages(data.pages, 'user.id', id);
     if (pageIndex !== -1 && itemIndex !== -1) {
       utils.user.relations.followerList.setInfiniteData(queryOptions, (oldData) => {
@@ -39,7 +40,7 @@ export const useFollowerList = (opts?: FollowerListOptions) => {
         if (page) {
           const item = page.items[itemIndex];
           if (item) {
-            item.user.followedByMe = true;
+            item.user.followedByMe = value;
           }
         }
 
@@ -51,7 +52,15 @@ export const useFollowerList = (opts?: FollowerListOptions) => {
   const follow = (id: number) => {
     _follow(id, {
       onSuccess: () => {
-        validateUser(id);
+        updateUser(id, true);
+      },
+    });
+  };
+
+  const unFollow = (id: number) => {
+    _unfollow(id, {
+      onSuccess: () => {
+        updateUser(id, false);
       },
     });
   };
@@ -67,5 +76,6 @@ export const useFollowerList = (opts?: FollowerListOptions) => {
     fetchNextPage,
     refetch,
     follow,
+    unFollow,
   };
 };

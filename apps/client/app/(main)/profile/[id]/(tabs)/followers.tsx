@@ -6,7 +6,7 @@ import { useFollowerList } from '@/hooks/relation/use-follower-list';
 
 export default function ProfileFollowers() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { users, fetchNextPage, refetch, isRefetching, follow } = useFollowerList({
+  const { users, fetchNextPage, refetch, isRefetching, follow, unFollow } = useFollowerList({
     id: Number(id),
   });
 
@@ -19,7 +19,7 @@ export default function ProfileFollowers() {
         onRefresh={refetch}
         refreshing={isRefetching}
         onFollow={follow}
-        onUnfollow={() => {}}
+        onUnfollow={unFollow}
       />
     </Stack>
   );
