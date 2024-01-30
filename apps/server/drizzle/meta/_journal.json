@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1699554331284,
-      "tag": "0000_broken_fallen_one",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1699813983292,
-      "tag": "0001_demonic_steve_rogers",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1699901445609,
-      "tag": "0002_plain_shaman",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1700160820274,
-      "tag": "0003_sloppy_the_twelve",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1701009373157,
-      "tag": "0004_white_elektra",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1704815452171,
-      "tag": "0005_black_baron_strucker",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "5",
-      "when": 1705858819095,
-      "tag": "0006_messy_obadiah_stane",
+      "when": 1706636442112,
+      "tag": "0000_amused_molly_hayes",
       "breakpoints": true
     }
   ]

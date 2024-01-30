@@ -26,7 +26,6 @@ export const activityComments = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => ({
-    userActivityIdx: uniqueIndex('user_activity_idx').on(table.userId, table.activityId),
     parentCommentReference: foreignKey({
       columns: [table.parentCommentId],
       foreignColumns: [table.id],
