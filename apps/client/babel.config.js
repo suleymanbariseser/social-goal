@@ -13,7 +13,6 @@ module.exports = function (api) {
           },
         },
       ],
-      require.resolve('expo-router/babel'),
       [
         'transform-inline-environment-variables',
         {
