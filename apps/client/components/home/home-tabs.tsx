@@ -1,14 +1,16 @@
+import {
+  Plus as PlusIcon,
+  MessageCircle as MessageIcon,
+  User as UserIcon,
+  Search as SearchIcon,
+  Home as HomeIcon,
+} from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
 import { Stack, getTokens } from 'tamagui';
 
 import { IconButton } from '../ui/icon-button';
 import { SafeAreaView } from '../ui/safe-area-view';
 
-import AddIcon from '@/assets/icons/add.svg';
-import HomeIcon from '@/assets/icons/home.svg';
-import MessageIcon from '@/assets/icons/message.svg';
-import ProfileIcon from '@/assets/icons/profile.svg';
-import SearchIcon from '@/assets/icons/search.svg';
 import { useAuth } from '@/hooks/use-auth';
 import { trpc } from '@/lib/trpc';
 
@@ -57,11 +59,11 @@ export const HomeTabs = () => {
           bg="$primaryMain"
           w={60}
           h={60}
-          icon={AddIcon}
+          icon={PlusIcon}
           mt={-30}
         />
         <IconButton onPress={handleLogout} variant="text" icon={MessageIcon} />
-        <IconButton onPress={handleProfile} variant="text" icon={ProfileIcon} />
+        <IconButton onPress={handleProfile} variant="text" icon={UserIcon} />
       </Stack>
     </SafeAreaView>
   );

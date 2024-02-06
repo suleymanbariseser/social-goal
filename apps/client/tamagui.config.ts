@@ -77,7 +77,6 @@ const newTokens = createTokens({
 });
 
 const config = createTamagui({
-  onlyAllowShorthands: true,
   animations,
   defaultTheme: 'dark',
   shouldAddPrefersColorThemes: false,

@@ -1,4 +1,4 @@
-import type { ColorTokens } from 'tamagui';
+import type { ColorTokens, SizeTokens } from 'tamagui';
 import { styled } from 'tamagui';
 
 import { BaseButton } from './button';
@@ -21,10 +21,10 @@ export const IconBaseButton = styled(BaseButton, {
 });
 
 interface Props extends React.ComponentProps<typeof IconBaseButton> {
-  icon: ({ color }: { color: ColorTokens }) => React.ReactNode;
+  icon: React.ComponentType<{ color: ColorTokens; size?: SizeTokens }>;
 }
 
-export function IconButton({ icon, variant = 'contained', ...props }: Props) {
+export function IconButton({ icon: Icon, variant = 'contained', ...props }: Props) {
   return (
     <IconBaseButton
       px="$0"
@@ -36,7 +36,7 @@ export function IconButton({ icon, variant = 'contained', ...props }: Props) {
       br="$12"
       variant={variant}
       {...props}>
-      {icon({ color: '$textPrimary' })}
+      <Icon color="$textPrimary" size="$6" />
     </IconBaseButton>
   );
 }

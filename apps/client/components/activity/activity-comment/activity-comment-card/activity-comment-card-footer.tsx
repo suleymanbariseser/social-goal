@@ -1,5 +1,5 @@
-import { EvilIcons } from '@expo/vector-icons';
-import { Card, getTokens } from 'tamagui';
+import { MessageCircle, ThumbsUp } from '@tamagui/lucide-icons';
+import { Card } from 'tamagui';
 
 import { Button } from '@/components/ui/button';
 
@@ -24,9 +24,7 @@ export const ActivityCommentCardFooter = ({
       f={1}
       jc="flex-start"
       onPress={onPressComment}
-      startAdornment={
-        <EvilIcons name="comment" size={24} color={getTokens().color.textPrimary.val} />
-      }>
+      startAdornment={<MessageCircle size="$4" />}>
       {comments}
     </Button>
     <Button
@@ -36,9 +34,7 @@ export const ActivityCommentCardFooter = ({
       f={1}
       jc="flex-start"
       onPress={onPressLike}
-      startAdornment={
-        <EvilIcons name="like" size={24} color={getTokens().color.textPrimary.val} />
-      }>
+      startAdornment={<ThumbsUp size="$4" />}>
       {likes}
     </Button>
   </Card.Footer>

@@ -1,11 +1,10 @@
+import { ChevronDown } from '@tamagui/lucide-icons';
 import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
 import { Adapt, Select as TamSelect, SelectProps as TamSelectProps, Sheet, Stack } from 'tamagui';
 
 import { Button, ButtonProps } from '../button';
 import { Divider } from '../divider';
 import { Text, TextProps } from '../text';
-
-import ChevronDown from '@/assets/icons/chevron-down.svg';
 
 type SelectItem = {
   name: string;
@@ -63,7 +62,14 @@ interface BaseSelectProps extends TamSelectProps {
   helperText?: string;
 }
 
-export function BaseSelect({ items = [], placeholder, header, helperText, error, ...props }: BaseSelectProps) {
+export function BaseSelect({
+  items = [],
+  placeholder,
+  header,
+  helperText,
+  error,
+  ...props
+}: BaseSelectProps) {
   return (
     <Stack w="100%" gap="$2">
       <TamSelect open={false} {...props}>
@@ -73,7 +79,7 @@ export function BaseSelect({ items = [], placeholder, header, helperText, error,
           boc={error ? '$errorMain' : '$backgroundBox'}
           px="$4"
           py="$4"
-          iconAfter={<ChevronDown width={16} />}>
+          iconAfter={<ChevronDown size="$5" />}>
           <TamSelect.Value
             placeholder={placeholder ?? 'Select'}
             color={error ? '$errorMain' : !props.value ? '$placeholderColor' : '$textPrimary'}

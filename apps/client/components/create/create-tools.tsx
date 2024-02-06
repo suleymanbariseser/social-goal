@@ -1,3 +1,4 @@
+import { Link as LinkIcon, Image as ImageIcon } from '@tamagui/lucide-icons';
 import { useEffect } from 'react';
 import { Control, Path, useController } from 'react-hook-form';
 import { XStack, YStack } from 'tamagui';
@@ -6,8 +7,6 @@ import { UploadedImages } from './uploaded-images/uploaded-images';
 import { IconButton } from '../ui/icon-button';
 import { Text } from '../ui/text';
 
-import ImageIcon from '@/assets/icons/image.svg';
-import LinkIcon from '@/assets/icons/link.svg';
 import { useUploadImage } from '@/hooks/asset/use-upload-image';
 import { useImagePicker } from '@/hooks/use-image-picker';
 

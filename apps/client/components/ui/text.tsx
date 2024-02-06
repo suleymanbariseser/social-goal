@@ -1,6 +1,6 @@
-import { styled, Text as TamText } from 'tamagui';
+import { styled, Text as TamaguiText } from 'tamagui';
 
-export const Text = styled(TamText, {
+export const Text = styled(TamaguiText, {
   name: 'Text',
 
   // default props

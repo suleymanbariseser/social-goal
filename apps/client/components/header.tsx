@@ -1,4 +1,4 @@
-import { AntDesign } from '@expo/vector-icons';
+import { ArrowLeft } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { XStack } from 'tamagui';
@@ -18,12 +18,7 @@ export const Header = ({ back, title }: Props) => {
 
   return (
     <XStack px="$4" pb="$4" pt={safeArea.top}>
-      {back && (
-        <IconButton
-          icon={({ color }) => <AntDesign name="arrowleft" size={24} color="#fff" />}
-          onPress={() => router.back()}
-        />
-      )}
+      {back && <IconButton icon={ArrowLeft} onPress={() => router.back()} />}
       <XStack>
         <Text>{title}</Text>
       </XStack>
