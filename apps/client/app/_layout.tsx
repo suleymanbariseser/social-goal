@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import moment from 'moment';
 import { Suspense, useEffect, useState } from 'react';
 import { TamaguiProvider, Theme, YStack } from 'tamagui';
 
@@ -11,6 +12,13 @@ import config from '../tamagui.config';
 import { AppToast, AppToastViewport } from '@/components/toast';
 import { useAuth } from '@/hooks/use-auth';
 import { trpcClient, trpc } from '@/lib/trpc';
+
+moment.updateLocale('en', {
+  week: {
+    // Monday is the first day of the week.
+    dow: 1,
+  },
+});
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const rootSegment = useSegments()[0];
