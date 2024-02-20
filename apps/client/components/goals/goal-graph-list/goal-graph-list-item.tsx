@@ -13,8 +13,8 @@ export const GoalGraphListItem = ({ start, end }: Props) => {
   const { settings } = useGoalGraphContext();
   const startDate = useRef(moment()).current;
   const dayDiff = moment(end).diff(moment(start), 'days');
-  const width = dayDiff * settings.dayWidth;
-  const prevGap = moment(start).diff(startDate, 'days') * 50;
+  const width = (dayDiff - 1) * settings.dayWidth;
+  const prevGap = moment(start).diff(startDate, 'days') * settings.dayWidth;
 
   return <Stack w={width} h={40} br="$6" bg="$red1" ml={prevGap} />;
 };

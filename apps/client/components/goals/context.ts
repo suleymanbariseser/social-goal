@@ -1,7 +1,9 @@
 import { createContext, useContext } from 'react';
+import { SharedValue } from 'react-native-gesture-handler/lib/typescript/handlers/gestures/reanimatedWrapper';
 
 type GoalGraphSettings = {
   dayWidth: number;
+  gridWidth: SharedValue<number>;
 };
 
 type GoalGraphContextType = {
