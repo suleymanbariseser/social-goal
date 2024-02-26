@@ -2,7 +2,8 @@ import { createContext, useContext } from 'react';
 import { SharedValue } from 'react-native-reanimated';
 
 type GraphScrollContextType = {
-  startX: SharedValue<number>;
+  scrollX: SharedValue<number>;
+  scrollY: SharedValue<number>;
 };
 
 export const GraphScrollContext = createContext<GraphScrollContextType | null>(null);

@@ -3,7 +3,11 @@ import { SharedValue } from 'react-native-gesture-handler/lib/typescript/handler
 
 type GoalGraphSettings = {
   dayWidth: number;
+  goalHeight: number;
   gridWidth: SharedValue<number>;
+  gridHeight: SharedValue<number>;
+  contentWidth: SharedValue<number>;
+  contentHeight: SharedValue<number>;
 };
 
 type GoalGraphContextType = {
