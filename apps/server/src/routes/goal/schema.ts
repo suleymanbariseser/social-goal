@@ -36,4 +36,11 @@ export const createGoalSchema = z
     }
   });
 
+export const getGoalsSummarySchema = z.object({
+  id: z.number({
+    required_error: 'User id is required',
+  }),
+});
+
 export type CreateGoalInput = z.infer<typeof createGoalSchema>;
+export type GetGoalsSummaryInput = z.infer<typeof getGoalsSummarySchema>;

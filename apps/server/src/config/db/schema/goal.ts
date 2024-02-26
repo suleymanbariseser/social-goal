@@ -1,4 +1,4 @@
-import { InferModel, relations } from 'drizzle-orm';
+import { InferSelectModel, relations } from 'drizzle-orm';
 import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 import { users } from './user';
 import { activities } from './activity';
@@ -23,4 +23,4 @@ export const goalRelations = relations(goals, ({ one, many }) => ({
   activities: many(activities),
 }));
 
-export type Goal = InferModel<typeof goals>;
+export type Goal = InferSelectModel<typeof goals>;
