@@ -1,14 +1,19 @@
 import moment from 'moment';
 import { Stack } from 'tamagui';
 
+import { ActivityIndicatorList, ActivitySummary } from './activity-indicator-list';
 import { useGoalGraphContext } from '../context';
+
+import { Text } from '@/components/ui/text';
 
 type Props = {
   startDate: Date;
   endDate: Date;
+  title: string;
+  activities: ActivitySummary[];
 };
 
-export const GoalGraphListItem = ({ startDate, endDate }: Props) => {
+export const GoalGraphListItem = ({ title, startDate, endDate, activities }: Props) => {
   const { settings, startDate: graphStartDate, endDate: graphEndDate } = useGoalGraphContext();
   const tileEndDate = moment(endDate).isAfter(graphEndDate) ? graphEndDate : endDate;
   const tileStartDate = moment(startDate).isBefore(graphStartDate) ? graphStartDate : startDate;
@@ -22,5 +27,19 @@ export const GoalGraphListItem = ({ startDate, endDate }: Props) => {
 
   const prevGap = diffWithStart * settings.dayWidth;
 
-  return <Stack w={width} h={settings.goalHeight} br="$6" bg="$red1" ml={prevGap} />;
+  return (
+    <Stack
+      w={width}
+      h={settings.goalHeight}
+      br="$6"
+      bg="$red1"
+      ml={prevGap}
+      ov="hidden"
+      ai="center"
+      pos="relative"
+      jc="center">
+      <ActivityIndicatorList activities={activities} />
+      <Text>{title}</Text>
+    </Stack>
+  );
 };

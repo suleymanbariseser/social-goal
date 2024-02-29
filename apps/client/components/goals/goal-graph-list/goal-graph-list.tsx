@@ -11,8 +11,14 @@ export const GoalGraphList = () => {
 
   return (
     <Stack fd="column" gap="$2" pt="$11" px={settings.dayWidth / 2}>
-      {goals.map((goal, index) => (
-        <GoalGraphListItem key={index} startDate={goal.startDate} endDate={goal.endDate} />
+      {goals.map((goal) => (
+        <GoalGraphListItem
+          key={goal.id}
+          startDate={goal.startDate}
+          endDate={goal.endDate}
+          title={goal.title}
+          activities={goal.activities}
+        />
       ))}
     </Stack>
   );
