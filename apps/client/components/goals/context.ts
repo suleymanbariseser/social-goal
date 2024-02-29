@@ -14,6 +14,7 @@ type GoalGraphContextType = {
   settings: GoalGraphSettings;
   startDate: Date;
   endDate: Date;
+  id: number;
 };
 
 export const GoalGraphContext = createContext<GoalGraphContextType>(null);

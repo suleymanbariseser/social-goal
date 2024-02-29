@@ -1,20 +1,26 @@
 import moment from 'moment';
-import { useRef } from 'react';
 import { Stack } from 'tamagui';
 
 import { useGoalGraphContext } from '../context';
 
 type Props = {
-  start: Date;
-  end: Date;
+  startDate: Date;
+  endDate: Date;
 };
 
-export const GoalGraphListItem = ({ start, end }: Props) => {
-  const { settings } = useGoalGraphContext();
-  const startDate = useRef(moment()).current;
-  const dayDiff = moment(end).diff(moment(start), 'days');
+export const GoalGraphListItem = ({ startDate, endDate }: Props) => {
+  const { settings, startDate: graphStartDate, endDate: graphEndDate } = useGoalGraphContext();
+  const tileEndDate = moment(endDate).isAfter(graphEndDate) ? graphEndDate : endDate;
+  const tileStartDate = moment(startDate).isBefore(graphStartDate) ? graphStartDate : startDate;
+
+  const dayDiff = moment(tileEndDate).diff(moment(tileStartDate), 'days');
   const width = dayDiff * settings.dayWidth;
-  const prevGap = moment(start).diff(startDate, 'days') * settings.dayWidth;
+
+  const diffWithStart = moment(startDate).isSameOrBefore(graphStartDate)
+    ? 0
+    : moment(startDate).diff(graphStartDate, 'days');
+
+  const prevGap = diffWithStart * settings.dayWidth;
 
   return <Stack w={width} h={settings.goalHeight} br="$6" bg="$red1" ml={prevGap} />;
 };

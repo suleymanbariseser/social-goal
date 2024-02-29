@@ -12,7 +12,7 @@ type Props = {
 export const GraphScrollArea = ({ children }: Props) => {
   const { endDate, startDate, settings } = useGoalGraphContext();
 
-  const dayDiff = moment(endDate).diff(moment(startDate), 'days');
+  const dayDiff = moment(endDate).diff(moment(startDate), 'days') + 1;
 
   const scrollableWidth = useDerivedValue(() => {
     return dayDiff * settings.dayWidth - settings.gridWidth.value;
