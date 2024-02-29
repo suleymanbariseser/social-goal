@@ -36,11 +36,22 @@ export const createGoalSchema = z
     }
   });
 
-export const getGoalsSummarySchema = z.object({
-  id: z.number({
-    required_error: 'User id is required',
-  }),
-});
+export const getGoalsSummarySchema = z
+  .object({
+    id: z.number({
+      required_error: 'User id is required',
+    }),
+    startDate: z.date({
+      required_error: 'Start date is required',
+    }),
+    endDate: z.date({
+      required_error: 'End date is required',
+    }),
+  })
+  .refine((data) => moment(data.startDate).isBefore(moment(data.endDate)), {
+    message: 'End date must be after start date',
+    path: ['endDate'],
+  });
 
 export type CreateGoalInput = z.infer<typeof createGoalSchema>;
 export type GetGoalsSummaryInput = z.infer<typeof getGoalsSummarySchema>;

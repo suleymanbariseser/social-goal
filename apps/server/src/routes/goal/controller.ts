@@ -2,7 +2,7 @@ import { ProtectedInputOptions } from '@/types/trpc';
 import { CreateGoalInput, GetGoalsSummaryInput } from './schema';
 import { db } from '@/config/db';
 import { activities, goals } from '@/config/db/schema';
-import { asc, eq } from 'drizzle-orm';
+import { and, asc, eq, gte, lte } from 'drizzle-orm';
 
 export const createGoal = async ({ input, ctx }: ProtectedInputOptions<CreateGoalInput>) => {
   const goal = await db
@@ -21,8 +21,13 @@ export const createGoal = async ({ input, ctx }: ProtectedInputOptions<CreateGoa
 
 export const getGoalsSummary = async ({ input }: ProtectedInputOptions<GetGoalsSummaryInput>) => {
   return await db.query.goals.findMany({
-    where: eq(goals.creatorId, input.id),
+    where: and(
+      eq(goals.creatorId, input.id),
+      lte(goals.startDate, input.endDate),
+      gte(goals.endDate, input.startDate),
+    ),
     columns: {
+      id: true,
       title: true,
       startDate: true,
       endDate: true,
@@ -30,15 +35,15 @@ export const getGoalsSummary = async ({ input }: ProtectedInputOptions<GetGoalsS
     with: {
       activities: {
         columns: {
-          createdAt: true,
           id: true,
+          createdAt: true,
         },
         orderBy: [asc(activities.createdAt)],
-      }
+      },
     },
     orderBy: [asc(goals.createdAt)],
-  })
-}
+  });
+};
 
 export const getGoals = async ({ ctx }: ProtectedInputOptions<unknown>) => {
   return await db.select().from(goals).where(eq(goals.creatorId, ctx.user.id));
