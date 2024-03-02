@@ -14,6 +14,7 @@ export const GoalGraphList = () => {
       {goals.map((goal) => (
         <GoalGraphListItem
           key={goal.id}
+          goalId={goal.id}
           startDate={goal.startDate}
           endDate={goal.endDate}
           title={goal.title}

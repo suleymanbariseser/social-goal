@@ -11,9 +11,10 @@ type Props = {
   endDate: Date;
   title: string;
   activities: ActivitySummary[];
+  goalId: number;
 };
 
-export const GoalGraphListItem = ({ title, startDate, endDate, activities }: Props) => {
+export const GoalGraphListItem = ({ goalId, title, startDate, endDate, activities }: Props) => {
   const { settings, startDate: graphStartDate, endDate: graphEndDate } = useGoalGraphContext();
   const tileEndDate = moment(endDate).isAfter(graphEndDate) ? graphEndDate : endDate;
   const tileStartDate = moment(startDate).isBefore(graphStartDate) ? graphStartDate : startDate;
@@ -38,7 +39,7 @@ export const GoalGraphListItem = ({ title, startDate, endDate, activities }: Pro
       ai="center"
       pos="relative"
       jc="center">
-      <ActivityIndicatorList activities={activities} />
+      <ActivityIndicatorList activities={activities} goalId={goalId} />
       <Text>{title}</Text>
     </Stack>
   );

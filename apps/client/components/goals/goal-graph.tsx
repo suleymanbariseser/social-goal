@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { Dimensions, LayoutChangeEvent } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSharedValue } from 'react-native-reanimated';
 
-import { GoalGraphContext } from './context';
+import { FocusedDetails, GoalGraphContext } from './context';
 import { GoalGraphContent } from './goal-graph-content';
 import { GraphScrollArea } from './graph-scroll-area/graph-scroll-area';
 
@@ -17,6 +18,8 @@ export const GoalsGraph = ({ id, startDate, endDate }: Props) => {
   const gridHeight = useSharedValue(Dimensions.get('window').height);
   const contentWidth = useSharedValue(Dimensions.get('window').width);
   const contentHeight = useSharedValue(Dimensions.get('window').height);
+
+  const [focusedDetails, setFocusedDetails] = useState<FocusedDetails | null>(null);
 
   const handleLayout = (event: LayoutChangeEvent) => {
     gridWidth.value = event.nativeEvent.layout.width;
@@ -37,6 +40,8 @@ export const GoalsGraph = ({ id, startDate, endDate }: Props) => {
         },
         startDate,
         endDate,
+        focusedDetails,
+        setFocusedDetails,
       }}>
       <GestureHandlerRootView onLayout={handleLayout} style={{ flex: 1 }}>
         <GraphScrollArea>

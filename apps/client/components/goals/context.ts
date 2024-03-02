@@ -10,11 +10,18 @@ type GoalGraphSettings = {
   contentHeight: SharedValue<number>;
 };
 
+export type FocusedDetails = {
+  date: string;
+  goalId: number;
+};
+
 type GoalGraphContextType = {
   settings: GoalGraphSettings;
   startDate: Date;
   endDate: Date;
   id: number;
+  focusedDetails: FocusedDetails | null;
+  setFocusedDetails: React.Dispatch<React.SetStateAction<FocusedDetails | null>>;
 };
 
 export const GoalGraphContext = createContext<GoalGraphContextType>(null);

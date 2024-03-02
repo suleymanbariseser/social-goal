@@ -10,9 +10,10 @@ export type ActivitySummary = {
 
 type Props = {
   activities: ActivitySummary[];
+  goalId: number;
 };
 
-export const ActivityIndicatorList = ({ activities }: Props) => {
+export const ActivityIndicatorList = ({ goalId, activities }: Props) => {
   const getDays = () => {
     const days = new Map<string, number>();
 
@@ -30,7 +31,7 @@ export const ActivityIndicatorList = ({ activities }: Props) => {
   return (
     <Stack l={0} t={0} w="100%" h="100%" pos="absolute">
       {[...days.entries()].map(([date, count]) => (
-        <ActivityIndicatorItem key={date} date={date} count={count} />
+        <ActivityIndicatorItem key={date} goalId={goalId} date={date} count={count} />
       ))}
     </Stack>
   );
