@@ -1,4 +1,5 @@
 import { Eye } from '@tamagui/lucide-icons';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import moment from 'moment';
 import { ColorTokens, Stack } from 'tamagui';
 
@@ -12,6 +13,8 @@ type Props = {
 
 export const ActivityIndicatorItem = ({ goalId, count, date }: Props) => {
   const { settings, startDate, focusedDetails, setFocusedDetails } = useGoalGraphContext();
+  const router = useRouter();
+  const { id } = useLocalSearchParams();
 
   const diff = moment(date).diff(startDate, 'days');
 
@@ -24,7 +27,7 @@ export const ActivityIndicatorItem = ({ goalId, count, date }: Props) => {
 
   const handlePress = () => {
     if (isHighlighted) {
-      // Open a modal screen
+      router.push(`/goal/${id}`);
       return;
     }
 

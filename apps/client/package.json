@@ -2,7 +2,7 @@
   "name": "@app/client",
   "version": "1.0.0",
   "description": "Client of Social Goal",
-  "main": "index.ts",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "TAMAGUI_TARGET=native expo start",
     "android": "TAMAGUI_TARGET=native expo start --android",
