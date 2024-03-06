@@ -21,7 +21,10 @@ export const ActivityListItem = ({ activity, onPressAvatar, onPress }: Props) =>
         name: activity.creator.fullName,
       }}
       content={activity.content}
-      goal={activity.goal.title}
+      goal={{
+        id: activity.goal.id,
+        title: activity.goal.title,
+      }}
       comments={activity.comments}
       likes={activity.likes}
       assets={activity.assets}

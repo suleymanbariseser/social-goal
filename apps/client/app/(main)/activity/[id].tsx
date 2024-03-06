@@ -30,7 +30,10 @@ export default function Activity() {
         header={
           <Stack>
             <ActivityCard
-              goal={activity.goal.title}
+              goal={{
+                id: activity.goal.id,
+                title: activity.goal.title,
+              }}
               admin={{
                 name: activity.creator.fullName,
                 img: activity.creator.image,
