@@ -36,7 +36,7 @@ export const createGoalSchema = z
     }
   });
 
-export const getGoalsSummarySchema = z
+export const goalActivitiesSchema = z
   .object({
     id: z.number({
       required_error: 'User id is required',
@@ -54,4 +54,4 @@ export const getGoalsSummarySchema = z
   });
 
 export type CreateGoalInput = z.infer<typeof createGoalSchema>;
-export type GetGoalsSummaryInput = z.infer<typeof getGoalsSummarySchema>;
+export type GoalActivitiesInput = z.infer<typeof goalActivitiesSchema>;

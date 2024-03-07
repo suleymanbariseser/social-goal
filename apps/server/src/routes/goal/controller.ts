@@ -1,5 +1,5 @@
 import { ProtectedInputOptions } from '@/types/trpc';
-import { CreateGoalInput, GetGoalsSummaryInput } from './schema';
+import { CreateGoalInput, GoalActivitiesInput } from './schema';
 import { db } from '@/config/db';
 import { activities, goals } from '@/config/db/schema';
 import { and, asc, eq, gte, lte } from 'drizzle-orm';
@@ -19,7 +19,7 @@ export const createGoal = async ({ input, ctx }: ProtectedInputOptions<CreateGoa
   return goal[0];
 };
 
-export const getGoalsSummary = async ({ input }: ProtectedInputOptions<GetGoalsSummaryInput>) => {
+export const getGoalsActivities = async ({ input }: ProtectedInputOptions<GoalActivitiesInput>) => {
   return await db.query.goals.findMany({
     where: and(
       eq(goals.creatorId, input.id),
