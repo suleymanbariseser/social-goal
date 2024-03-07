@@ -17,7 +17,13 @@ export default function Layout() {
         header: ({ navigation, options }) => (
           <Header back={navigation.canGoBack()} title={options.title} />
         ),
-      }}
-    />
+      }}>
+      <RouterStack.Screen
+        name="goal"
+        options={{
+          headerShown: false,
+        }}
+      />
+    </RouterStack>
   );
 }
