@@ -1,5 +1,6 @@
 import { useLocalSearchParams } from 'expo-router';
 import moment from 'moment';
+import { Stack } from 'tamagui';
 
 import { ActivityList } from '@/components/activity';
 
@@ -22,14 +23,16 @@ export default function Goal() {
   };
 
   return (
-    <ActivityList
-      onPress={console.log}
-      onPressAvatar={console.log}
-      filters={{
-        goalId: +id,
-        from: getDate(from),
-        to: getDate(to),
-      }}
-    />
+    <Stack f={1} px="$2">
+      <ActivityList
+        onPress={console.log}
+        onPressAvatar={console.log}
+        filters={{
+          goalId: +id,
+          from: getDate(from),
+          to: getDate(to),
+        }}
+      />
+    </Stack>
   );
 }
