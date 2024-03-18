@@ -1,8 +1,16 @@
+import { useLocalSearchParams } from 'expo-router';
+import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { Sheet, Stack, XStack } from 'tamagui';
 
 import { DatePicker } from '@/components/ui/form/date-picker';
 import { Text } from '@/components/ui/text';
+
+type Params = {
+  id: string;
+  from?: string;
+  to?: string;
+};
 
 type Props = {
   open: boolean;
@@ -10,15 +18,34 @@ type Props = {
 };
 
 export const GoalFiltersModal = ({ open, setOpen }: Props) => {
+  const { from, to } = useLocalSearchParams<Params>();
   const {
     control,
+    getValues,
+    setValue,
     formState: { errors },
-  } = useForm<{ startDate: Date | undefined; endDate: Date | undefined }>({
+  } = useForm<{ startDate: Date | null; endDate: Date | null }>({
     defaultValues: {
-      startDate: undefined,
-      endDate: undefined,
+      startDate: from ? moment(+from).toDate() : null,
+      endDate: to ? moment(+to).toDate() : null,
     },
   });
+
+  const handleStartDateChange = (date: Date | null) => {
+    const endDate = getValues('endDate');
+
+    if (date && endDate && moment(date).isAfter(endDate)) {
+      setValue('endDate', null);
+    }
+  };
+
+  const handleEndDateChange = (date: Date | null) => {
+    const startDate = getValues('startDate');
+
+    if (date && startDate && moment(date).isBefore(startDate)) {
+      setValue('startDate', null);
+    }
+  };
 
   return (
     <Sheet
@@ -27,7 +54,7 @@ export const GoalFiltersModal = ({ open, setOpen }: Props) => {
       native
       modal
       dismissOnSnapToBottom
-      snapPoints={[60]}
+      snapPoints={[20]}
       zIndex={9999999}>
       <Sheet.Frame p="$6" gap="$6" br="$8">
         <Stack>
@@ -41,6 +68,7 @@ export const GoalFiltersModal = ({ open, setOpen }: Props) => {
                 name="startDate"
                 placeholder="Start Date"
                 error={!!errors.startDate}
+                onChange={handleStartDateChange}
                 resetable
               />
             </Stack>
@@ -50,6 +78,7 @@ export const GoalFiltersModal = ({ open, setOpen }: Props) => {
                 name="endDate"
                 placeholder="End Date"
                 error={!!errors.endDate}
+                onChange={handleEndDateChange}
                 resetable
               />
             </Stack>

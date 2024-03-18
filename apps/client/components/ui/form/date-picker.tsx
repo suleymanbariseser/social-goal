@@ -12,7 +12,7 @@ import { Text } from '../text';
 
 interface BaseDatePickerProps {
   value: Date | null;
-  onChange: (date: Date) => void;
+  onChange?: (date: Date) => void;
 
   onPress?: () => void;
   disabled?: boolean;
@@ -21,6 +21,9 @@ interface BaseDatePickerProps {
   error?: boolean;
   resetable?: boolean;
   onReset?: () => void;
+
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 export function BaseDatePicker(props: BaseDatePickerProps) {
@@ -66,6 +69,8 @@ export function BaseDatePicker(props: BaseDatePickerProps) {
             numberOfMonths={12}
             onDatesChange={handleDatesChange}
             focusedInput="startDate"
+            minBookingDate={props.minDate}
+            maxBookingDate={props.maxDate}
           />
         </Sheet.Frame>
         <Sheet.Overlay />
@@ -74,8 +79,7 @@ export function BaseDatePicker(props: BaseDatePickerProps) {
   );
 }
 
-interface DatePickerProps<T, Context = any>
-  extends Omit<BaseDatePickerProps, 'value' | 'onChange' | 'onReset'> {
+interface DatePickerProps<T, Context = any> extends Omit<BaseDatePickerProps, 'value' | 'onReset'> {
   control: Control<T, Context>;
   name: Path<T>;
   defaultValue?: FieldPathValue<T, Path<T>>;
@@ -84,6 +88,7 @@ interface DatePickerProps<T, Context = any>
 export const DatePicker = <T extends object, Context = any>({
   control,
   name,
+  onChange,
   ...rest
 }: DatePickerProps<T, Context>) => {
   const { field } = useController({
@@ -92,11 +97,14 @@ export const DatePicker = <T extends object, Context = any>({
     defaultValue: rest?.defaultValue ?? undefined,
   });
 
-  const onReset = () => {
-    field.onChange(undefined);
+  const handleChange = (date: Date | null) => {
+    onChange?.(date);
+    field.onChange(date);
   };
 
-  return (
-    <BaseDatePicker value={field.value} onChange={field.onChange} onReset={onReset} {...rest} />
-  );
+  const onReset = () => {
+    handleChange(null);
+  };
+
+  return <BaseDatePicker value={field.value} onChange={handleChange} onReset={onReset} {...rest} />;
 };
