@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { Sheet, Stack, XStack } from 'tamagui';
@@ -18,7 +18,9 @@ type Props = {
 };
 
 export const GoalFiltersModal = ({ open, setOpen }: Props) => {
+  const router = useRouter();
   const { from, to } = useLocalSearchParams<Params>();
+
   const {
     control,
     getValues,
@@ -47,10 +49,22 @@ export const GoalFiltersModal = ({ open, setOpen }: Props) => {
     }
   };
 
+  const handleOpenChange = (value: boolean) => {
+    setOpen(false);
+
+    const startDate = getValues('startDate');
+    const endDate = getValues('endDate');
+
+    router.setParams({
+      from: startDate ? moment(startDate).startOf('day').valueOf().toString() : undefined,
+      to: endDate ? moment(endDate).endOf('day').valueOf().toString() : undefined,
+    });
+  };
+
   return (
     <Sheet
       open={open}
-      onOpenChange={setOpen}
+      onOpenChange={handleOpenChange}
       native
       modal
       dismissOnSnapToBottom
