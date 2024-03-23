@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { Stack } from 'tamagui';
 
 import { ActivityList } from '@/components/activity';
-import { HomeTabs } from '@/components/home/home-tabs';
+import { AppTabs } from '@/components/app-tabs';
 
 const Home = () => {
   const router = useRouter();
@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <Stack pos="relative" f={1} px="$2">
       <ActivityList onPress={handlePress} onPressAvatar={handlePressAvatar} />
-      <HomeTabs />
+      <AppTabs activeTab="home" />
     </Stack>
   );
 };

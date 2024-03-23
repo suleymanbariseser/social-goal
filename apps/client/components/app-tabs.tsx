@@ -8,16 +8,24 @@ import {
 import { useRouter } from 'expo-router';
 import { Stack, getTokens } from 'tamagui';
 
-import { IconButton } from '../ui/icon-button';
-import { SafeAreaView } from '../ui/safe-area-view';
+import { IconButton } from './ui/icon-button';
+import { SafeAreaView } from './ui/safe-area-view';
 
 import { useAuth } from '@/hooks/use-auth';
 import { trpc } from '@/lib/trpc';
 
-export const HomeTabs = () => {
+type Props = {
+  activeTab: 'home' | 'discover' | 'create' | 'messages' | 'profile';
+};
+
+export const AppTabs = ({ activeTab }: Props) => {
   const router = useRouter();
   const { data: userInfo } = trpc.user.info.useQuery();
   const { logout } = useAuth();
+
+  const handleHome = () => {
+    router.push('/');
+  };
 
   const handleCreate = () => {
     router.push('/create');
@@ -55,8 +63,18 @@ export const HomeTabs = () => {
         }}
         shadowOpacity={0.1}
         shadowRadius="$1">
-        <IconButton variant="text" icon={HomeIcon} />
-        <IconButton variant="text" onPress={handleDiscover} icon={CompassIcon} />
+        <IconButton
+          variant="text"
+          onPress={handleHome}
+          icon={HomeIcon}
+          disabled={activeTab === 'home'}
+        />
+        <IconButton
+          variant="text"
+          onPress={handleDiscover}
+          icon={CompassIcon}
+          disabled={activeTab === 'discover'}
+        />
         <IconButton
           variant="text"
           onPress={handleCreate}
@@ -65,9 +83,20 @@ export const HomeTabs = () => {
           h={60}
           icon={PlusIcon}
           mt={-30}
+          disabled={activeTab === 'create'}
         />
-        <IconButton onPress={handleLogout} variant="text" icon={MessageIcon} />
-        <IconButton onPress={handleProfile} variant="text" icon={UserIcon} />
+        <IconButton
+          variant="text"
+          onPress={handleLogout}
+          icon={MessageIcon}
+          disabled={activeTab === 'messages'}
+        />
+        <IconButton
+          variant="text"
+          onPress={handleProfile}
+          icon={UserIcon}
+          disabled={activeTab === 'profile'}
+        />
       </Stack>
     </SafeAreaView>
   );
