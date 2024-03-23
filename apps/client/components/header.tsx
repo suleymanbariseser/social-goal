@@ -16,15 +16,19 @@ export const Header = ({ back, title, actions }: Props) => {
 
   const router = useRouter();
 
+  const showAction = back || actions;
+
   return (
     <XStack px="$4" pb="$4" pt={safeArea.top}>
-      <XStack w={40}>
-        {back && <IconButton icon={ArrowLeft} onPress={() => router.back()} />}
-      </XStack>
+      {showAction && (
+        <XStack w={40}>
+          {back && <IconButton icon={ArrowLeft} onPress={() => router.back()} />}
+        </XStack>
+      )}
       <XStack fg={1} ai="center" jc="center">
         {title}
       </XStack>
-      <XStack w={40}>{actions}</XStack>
+      {showAction && <XStack w={40}>{actions}</XStack>}
     </XStack>
   );
 };

@@ -1,5 +1,7 @@
 import Color from 'color';
+import { forwardRef } from 'react';
 import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
+import type { TextInput } from 'react-native';
 import { Stack, Input as TInput, getTokens, styled } from 'tamagui';
 
 import { Text } from '../text';
@@ -39,29 +41,32 @@ type BaseInputProps = React.ComponentProps<typeof StyledInput> & {
   helperText?: string;
 };
 
-export const BaseInput = ({ error, helperText, disabled, ...rest }: BaseInputProps) => {
-  const color = error ? getTokens().color.$errorMain.val : getTokens().color.$textPrimary.val;
+export const BaseInput = forwardRef<TextInput, BaseInputProps>(
+  ({ error, helperText, disabled, ...rest }, ref) => {
+    const color = error ? getTokens().color.$errorMain.val : getTokens().color.$textPrimary.val;
 
-  return (
-    <Stack gap="$2" opacity={disabled ? 0.5 : 1}>
-      <StyledInput
-        {...rest}
-        placeholderTextColor={Color(color).alpha(0.7).toString()}
-        disabled={disabled}
-        editable={!disabled}
-        boc={error ? '$errorMain' : defaultStyles.boc}
-        focusStyle={{
-          boc: color,
-        }}
-      />
-      {helperText && (
-        <Text variant="body3" color={color}>
-          {helperText}
-        </Text>
-      )}
-    </Stack>
-  );
-};
+    return (
+      <Stack gap="$2" opacity={disabled ? 0.5 : 1}>
+        <StyledInput
+          ref={ref}
+          {...rest}
+          placeholderTextColor={Color(color).alpha(0.7).toString()}
+          disabled={disabled}
+          editable={!disabled}
+          boc={error ? '$errorMain' : defaultStyles.boc}
+          focusStyle={{
+            boc: color,
+          }}
+        />
+        {helperText && (
+          <Text variant="body3" color={color}>
+            {helperText}
+          </Text>
+        )}
+      </Stack>
+    );
+  }
+);
 
 type InputProps<T, Context = any> = Omit<BaseInputProps, 'defaultValue'> & {
   control: Control<T, Context>;

@@ -1,13 +1,12 @@
 import { LayoutChangeEvent } from 'react-native';
-import Animated, { useAnimatedStyle } from 'react-native-reanimated';
-import { Stack } from 'tamagui';
+import { useAnimatedStyle } from 'react-native-reanimated';
 
 import { useGoalGraphContext } from './context';
 import { GoalGraphList } from './goal-graph-list/goal-graph-list';
 import { GoalGrid } from './goal-grid/goal-grid';
 import { useGraphScrollContext } from './graph-scroll-area/context';
 
-const AnimatedStack = Animated.createAnimatedComponent(Stack);
+import { AnimatedStack } from '@/components/ui/animated-layout';
 
 export const GoalGraphContent = () => {
   const goalGraphContext = useGoalGraphContext();

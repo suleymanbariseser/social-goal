@@ -1,6 +1,7 @@
 import { Stack as RouterStack } from 'expo-router';
 import { getTokens } from 'tamagui';
 
+import { DiscoverSearchInput } from '@/components/discover/discover-search/discover-search-input';
 import { Header } from '@/components/header';
 
 export const unstable_settings = {
@@ -22,6 +23,12 @@ export default function Layout() {
         name="goal"
         options={{
           headerShown: false,
+        }}
+      />
+      <RouterStack.Screen
+        name="discover"
+        options={{
+          header: () => <Header title={<DiscoverSearchInput />} />,
         }}
       />
     </RouterStack>

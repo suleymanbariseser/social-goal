@@ -2,7 +2,7 @@ import {
   Plus as PlusIcon,
   MessageCircle as MessageIcon,
   User as UserIcon,
-  Search as SearchIcon,
+  Compass as CompassIcon,
   Home as HomeIcon,
 } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
@@ -25,6 +25,10 @@ export const HomeTabs = () => {
 
   const handleProfile = () => {
     router.push(`/profile/${userInfo.id}`);
+  };
+
+  const handleDiscover = () => {
+    router.push(`/discover`);
   };
 
   const handleLogout = () => {
@@ -52,7 +56,7 @@ export const HomeTabs = () => {
         shadowOpacity={0.1}
         shadowRadius="$1">
         <IconButton variant="text" icon={HomeIcon} />
-        <IconButton variant="text" icon={SearchIcon} />
+        <IconButton variant="text" onPress={handleDiscover} icon={CompassIcon} />
         <IconButton
           variant="text"
           onPress={handleCreate}
