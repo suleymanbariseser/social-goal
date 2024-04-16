@@ -1,7 +1,8 @@
 import { useStore } from 'zustand';
 
+import { SearchResult } from './search-result';
+
 import { Overlay } from '@/components/ui/overlay';
-import { Text } from '@/components/ui/text';
 import { discoverStore } from '@/store/discover';
 
 export const DiscoverSearchOverlay = () => {
@@ -9,7 +10,7 @@ export const DiscoverSearchOverlay = () => {
 
   return (
     <Overlay bg="$backgroundMain" open={isSearchFocused}>
-      <Text>Search result</Text>
+      <SearchResult />
     </Overlay>
   );
 };

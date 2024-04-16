@@ -6,17 +6,20 @@ import { userSocialLinks } from './user-social-link';
 import { userRelationships } from './user-relationships';
 import { activityComments } from '../activity/activity-comments';
 
-export const users = pgTable('users', {
-  id: serial('id').primaryKey(),
-  image: text('image'),
-  firstName: text('first_name').notNull(),
-  lastName: text('last_name').notNull(),
-  email: text('email').notNull().unique(),
-  description: text('description'),
-  password: text('password').notNull(),
-  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
-});
+export const users = pgTable(
+  'users',
+  {
+    id: serial('id').primaryKey(),
+    image: text('image'),
+    firstName: text('first_name').notNull(),
+    lastName: text('last_name').notNull(),
+    email: text('email').notNull().unique(),
+    description: text('description'),
+    password: text('password').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  }
+);
 
 export const userRelations = relations(users, ({ many }) => ({
   goals: many(goals),

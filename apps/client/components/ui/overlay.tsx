@@ -1,4 +1,4 @@
-import { SlideInLeft, SlideInRight } from 'react-native-reanimated';
+import { SlideInRight } from 'react-native-reanimated';
 import { Edge, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StackProps } from 'tamagui';
 
@@ -23,6 +23,7 @@ export const Overlay = ({ children, edges = [], open, ...props }: Props) => {
       r={0}
       b={0}
       pos="absolute"
+      zi={99}
       pl={edges.includes('left') && insets.left}
       pt={edges.includes('top') && insets.top}
       pr={edges.includes('right') && insets.right}

@@ -12,7 +12,7 @@ import { discoverStore } from '@/store/discover';
 
 export const DiscoverSearchInput = () => {
   const inputRef = useRef<TextInput>(null);
-  const { isSearchFocused, focusSearch, blurSearch } = useStore(discoverStore);
+  const { isSearchFocused, focusSearch, blurSearch, updateSearch } = useStore(discoverStore);
 
   const handleXPress = () => {
     inputRef.current.blur();
@@ -26,6 +26,7 @@ export const DiscoverSearchInput = () => {
           placeholder="Search..."
           onFocus={focusSearch}
           onBlur={blurSearch}
+          onChangeText={(value) => updateSearch(value)}
         />
       </Stack>
       {isSearchFocused && (
