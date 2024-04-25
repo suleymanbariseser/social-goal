@@ -1,6 +1,6 @@
 import { useStore } from 'zustand';
 
-import { SearchRecommendations } from './search-recommendations';
+import { SearchRecommendations } from './search-recommendations/search-recommendations';
 
 import { Text } from '@/components/ui/text';
 import { discoverStore } from '@/store/discover';
