@@ -15,6 +15,7 @@ export const searchRecommendation = async ({
       image: true,
       lastName: true,
     },
+    limit: 10,
     extras: (table, { sql }) => ({
       fullName: sql<string>`concat(${table.firstName} || ' ' || ${table.lastName})`.as('full_name'),
     }),

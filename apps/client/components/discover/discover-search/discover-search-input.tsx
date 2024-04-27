@@ -1,4 +1,5 @@
 import { X } from '@tamagui/lucide-icons';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRef } from 'react';
 import type { TextInput } from 'react-native';
 import { SlideInRight } from 'react-native-reanimated';
@@ -10,12 +11,28 @@ import { BaseInput } from '@/components/ui/form/input';
 import { IconButton } from '@/components/ui/icon-button';
 import { discoverStore } from '@/store/discover';
 
+type SearchParams = {
+  q: string;
+};
+
 export const DiscoverSearchInput = () => {
   const inputRef = useRef<TextInput>(null);
-  const { isSearchFocused, focusSearch, blurSearch, updateSearch } = useStore(discoverStore);
+  const { q } = useLocalSearchParams<SearchParams>();
+  const router = useRouter();
+
+  const { isSearchFocused, focusSearch, blurSearch, updateSearch, search } =
+    useStore(discoverStore);
 
   const handleXPress = () => {
     inputRef.current.blur();
+
+    updateSearch(q);
+  };
+
+  const handleSubmit = () => {
+    inputRef.current.blur();
+
+    router.setParams({ q: search });
   };
 
   return (
@@ -24,8 +41,10 @@ export const DiscoverSearchInput = () => {
         <BaseInput
           ref={inputRef}
           placeholder="Search..."
+          value={search}
           onFocus={focusSearch}
           onBlur={blurSearch}
+          onSubmitEditing={handleSubmit}
           onChangeText={(value) => updateSearch(value)}
         />
       </Stack>
