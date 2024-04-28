@@ -28,6 +28,7 @@ export const activityInfiniteSchema = z.object({
   goalId: z.number().nullish(),
   from: z.date().nullish(),
   to: z.date().nullish(),
+  q: z.string().nullish(),
 });
 
 export const activityWithIdSchema = z.object({

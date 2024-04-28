@@ -6,18 +6,16 @@ import { SlideInRight } from 'react-native-reanimated';
 import { Stack } from 'tamagui';
 import { useStore } from 'zustand';
 
+import { DiscoverLocalSearchParams } from '../types';
+
 import { AnimatedStack } from '@/components/ui/animated-layout';
 import { BaseInput } from '@/components/ui/form/input';
 import { IconButton } from '@/components/ui/icon-button';
 import { discoverStore } from '@/store/discover';
 
-type SearchParams = {
-  q: string;
-};
-
 export const DiscoverSearchInput = () => {
   const inputRef = useRef<TextInput>(null);
-  const { q } = useLocalSearchParams<SearchParams>();
+  const { q } = useLocalSearchParams<DiscoverLocalSearchParams>();
   const router = useRouter();
 
   const { isSearchFocused, focusSearch, blurSearch, updateSearch, search } =

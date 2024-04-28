@@ -17,6 +17,7 @@ export const useActivities = (opts?: ActivityOptions) => {
     fetchNextPage,
     refetch: _refetch,
     isRefetching,
+    isLoading,
   } = trpc.activity.activities.useInfiniteQuery(
     {
       limit: 15,
@@ -52,5 +53,6 @@ export const useActivities = (opts?: ActivityOptions) => {
     isRefetching,
     fetchNextPage,
     refetch,
+    isLoading,
   };
 };

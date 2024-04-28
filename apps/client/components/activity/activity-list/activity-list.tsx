@@ -1,7 +1,7 @@
 import { NetworkActivity } from '@app/server/src/routes/activity/controller';
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList, FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
 import { useToastController } from '@tamagui/toast';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
@@ -9,16 +9,23 @@ import { ActivityListItem } from './activity-list-item';
 
 import { ActivityOptions, useActivities } from '@/hooks/activity/use-activities';
 
-type Props = {
+type Props<T> = {
   onPressAvatar: (userId: number) => void;
   onPress: (activityId: number) => void;
   filters?: ActivityOptions;
   header?: React.ReactNode;
+  ListEmptyComponent?: FlashListProps<T>['ListEmptyComponent'];
 };
 
 // TODO - accept more props to filter activities for reusing this component in other screens
-export const ActivityList = ({ filters, onPressAvatar, onPress, header }: Props) => {
-  const { activities, fetchNextPage, refetch, isRefetching } = useActivities(filters);
+export const ActivityList = <T,>({
+  filters,
+  onPressAvatar,
+  onPress,
+  header,
+  ListEmptyComponent,
+}: Props<T>) => {
+  const { activities, fetchNextPage, refetch, isRefetching, isLoading } = useActivities(filters);
   const toast = useToastController();
 
   const handleRefresh = () => {
@@ -63,6 +70,7 @@ export const ActivityList = ({ filters, onPressAvatar, onPress, header }: Props)
       ListHeaderComponentStyle={{ paddingBottom: 16 }}
       renderItem={renderItem}
       estimatedItemSize={152}
+      ListEmptyComponent={!isLoading && ListEmptyComponent}
     />
   );
 };
