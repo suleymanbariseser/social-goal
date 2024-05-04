@@ -1,8 +1,9 @@
 import { db } from '@/config/db';
-import { users } from '@/config/db/schema';
+import { userRelationships, users } from '@/config/db/schema';
 import { ProtectedInputOptions } from '@/types/trpc';
 import { eq } from 'drizzle-orm';
-import { ProfileSummaryInput } from './schema';
+import { ProfileSummaryInput, UsersListInput } from './schema';
+import { getInfiniteQuery } from '@/utils/infinity';
 
 export const getUserInfo = async ({ ctx }: ProtectedInputOptions<any>) => {
   const user = await db
@@ -55,4 +56,47 @@ export const getProfileSummary = async ({ input }: ProtectedInputOptions<Profile
     followers: userSummary?.followers.length ?? 0,
     followings: userSummary?.followings.length ?? 0,
   };
+};
+
+export type UserItem = {
+  id: string;
+  image: string;
+  firstName: string;
+  lastName: string;
+  followedByMe: boolean;
+};
+
+export const getUsersList = async ({ ctx, input }: ProtectedInputOptions<UsersListInput>) => {
+  const { items: usersList, nextCursor } = await getInfiniteQuery(
+    'users',
+    {
+      columns: {
+        id: true,
+        image: true,
+        firstName: true,
+        lastName: true,
+      },
+      with: {
+        followers: {
+          where: eq(userRelationships.followerId, ctx.user.id),
+          columns: {
+            id: true,
+          },
+        },
+      },
+    },
+    {
+      limit: input.limit,
+      cursor: input.cursor,
+    }
+  );
+
+  const newUsersList = usersList.map(({ followers, followings, ...user }: any) => {
+    return {
+      ...user,
+      followedByMe: followers.length > 0,
+    } as UserItem;
+  });
+
+  return { items: newUsersList, nextCursor };
 };
