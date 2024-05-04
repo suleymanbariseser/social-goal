@@ -4,8 +4,8 @@ import { useToastController } from '@tamagui/toast';
 import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
-import { RelationItem } from './relation-item/relation-item';
 import { RelationListEmpty } from './relation-list-empty';
+import { ProfileListItem } from '../profile/profile-list/profile-list-item';
 
 type Props = {
   users: RelationShipListItem[];
@@ -30,8 +30,8 @@ export const RelationList = ({
 
   const renderItem = ({ item }: ListRenderItemInfo<RelationShipListItem>) => {
     return (
-      <RelationItem
-        relation={item}
+      <ProfileListItem
+        user={item.user}
         onFollow={() => onFollow(item.user.id)}
         onUnfollow={() => onUnfollow(item.user.id)}
       />
