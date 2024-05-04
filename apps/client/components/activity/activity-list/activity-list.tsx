@@ -1,7 +1,6 @@
 import { NetworkActivity } from '@app/server/src/routes/activity/controller';
 import { FlashList, FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
 import { useToastController } from '@tamagui/toast';
-import { useCallback } from 'react';
 import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
@@ -42,15 +41,12 @@ export const ActivityList = <T,>({
     fetchNextPage();
   };
 
-  const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<NetworkActivity>) => (
-      <ActivityListItem
-        activity={item}
-        onPress={() => onPress(item.id)}
-        onPressAvatar={() => onPressAvatar(item.creator.id)}
-      />
-    ),
-    []
+  const renderItem = ({ item }: ListRenderItemInfo<NetworkActivity>) => (
+    <ActivityListItem
+      activity={item}
+      onPress={() => onPress(item.id)}
+      onPressAvatar={() => onPressAvatar(item.creator.id)}
+    />
   );
 
   const refreshControl = (

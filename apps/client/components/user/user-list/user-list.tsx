@@ -1,7 +1,6 @@
 import { UserItem } from '@app/server/src/routes/user/relationship/types';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { useToastController } from '@tamagui/toast';
-import { useCallback } from 'react';
 import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
@@ -20,6 +19,8 @@ export const UserList = ({ filters }: Props) => {
     fetchNextPage,
     isRefetching,
     refetch,
+    follow,
+    unFollow,
   } = useUserList({
     filters,
   });
@@ -34,9 +35,13 @@ export const UserList = ({ filters }: Props) => {
     }
   };
 
-  const renderItem = useCallback(({ item }: ListRenderItemInfo<UserItem>) => {
-    return <UserListItem user={item} onFollow={console.log} onUnfollow={console.log} />;
-  }, []);
+  const renderItem = ({ item }: ListRenderItemInfo<UserItem>) => (
+    <UserListItem
+      user={item}
+      onFollow={() => follow(item.id)}
+      onUnfollow={() => unFollow(item.id)}
+    />
+  );
 
   const refreshControl = (
     <RefreshControl tintColor="white" refreshing={isRefetching} onRefresh={handleRefresh} />
