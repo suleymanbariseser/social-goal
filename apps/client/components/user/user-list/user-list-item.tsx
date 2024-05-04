@@ -11,15 +11,16 @@ type Props = {
   user: UserItem;
   onFollow: () => void;
   onUnfollow: () => void;
+  onPress: () => void;
 };
 
-export const UserListItem = ({ user, onFollow, onUnfollow }: Props) => {
+export const UserListItem = ({ user, onFollow, onUnfollow, onPress }: Props) => {
   const {
     user: { id },
   } = useAuth();
 
   return (
-    <XStack ai="center">
+    <XStack ai="center" onPress={onPress}>
       <XStack f={1} gap="$2" ai="center">
         <Avatar src={user.image} />
         <Text>{user.firstName}</Text>

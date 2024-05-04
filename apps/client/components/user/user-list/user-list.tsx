@@ -1,6 +1,7 @@
 import { UserItem } from '@app/server/src/routes/user/relationship/types';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { useToastController } from '@tamagui/toast';
+import { useRouter } from 'expo-router';
 import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
@@ -14,6 +15,7 @@ type Props = {
 
 export const UserList = ({ filters }: Props) => {
   const toast = useToastController();
+  const router = useRouter();
   const {
     users: profiles,
     fetchNextPage,
@@ -38,6 +40,7 @@ export const UserList = ({ filters }: Props) => {
   const renderItem = ({ item }: ListRenderItemInfo<UserItem>) => (
     <UserListItem
       user={item}
+      onPress={() => router.push(`/profile/${item.id}`)}
       onFollow={() => follow(item.id)}
       onUnfollow={() => unFollow(item.id)}
     />
