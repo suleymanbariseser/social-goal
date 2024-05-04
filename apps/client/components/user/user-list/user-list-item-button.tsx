@@ -5,7 +5,7 @@ type Props = {
   onFollow: () => void;
   onUnfollow: () => void;
 };
-export const ProfileListItemButton = ({ followedByMe, onFollow, onUnfollow }: Props) => {
+export const UserListItemButton = ({ followedByMe, onFollow, onUnfollow }: Props) => {
   if (followedByMe) {
     return (
       <Button onPress={onUnfollow} size="small" variant="outlined" w="$16">

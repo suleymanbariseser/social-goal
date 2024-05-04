@@ -1,7 +1,7 @@
 import { db } from '@/config/db';
 import { userRelationships, users } from '@/config/db/schema';
 import { ProtectedInputOptions } from '@/types/trpc';
-import { eq } from 'drizzle-orm';
+import { eq, ilike } from 'drizzle-orm';
 import { ProfileSummaryInput, UsersListInput } from './schema';
 import { getInfiniteQuery } from '@/utils/infinity';
 import { UserItem } from './relationship/types';
@@ -69,6 +69,7 @@ export const getUsersList = async ({ ctx, input }: ProtectedInputOptions<UsersLi
         firstName: true,
         lastName: true,
       },
+      where: input.q ? ilike(users.firstName, `%${input.q}%`) : undefined,
       with: {
         followers: {
           where: eq(userRelationships.followerId, ctx.user.id),

@@ -3,14 +3,14 @@ import { Stack } from 'tamagui';
 
 import { DiscoverLocalSearchParams } from '../../types';
 
-import { ProfileList } from '@/components/profile/profile-list';
+import { UserList } from '@/components/user/user-list';
 
-export const DiscoverProfileList = () => {
+export const DiscoverUserList = () => {
   const { q } = useLocalSearchParams<DiscoverLocalSearchParams>();
 
   return (
     <Stack fg={1} pt="$4">
-      <ProfileList filters={{ q }} />
+      <UserList filters={{ q }} />
     </Stack>
   );
 };

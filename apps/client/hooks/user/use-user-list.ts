@@ -4,13 +4,13 @@ import { useRef } from 'react';
 
 import { trpc } from '@/lib/trpc';
 
-export type ProfileListFilters = Partial<UsersListInput>;
+export type UserListFilters = Partial<UsersListInput>;
 
 type Options = {
-  filters?: ProfileListFilters;
+  filters?: UserListFilters;
 };
 
-export const useProfileList = (options: Options = {}) => {
+export const useUserList = (options: Options = {}) => {
   const timestamp = useRef(moment().utc().toDate());
 
   const {
@@ -36,7 +36,7 @@ export const useProfileList = (options: Options = {}) => {
   };
 
   return {
-    profiles: data?.pages.flatMap((page) => page.items) ?? [],
+    users: data?.pages.flatMap((page) => page.items) ?? [],
     isRefetching,
     fetchNextPage,
     refetch,

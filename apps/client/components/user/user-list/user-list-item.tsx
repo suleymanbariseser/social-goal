@@ -1,7 +1,7 @@
-import { UserItem } from '@app/server/src/routes/user/controller';
+import type { UserItem } from '@app/server/src/routes/user/relationship/types';
 import { XStack } from 'tamagui';
 
-import { ProfileListItemButton } from './profile-list-item-button';
+import { UserListItemButton } from './user-list-item-button';
 
 import { Avatar } from '@/components/ui/avatar';
 import { Text } from '@/components/ui/text';
@@ -12,7 +12,7 @@ type Props = {
   onUnfollow: () => void;
 };
 
-export const ProfileListItem = ({ user, onFollow, onUnfollow }: Props) => {
+export const UserListItem = ({ user, onFollow, onUnfollow }: Props) => {
   return (
     <XStack ai="center">
       <XStack f={1} gap="$2" ai="center">
@@ -20,7 +20,7 @@ export const ProfileListItem = ({ user, onFollow, onUnfollow }: Props) => {
         <Text>{user.firstName}</Text>
       </XStack>
       <XStack>
-        <ProfileListItemButton
+        <UserListItemButton
           followedByMe={user.followedByMe}
           onFollow={onFollow}
           onUnfollow={onUnfollow}

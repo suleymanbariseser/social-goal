@@ -5,17 +5,22 @@ import { useCallback } from 'react';
 import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
-import { ProfileListItem } from './profile-list-item';
+import { UserListItem } from './user-list-item';
 
-import { ProfileListFilters, useProfileList } from '@/hooks/profile/use-profile-list';
+import { UserListFilters, useUserList } from '@/hooks/user/use-user-list';
 
 type Props = {
-  filters?: ProfileListFilters;
+  filters?: UserListFilters;
 };
 
-export const ProfileList = ({ filters }: Props) => {
+export const UserList = ({ filters }: Props) => {
   const toast = useToastController();
-  const { profiles, fetchNextPage, isRefetching, refetch } = useProfileList({
+  const {
+    users: profiles,
+    fetchNextPage,
+    isRefetching,
+    refetch,
+  } = useUserList({
     filters,
   });
 
@@ -30,7 +35,7 @@ export const ProfileList = ({ filters }: Props) => {
   };
 
   const renderItem = useCallback(({ item }: ListRenderItemInfo<UserItem>) => {
-    return <ProfileListItem user={item} onFollow={console.log} onUnfollow={console.log} />;
+    return <UserListItem user={item} onFollow={console.log} onUnfollow={console.log} />;
   }, []);
 
   const refreshControl = (

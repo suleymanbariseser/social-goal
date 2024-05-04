@@ -5,7 +5,7 @@ import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
 import { RelationListEmpty } from './relation-list-empty';
-import { ProfileListItem } from '../profile/profile-list/profile-list-item';
+import { UserListItem } from '../user/user-list/user-list-item';
 
 type Props = {
   users: RelationShipListItem[];
@@ -30,7 +30,7 @@ export const RelationList = ({
 
   const renderItem = ({ item }: ListRenderItemInfo<RelationShipListItem>) => {
     return (
-      <ProfileListItem
+      <UserListItem
         user={item.user}
         onFollow={() => onFollow(item.user.id)}
         onUnfollow={() => onUnfollow(item.user.id)}
