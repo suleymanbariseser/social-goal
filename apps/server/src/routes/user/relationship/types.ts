@@ -1,4 +1,4 @@
-export type RelationShipListItemUser = {
+export type UserItem = {
   id: number;
   firstName: string;
   lastName: string;
@@ -8,7 +8,7 @@ export type RelationShipListItemUser = {
 
 export type RelationShipListItem = {
   id: number;
-  user: RelationShipListItemUser;
+  user: UserItem;
 };
 
 export type RelationShipListResponse = {

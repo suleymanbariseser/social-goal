@@ -4,6 +4,7 @@ import { ProtectedInputOptions } from '@/types/trpc';
 import { eq } from 'drizzle-orm';
 import { ProfileSummaryInput, UsersListInput } from './schema';
 import { getInfiniteQuery } from '@/utils/infinity';
+import { UserItem } from './relationship/types';
 
 export const getUserInfo = async ({ ctx }: ProtectedInputOptions<any>) => {
   const user = await db
@@ -56,14 +57,6 @@ export const getProfileSummary = async ({ input }: ProtectedInputOptions<Profile
     followers: userSummary?.followers.length ?? 0,
     followings: userSummary?.followings.length ?? 0,
   };
-};
-
-export type UserItem = {
-  id: string;
-  image: string;
-  firstName: string;
-  lastName: string;
-  followedByMe: boolean;
 };
 
 export const getUsersList = async ({ ctx, input }: ProtectedInputOptions<UsersListInput>) => {

@@ -6,7 +6,7 @@ import { userRelationships } from '@/config/db/schema';
 import { and, eq, lte } from 'drizzle-orm';
 import { UserSettings, getFollowingIdsFromUserIds, isUserAllowedToGetRelationships } from './utils';
 import { getInfiniteQuery } from '@/utils/infinity';
-import { RelationShipListItemUser, RelationShipListResponse } from './types';
+import { RelationShipListResponse, UserItem } from './types';
 
 export const followerList = async ({
   ctx,
@@ -51,14 +51,14 @@ export const followerList = async ({
     }
   );
 
-  const ids = data.items.map((item) => ((item as any).follower as RelationShipListItemUser).id);
+  const ids = data.items.map((item) => ((item as any).follower as UserItem).id);
 
   const followedByMeIds = await getFollowingIdsFromUserIds(ctx.user.id, ids);
 
   const newData = {
     ...data,
     items: data.items.map((item) => {
-      const follower = (item as any).follower as RelationShipListItemUser;
+      const follower = (item as any).follower as UserItem;
       return {
         id: item.id,
         // TODO remove this after type improvement
@@ -116,14 +116,14 @@ export const followingList = async ({
     }
   );
 
-  const ids = data.items.map((item) => ((item as any).following as RelationShipListItemUser).id);
+  const ids = data.items.map((item) => ((item as any).following as UserItem).id);
 
   const followedByMeIds = await getFollowingIdsFromUserIds(ctx.user.id, ids);
 
   const newData = {
     ...data,
     items: data.items.map((item) => {
-      const following = (item as any).following as RelationShipListItemUser;
+      const following = (item as any).following as UserItem;
       return {
         id: item.id,
         // TODO remove this after type improvement
