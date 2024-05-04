@@ -1,9 +1,16 @@
+import { UsersListInput } from '@app/server/src/routes/user/schema';
 import moment from 'moment';
 import { useRef } from 'react';
 
 import { trpc } from '@/lib/trpc';
 
-export const useProfileList = () => {
+export type ProfileListFilters = Partial<UsersListInput>;
+
+type Options = {
+  filters?: ProfileListFilters;
+};
+
+export const useProfileList = (options: Options = {}) => {
   const timestamp = useRef(moment().utc().toDate());
 
   const {
@@ -16,6 +23,7 @@ export const useProfileList = () => {
     {
       limit: 15,
       timestamp: timestamp.current,
+      ...options.filters,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

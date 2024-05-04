@@ -7,11 +7,17 @@ import { Stack } from 'tamagui';
 
 import { ProfileListItem } from './profile-list-item';
 
-import { useProfileList } from '@/hooks/profile/use-profile-list';
+import { ProfileListFilters, useProfileList } from '@/hooks/profile/use-profile-list';
 
-export const ProfileList = () => {
-  const { profiles, fetchNextPage, isRefetching, refetch } = useProfileList();
+type Props = {
+  filters?: ProfileListFilters;
+};
+
+export const ProfileList = ({ filters }: Props) => {
   const toast = useToastController();
+  const { profiles, fetchNextPage, isRefetching, refetch } = useProfileList({
+    filters,
+  });
 
   const handleRefresh = () => {
     try {

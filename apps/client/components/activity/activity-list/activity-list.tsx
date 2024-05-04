@@ -67,7 +67,7 @@ export const ActivityList = <T,>({
       keyExtractor={(item) => item.id.toString()}
       ItemSeparatorComponent={() => <Stack py="$2" />}
       ListHeaderComponent={header ? () => <Stack mb="$2">{header}</Stack> : undefined}
-      ListHeaderComponentStyle={{ paddingBottom: 16 }}
+      ListHeaderComponentStyle={header && { paddingBottom: 16 }}
       renderItem={renderItem}
       estimatedItemSize={152}
       ListEmptyComponent={!isLoading && ListEmptyComponent}

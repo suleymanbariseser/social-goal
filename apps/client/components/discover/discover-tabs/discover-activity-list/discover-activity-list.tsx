@@ -1,4 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack } from 'tamagui';
 
 import { DiscoverActivityListEmpty } from './discover-activity-list-empty';
 import { DiscoverLocalSearchParams } from '../../types';
@@ -18,13 +19,15 @@ export const DiscoverActivityList = () => {
   };
 
   return (
-    <ActivityList
-      onPress={handlePress}
-      onPressAvatar={handlePressAvatar}
-      filters={{
-        q,
-      }}
-      ListEmptyComponent={<DiscoverActivityListEmpty />}
-    />
+    <Stack fg={1} pt="$4">
+      <ActivityList
+        onPress={handlePress}
+        onPressAvatar={handlePressAvatar}
+        filters={{
+          q,
+        }}
+        ListEmptyComponent={<DiscoverActivityListEmpty />}
+      />
+    </Stack>
   );
 };
