@@ -2,7 +2,8 @@ import { ProtectedInputOptions } from '@/types/trpc';
 import { CreateGoalInput, GoalActivitiesInput, GoalSummaryInput } from './schema';
 import { db } from '@/config/db';
 import { activities, goals } from '@/config/db/schema';
-import { and, asc, eq, gte, lte } from 'drizzle-orm';
+import { and, asc, eq, gte, ilike, lte } from 'drizzle-orm';
+import { getInfiniteQuery } from '@/utils/infinity';
 
 export const createGoal = async ({ input, ctx }: ProtectedInputOptions<CreateGoalInput>) => {
   const goal = await db
@@ -62,6 +63,25 @@ export const getGoalSummary = async ({ input }: ProtectedInputOptions<GoalSummar
   })
 }
 
-export const getGoals = async ({ ctx }: ProtectedInputOptions<unknown>) => {
-  return await db.select().from(goals).where(eq(goals.creatorId, ctx.user.id));
+export const getGoalsList = async ({ input }: ProtectedInputOptions<any>) => {
+  const { items: allGoals, nextCursor } = await getInfiniteQuery(
+    'goals',
+    {
+      where: and(
+        input.userId ? eq(goals.creatorId, input.userId) : undefined,
+        input.q ? ilike(goals.title, `%${input.q}%`) : undefined
+      ),
+    },
+    {
+      cursor: input.cursor,
+      limit: input.limit,
+    }
+  );
+
+  return {
+    items: allGoals,
+    nextCursor,
+  };
 };
+
+export type GoalItem = Awaited<ReturnType<typeof getGoalsList>>['items'][0];

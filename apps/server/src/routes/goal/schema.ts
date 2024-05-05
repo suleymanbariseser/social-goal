@@ -59,6 +59,21 @@ export const goalSummarySchema = z.object({
   }),
 });
 
+const DEFAULT_LIMIT = 10;
+const MIN_LIMIT = 5;
+const MAX_LIMIT = 100;
+
+export const goalListSchema = z.object({
+  q: z.string().nullish(),
+  userId: z.number().nullish(),
+
+  // TODO use infiniteschema to validate this
+  limit: z.number().min(MIN_LIMIT).max(MAX_LIMIT).nullish(),
+  cursor: z.number().nullish(),
+  timestamp: z.date(),
+});
+
 export type CreateGoalInput = z.infer<typeof createGoalSchema>;
 export type GoalActivitiesInput = z.infer<typeof goalActivitiesSchema>;
 export type GoalSummaryInput = z.infer<typeof goalSummarySchema>;
+export type GoalListInput = z.infer<typeof goalListSchema>;
