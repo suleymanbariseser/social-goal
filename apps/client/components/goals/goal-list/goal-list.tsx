@@ -1,0 +1,50 @@
+import { GoalItem } from '@app/server/src/routes/goal/controller';
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { useToastController } from '@tamagui/toast';
+import { RefreshControl } from 'react-native';
+import { Stack } from 'tamagui';
+
+import { GoalListItem } from './goal-list-item';
+
+import { GoalListFilters, useGoalList } from '@/hooks/goal/use-goal-list';
+
+type Props = {
+  filters?: GoalListFilters;
+};
+
+export const GoalList = ({ filters }: Props) => {
+  const toast = useToastController();
+  const { goals, isRefetching, refetch, fetchNextPage } = useGoalList({ filters });
+
+  const handleRefresh = () => {
+    try {
+      refetch?.();
+    } catch (error) {
+      toast.show(error.message, {
+        variant: 'error',
+      });
+    }
+  };
+
+  const renderItem = ({ item }: ListRenderItemInfo<GoalItem>) => {
+    return <GoalListItem goal={item} />;
+  };
+
+  const refreshControl = (
+    <RefreshControl tintColor="white" refreshing={isRefetching} onRefresh={handleRefresh} />
+  );
+
+  return (
+    <FlashList
+      data={goals}
+      renderItem={renderItem}
+      refreshing={isRefetching}
+      onRefresh={handleRefresh}
+      refreshControl={refreshControl}
+      onEndReached={fetchNextPage}
+      keyExtractor={(item) => item.id.toString()}
+      ItemSeparatorComponent={() => <Stack py="$2" />}
+      estimatedItemSize={40}
+    />
+  );
+};

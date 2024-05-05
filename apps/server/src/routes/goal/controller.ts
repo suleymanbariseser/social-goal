@@ -63,6 +63,20 @@ export const getGoalSummary = async ({ input }: ProtectedInputOptions<GoalSummar
   })
 }
 
+export type GoalItem = {
+  id: number;
+  title: string;
+  startDate: Date;
+  endDate: Date;
+  creator: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    image: string;
+  };
+};
+
 export const getGoalsList = async ({ input }: ProtectedInputOptions<any>) => {
   const { items: allGoals, nextCursor } = await getInfiniteQuery(
     'goals',
@@ -71,6 +85,21 @@ export const getGoalsList = async ({ input }: ProtectedInputOptions<any>) => {
         input.userId ? eq(goals.creatorId, input.userId) : undefined,
         input.q ? ilike(goals.title, `%${input.q}%`) : undefined
       ),
+      with: {
+        creator: {
+          columns: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            image: true,
+          },
+          extras: (table, { sql }) => ({
+            fullName: sql<string>`concat(${table.firstName} || ' ' || ${table.lastName})`.as(
+              'creator_full_name'
+            ),
+          }),
+        }
+      }
     },
     {
       cursor: input.cursor,
@@ -79,9 +108,7 @@ export const getGoalsList = async ({ input }: ProtectedInputOptions<any>) => {
   );
 
   return {
-    items: allGoals,
+    items: allGoals as unknown as GoalItem[],
     nextCursor,
   };
 };
-
-export type GoalItem = Awaited<ReturnType<typeof getGoalsList>>['items'][0];
