@@ -25,7 +25,7 @@ export const useUserList = (options: Options = {}) => {
 
   const queryOptions = {
     timestamp: timestamp.current,
-    ...options,
+    ...options.filters,
   };
 
   const {
