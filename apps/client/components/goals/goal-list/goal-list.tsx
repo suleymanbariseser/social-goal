@@ -1,6 +1,7 @@
 import { GoalItem } from '@app/server/src/routes/goal/controller';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { useToastController } from '@tamagui/toast';
+import { useRouter } from 'expo-router';
 import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
@@ -14,6 +15,7 @@ type Props = {
 
 export const GoalList = ({ filters }: Props) => {
   const toast = useToastController();
+  const router = useRouter();
   const { goals, isRefetching, refetch, fetchNextPage } = useGoalList({ filters });
 
   const handleRefresh = () => {
@@ -27,7 +29,13 @@ export const GoalList = ({ filters }: Props) => {
   };
 
   const renderItem = ({ item }: ListRenderItemInfo<GoalItem>) => {
-    return <GoalListItem goal={item} />;
+    return (
+      <GoalListItem
+        onPress={() => router.push(`/goal/${item.id}`)}
+        onPressAvatar={() => router.push(`/profile/${item.creator.id}`)}
+        goal={item}
+      />
+    );
   };
 
   const refreshControl = (

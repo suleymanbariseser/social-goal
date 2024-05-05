@@ -1,6 +1,7 @@
 import { ScrollView, Stack, Tabs } from 'tamagui';
 
 import { DiscoverActivityList } from './discover-activity-list';
+import { DiscoverGoalList } from './discover-goal-list';
 import { DiscoverUserList } from './discover-user-list';
 
 import { Text } from '@/components/ui/text';
@@ -31,8 +32,8 @@ export const DiscoverTabs = () => {
         <Tabs.Content value="activities" fg={1}>
           <DiscoverActivityList />
         </Tabs.Content>
-        <Tabs.Content value="goals">
-          <Text>Goals</Text>
+        <Tabs.Content value="goals" fg={1}>
+          <DiscoverGoalList />
         </Tabs.Content>
       </Stack>
     </Tabs>
