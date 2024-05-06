@@ -8,22 +8,18 @@ import { ActivityListItem } from './activity-list-item';
 
 import { ActivityOptions, useActivities } from '@/hooks/activity/use-activities';
 
-type Props<T> = {
+type Props = {
   onPressAvatar: (userId: number) => void;
   onPress: (activityId: number) => void;
   filters?: ActivityOptions;
   header?: React.ReactNode;
-  ListEmptyComponent?: FlashListProps<T>['ListEmptyComponent'];
-};
+} & Omit<
+  FlashListProps<NetworkActivity>,
+  'data' | 'renderItem' | 'onEndReached' | 'keyExtractor' | 'estimatedItemSize'
+>;
 
 // TODO - accept more props to filter activities for reusing this component in other screens
-export const ActivityList = <T,>({
-  filters,
-  onPressAvatar,
-  onPress,
-  header,
-  ListEmptyComponent,
-}: Props<T>) => {
+export const ActivityList = ({ filters, onPressAvatar, onPress, header, ...rest }: Props) => {
   const { activities, fetchNextPage, refetch, isRefetching, isLoading } = useActivities(filters);
   const toast = useToastController();
 
@@ -55,6 +51,7 @@ export const ActivityList = <T,>({
 
   return (
     <FlashList
+      {...rest}
       data={activities}
       refreshing={isRefetching}
       onRefresh={handleRefresh}
@@ -66,7 +63,7 @@ export const ActivityList = <T,>({
       ListHeaderComponentStyle={header && { paddingBottom: 16 }}
       renderItem={renderItem}
       estimatedItemSize={152}
-      ListEmptyComponent={!isLoading && ListEmptyComponent}
+      ListEmptyComponent={!isLoading && rest.ListEmptyComponent}
     />
   );
 };

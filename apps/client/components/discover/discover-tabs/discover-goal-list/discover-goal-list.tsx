@@ -10,7 +10,7 @@ export const DiscoverGoalList = () => {
 
   return (
     <Stack fg={1} pt="$4">
-      <GoalList filters={{ q }} />
+      <GoalList filters={{ q }} ListFooterComponent={<Stack h="$18" />} />
     </Stack>
   );
 };

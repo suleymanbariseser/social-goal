@@ -27,6 +27,7 @@ export const DiscoverActivityList = () => {
           q,
         }}
         ListEmptyComponent={<DiscoverActivityListEmpty />}
+        ListFooterComponent={<Stack h="$18" />}
       />
     </Stack>
   );

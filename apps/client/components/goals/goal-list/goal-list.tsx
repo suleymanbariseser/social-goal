@@ -1,5 +1,5 @@
 import { GoalItem } from '@app/server/src/routes/goal/controller';
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList, FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
 import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'expo-router';
 import { RefreshControl } from 'react-native';
@@ -11,9 +11,12 @@ import { GoalListFilters, useGoalList } from '@/hooks/goal/use-goal-list';
 
 type Props = {
   filters?: GoalListFilters;
-};
+} & Omit<
+  FlashListProps<GoalItem>,
+  'data' | 'renderItem' | 'onEndReached' | 'keyExtractor' | 'estimatedItemSize'
+>;
 
-export const GoalList = ({ filters }: Props) => {
+export const GoalList = ({ filters, ...rest }: Props) => {
   const toast = useToastController();
   const router = useRouter();
   const { goals, isRefetching, refetch, fetchNextPage } = useGoalList({ filters });
@@ -44,6 +47,7 @@ export const GoalList = ({ filters }: Props) => {
 
   return (
     <FlashList
+      {...rest}
       data={goals}
       renderItem={renderItem}
       refreshing={isRefetching}

@@ -10,7 +10,7 @@ export const DiscoverUserList = () => {
 
   return (
     <Stack fg={1} pt="$4">
-      <UserList filters={{ q }} />
+      <UserList filters={{ q }} ListFooterComponent={<Stack h="$18" />} />
     </Stack>
   );
 };

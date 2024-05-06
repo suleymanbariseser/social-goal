@@ -1,5 +1,5 @@
 import { UserItem } from '@app/server/src/routes/user/relationship/types';
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList, FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
 import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'expo-router';
 import { RefreshControl } from 'react-native';
@@ -11,9 +11,12 @@ import { UserListFilters, useUserList } from '@/hooks/user/use-user-list';
 
 type Props = {
   filters?: UserListFilters;
-};
+} & Omit<
+  FlashListProps<UserItem>,
+  'data' | 'renderItem' | 'onEndReached' | 'keyExtractor' | 'estimatedItemSize'
+>;
 
-export const UserList = ({ filters }: Props) => {
+export const UserList = ({ filters, ...rest }: Props) => {
   const toast = useToastController();
   const router = useRouter();
   const {
@@ -52,6 +55,7 @@ export const UserList = ({ filters }: Props) => {
 
   return (
     <FlashList
+      {...rest}
       data={profiles}
       refreshing={isRefetching}
       onRefresh={handleRefresh}
