@@ -16,7 +16,7 @@ const getPartialValues = <T>(value: T, partial: MergeDeepPartial<T, T>): DeepPar
     const partialValue = partial[typedKey];
 
     if (typeof partialValue === 'function') {
-      partialValues[typedKey] = partialValue(value[typedKey]);
+      partialValues[typedKey] = partialValue(value);
     } else if (typeof partialValue === 'object') {
       partialValues[typedKey] = getPartialValues(value[typedKey], partialValue);
     } else {

@@ -20,7 +20,8 @@ type Props = {
 
 // TODO - accept more props to filter activities for reusing this component in other screens
 export const ActivityList = ({ filters, onPressAvatar, onPress, header, ...rest }: Props) => {
-  const { activities, fetchNextPage, refetch, isRefetching, isLoading } = useActivities(filters);
+  const { activities, fetchNextPage, refetch, isRefetching, isLoading, like } =
+    useActivities(filters);
   const toast = useToastController();
 
   const handleRefresh = () => {
@@ -42,6 +43,7 @@ export const ActivityList = ({ filters, onPressAvatar, onPress, header, ...rest 
       activity={item}
       onPress={() => onPress(item.id)}
       onPressAvatar={() => onPressAvatar(item.creator.id)}
+      onLike={() => like(item.id)}
     />
   );
 
