@@ -7,7 +7,7 @@ import { activityCommentsRouter } from './comments';
 
 export const activityRouter = router({
   create: protectedProcedure.input(createActivitySchema).mutation(createActivity),
-  activities: protectedProcedure.input(activityInfiniteSchema).query(getNetworkActivities),
+  list: protectedProcedure.input(activityInfiniteSchema).query(getNetworkActivities),
   activityWithId: protectedProcedure.input(activityWithIdSchema).query(getActivityWithId),
   feedEvents: publicProcedure.input(feedEventSchema).subscription(feedEvents),
   likes: likesRouter,

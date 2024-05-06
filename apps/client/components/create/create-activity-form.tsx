@@ -53,7 +53,7 @@ export const CreateActivityForm = () => {
 
     createActivity(input, {
       onSuccess: () => {
-        utils.activity.activities.invalidate();
+        utils.activity.list.invalidate();
         router.replace('/');
       },
       onError: (error) => {

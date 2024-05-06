@@ -19,6 +19,7 @@ export function ActivityCard({
   likes,
   shares,
   assets,
+  likedByMe,
   onPress,
   onPressAvatar,
   onPressComment,
@@ -40,6 +41,7 @@ export function ActivityCard({
         comments={comments}
         likes={likes}
         shares={shares}
+        likedByMe={likedByMe}
         onPressLike={onPressLike}
         onPressComment={onPressComment}
         onPressShare={onPressShare}

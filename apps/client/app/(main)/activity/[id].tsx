@@ -3,12 +3,12 @@ import { Stack } from 'tamagui';
 
 import { ActivityCard, ActivityCommentInput, ActivityCommentList } from '@/components/activity';
 import { Divider } from '@/components/ui/divider';
-import { useLikeActivity } from '@/hooks/activity/use-like-activity';
+import { useLike } from '@/hooks/activity/use-like';
 import { trpc } from '@/lib/trpc';
 
 export default function Activity() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const likeActivity = useLikeActivity({ id: +id });
+  const likeActivity = useLike();
   const router = useRouter();
 
   const { data: activity } = trpc.activity.activityWithId.useQuery(
@@ -44,7 +44,8 @@ export default function Activity() {
               shares={3}
               assets={activity.assets}
               onPressAvatar={handlePressAvatar}
-              onPressLike={likeActivity}
+              onPressLike={() => likeActivity(+id)}
+              likedByMe={false}
             />
             <Divider />
           </Stack>

@@ -2,17 +2,14 @@ import { NetworkActivity } from '@app/server/src/routes/activity/controller';
 
 import { ActivityCard } from './activity-card';
 
-import { useLikeActivity } from '@/hooks/activity/use-like-activity';
-
 type Props = {
   activity: NetworkActivity;
   onPressAvatar: () => void;
   onPress: () => void;
+  onLike: () => void;
 };
 
-export const ActivityListItem = ({ activity, onPressAvatar, onPress }: Props) => {
-  const likeActivity = useLikeActivity({ id: activity.id });
-
+export const ActivityListItem = ({ activity, onPressAvatar, onPress, onLike }: Props) => {
   return (
     <ActivityCard
       bordered
@@ -28,11 +25,12 @@ export const ActivityListItem = ({ activity, onPressAvatar, onPress }: Props) =>
       comments={activity.comments}
       likes={activity.likes}
       assets={activity.assets}
+      likedByMe={activity.likedByMe}
       shares={3}
       onPress={onPress}
       onPressAvatar={onPressAvatar}
       onPressComment={() => {}}
-      onPressLike={likeActivity}
+      onPressLike={onLike}
       onPressShare={() => {}}
     />
   );

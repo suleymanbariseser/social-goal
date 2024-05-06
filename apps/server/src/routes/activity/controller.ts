@@ -42,6 +42,7 @@ export const createActivity = async ({
 
 export const getNetworkActivities = async ({
   input,
+  ctx
 }: ProtectedInputOptions<ActivityInfiniteInput>) => {
   const limit = input.limit || 10;
 
@@ -58,6 +59,7 @@ export const getNetworkActivities = async ({
       likes: {
         columns: {
           id: true,
+          userId: true,
         },
       },
       comments: {
@@ -95,6 +97,7 @@ export const getNetworkActivities = async ({
     ...activity,
     likes: likes.length,
     comments: comments.length,
+    likedByMe: likes.some((like) => like.userId === ctx.user.id),
   }));
 
   feedCache.sync(modifiedActivities);
