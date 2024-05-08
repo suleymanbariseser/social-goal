@@ -13,14 +13,23 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/form/input';
 import { Select } from '../ui/form/select';
 
+import { useGoalList } from '@/hooks/goal/use-goal-list';
+import { useAuth } from '@/hooks/use-auth';
 import { trpc } from '@/lib/trpc';
 
 export const CreateActivityForm = () => {
   const router = useRouter();
   const utils = trpc.useContext();
+  const auth = useAuth();
   const toast = useToastController();
 
-  const [goals, { refetch }] = trpc.goal.list.useSuspenseQuery();
+  const { goals, refetch } = useGoalList({
+    filters: {
+      userId: auth.user.id,
+      limit: 100,
+    },
+  });
+
   const { mutate: createActivity } = trpc.activity.create.useMutation();
 
   const [selectGoalOpen, setSelectGoalOpen] = useState(false);
