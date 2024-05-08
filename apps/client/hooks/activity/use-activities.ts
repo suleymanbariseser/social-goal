@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useRef } from 'react';
 
 import { useLike } from './use-like';
+import { useUnlike } from './use-unlike';
 
 import { useStorageItemValue } from '@/lib/storage';
 import { trpc } from '@/lib/trpc';
@@ -17,6 +18,7 @@ export const useActivities = (options?: ActivityOptions) => {
   const timestamp = useRef(moment().utc().toDate());
   const authToken = useStorageItemValue(authTokenState);
   const _like = useLike();
+  const _unlike = useUnlike();
   const utils = trpc.useContext();
 
   const queryOptions = {
@@ -83,6 +85,17 @@ export const useActivities = (options?: ActivityOptions) => {
     });
   };
 
+  const unlike = (id: number) => {
+    _unlike(id, {
+      onSuccess: () => {
+        updateActivity(id, {
+          likes: (value) => (value.likedByMe ? value.likes - 1 : value.likes),
+          likedByMe: false,
+        });
+      },
+    });
+  };
+
   return {
     activities: data?.pages.flatMap((page) => page.items) ?? [],
     isRefetching,
@@ -90,5 +103,6 @@ export const useActivities = (options?: ActivityOptions) => {
     refetch,
     isLoading,
     like,
+    unlike,
   };
 };

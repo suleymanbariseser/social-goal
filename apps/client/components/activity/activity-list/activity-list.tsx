@@ -20,7 +20,7 @@ type Props = {
 
 // TODO - accept more props to filter activities for reusing this component in other screens
 export const ActivityList = ({ filters, onPressAvatar, onPress, header, ...rest }: Props) => {
-  const { activities, fetchNextPage, refetch, isRefetching, isLoading, like } =
+  const { activities, fetchNextPage, refetch, isRefetching, isLoading, like, unlike } =
     useActivities(filters);
   const toast = useToastController();
 
@@ -43,7 +43,7 @@ export const ActivityList = ({ filters, onPressAvatar, onPress, header, ...rest 
       activity={item}
       onPress={() => onPress(item.id)}
       onPressAvatar={() => onPressAvatar(item.creator.id)}
-      onLike={() => like(item.id)}
+      onLike={() => (item.likedByMe ? unlike(item.id) : like(item.id))}
     />
   );
 

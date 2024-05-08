@@ -1,6 +1,5 @@
-import { EvilIcons } from '@expo/vector-icons';
-import { MessageCircle, ThumbsUp } from '@tamagui/lucide-icons';
-import { Card, getTokens } from 'tamagui';
+import { MessageCircle, ThumbsUp, Share } from '@tamagui/lucide-icons';
+import { Card } from 'tamagui';
 
 import { Button } from '@/components/ui/button';
 
@@ -43,9 +42,7 @@ export const ActivityCardFooter = ({
         f={1}
         jc="flex-start"
         onPress={onPressShare}
-        startAdornment={
-          <EvilIcons name="retweet" size={24} color={getTokens().color.textPrimary.val} />
-        }>
+        startAdornment={<Share size="$4" />}>
         {shares}
       </Button>
       <Button
