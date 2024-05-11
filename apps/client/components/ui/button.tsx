@@ -1,18 +1,10 @@
-import { Spinner, Stack, TextProps, styled } from 'tamagui';
+import { Spinner, TextProps, styled } from 'tamagui';
 
+import { Box } from './Box';
 import { Text } from './text';
 
-export const BaseButton = styled(Stack, {
+export const BaseButton = styled(Box, {
   name: 'ButtonFrame',
-
-  br: '$6',
-  fd: 'row',
-  ai: 'center',
-  jc: 'center',
-  gap: '$2',
-  boc: '$transparent',
-  bw: 1,
-  bs: 'solid',
 
   variants: {
     // style for disabled button
@@ -112,23 +104,17 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   return (
-    <BaseButton variant={variant} {...props}>
-      {startAdornment && (
-        <Stack space="$2" alignItems="center" justifyContent="center">
-          {startAdornment}
-        </Stack>
-      )}
+    <BaseButton
+      variant={variant}
+      startAdornment={startAdornment}
+      endAdornment={endAdornment}
+      {...props}>
       {loading ? (
         <Spinner size="small" />
       ) : (
         <ButtonText buttonVariant={variant} {...textProps}>
           {children}
         </ButtonText>
-      )}
-      {endAdornment && (
-        <Stack space="$2" alignItems="center" justifyContent="center">
-          {endAdornment}
-        </Stack>
       )}
     </BaseButton>
   );

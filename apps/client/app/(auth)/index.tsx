@@ -2,6 +2,7 @@ import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { YStack } from 'tamagui';
 
+import { Box } from '@/components/ui/Box';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Control, FieldPathValue, Path, useController } from 'react-hook-form';
 import { Sheet, Stack, XStack, getTokens } from 'tamagui';
 
-import { defaultStyles } from './input';
+import { Box } from '../Box';
 import { Calendar } from '../calendar';
 import { Text } from '../text';
 
@@ -39,23 +39,27 @@ export function BaseDatePicker(props: BaseDatePickerProps) {
 
   return (
     <Stack gap="$2" opacity={props.disabled ? 0.5 : 1}>
-      <XStack
-        {...defaultStyles}
-        boc={props.error ? '$errorMain' : defaultStyles.boc}
+      <Box
+        p="$4"
+        boc={props.error ? '$errorMain' : '$backgroundBox'}
         onPress={props.onPress ?? (() => setOpen(true))}
         jc="space-between"
-        pressStyle={{ opacity: 0.8 }}>
-        <Text
-          variant="body3"
-          col={props.error ? '$errorMain' : props.value ? '$textPrimary' : placeholderColor}>
-          {props.value ? moment(props.value).format('DD/MM/YYYY') : props.placeholder}
-        </Text>
-        {_resetable && (
-          <Stack onPress={props.onReset}>
-            <XCircle size="$4" />
-          </Stack>
-        )}
-      </XStack>
+        pressStyle={{ opacity: 0.8 }}
+        endAdornment={
+          _resetable ? (
+            <Stack onPress={props.onReset}>
+              <XCircle size="$4" />
+            </Stack>
+          ) : null
+        }>
+        <Stack f={1}>
+          <Text
+            variant="body3"
+            col={props.error ? '$errorMain' : props.value ? '$textPrimary' : placeholderColor}>
+            {props.value ? moment(props.value).format('DD/MM/YYYY') : props.placeholder}
+          </Text>
+        </Stack>
+      </Box>
       {props.helperText && (
         <Text variant="body3" col={props.error ? '$errorMain' : '$textPrimary'}>
           {props.helperText}
