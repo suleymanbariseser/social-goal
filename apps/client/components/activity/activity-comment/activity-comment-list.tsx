@@ -6,7 +6,7 @@ import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
 import { ActivityCommentItem } from './activity-comment-item';
-import { useActivityComments } from './hooks/use-activity-comments';
+import { useActivityComments } from '../../../hooks/activity/comment/use-activity-comments';
 
 type Props = {
   header: React.ReactNode;

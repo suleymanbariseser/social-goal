@@ -62,7 +62,7 @@ export default function Activity() {
         }
         activityId={+id}
       />
-      <ActivityCommentInput />
+      <ActivityCommentInput activityId={+id} />
     </AnimatedStack>
   );
 }
