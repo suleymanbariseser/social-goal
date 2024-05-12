@@ -22,6 +22,7 @@ export const ActivityCommentCard = ({
   content,
   comments,
   likes,
+  likedByMe,
   onPressComment,
   onPressLike,
 }: Props) => (
@@ -31,6 +32,7 @@ export const ActivityCommentCard = ({
     <ActivityCommentCardFooter
       comments={comments}
       likes={likes}
+      likedByMe={likedByMe}
       onPressComment={onPressComment}
       onPressLike={onPressLike}
     />

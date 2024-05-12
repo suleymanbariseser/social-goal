@@ -1,7 +1,7 @@
 import { NetworkActivityComment } from '@app/server/src/routes/activity/comments/controller';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { useToastController } from '@tamagui/toast';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
@@ -15,7 +15,10 @@ type Props = {
 };
 
 export const ActivityCommentList = ({ header, activityId, parentCommentId }: Props) => {
-  const { comments, refetch } = useActivityComments({ activityId, parentCommentId });
+  const { comments, refetch, like, unlike, fetchNextPage, isRefetching } = useActivityComments({
+    activityId,
+    parentCommentId,
+  });
 
   const [refreshing, setRefreshing] = useState(false);
   const toast = useToastController();
@@ -34,11 +37,12 @@ export const ActivityCommentList = ({ header, activityId, parentCommentId }: Pro
     }
   };
 
-  const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<NetworkActivityComment>) => (
-      <ActivityCommentItem comment={item} />
-    ),
-    []
+  const renderItem = ({ item }: ListRenderItemInfo<NetworkActivityComment>) => (
+    <ActivityCommentItem
+      comment={item}
+      onPressLike={() => (item.likedByMe ? unlike(item.id) : like(item.id))}
+      onPressComment={console.log}
+    />
   );
 
   const refreshControl = (
@@ -47,13 +51,15 @@ export const ActivityCommentList = ({ header, activityId, parentCommentId }: Pro
 
   return (
     <FlashList
-      data={comments ?? []}
-      refreshing={refreshing}
+      data={comments}
+      refreshing={isRefetching}
       onRefresh={handleRefresh}
-      ListHeaderComponent={() => header}
       refreshControl={refreshControl}
+      onEndReached={fetchNextPage}
       keyExtractor={(item) => item.id.toString()}
       ItemSeparatorComponent={() => <Stack py="$2" />}
+      ListHeaderComponent={header ? () => <Stack mb="$2">{header}</Stack> : undefined}
+      ListHeaderComponentStyle={header && { paddingBottom: 16 }}
       renderItem={renderItem}
       estimatedItemSize={80}
     />

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 export type ActivityCommentCardFooterProps = {
   comments: number;
   likes: number;
+  likedByMe: boolean;
   onPressComment: () => void;
   onPressLike: () => void;
 };
@@ -13,6 +14,7 @@ export type ActivityCommentCardFooterProps = {
 export const ActivityCommentCardFooter = ({
   comments,
   likes,
+  likedByMe,
   onPressComment,
   onPressLike,
 }: ActivityCommentCardFooterProps) => (
@@ -34,7 +36,10 @@ export const ActivityCommentCardFooter = ({
       f={1}
       jc="flex-start"
       onPress={onPressLike}
-      startAdornment={<ThumbsUp size="$4" />}>
+      textProps={{
+        color: likedByMe ? '$primaryMain' : '$textPrimary',
+      }}
+      startAdornment={<ThumbsUp size="$4" color={likedByMe ? '$primaryMain' : '$textPrimary'} />}>
       {likes}
     </Button>
   </Card.Footer>

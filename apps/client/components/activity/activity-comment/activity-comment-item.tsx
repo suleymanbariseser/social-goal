@@ -4,9 +4,11 @@ import { ActivityCommentCard } from './activity-comment-card/activity-comment-ca
 
 interface Props {
   comment: NetworkActivityComment;
+  onPressLike: () => void;
+  onPressComment: () => void;
 }
 
-export const ActivityCommentItem = ({ comment }: Props) => {
+export const ActivityCommentItem = ({ comment, onPressLike, onPressComment }: Props) => {
   return (
     <ActivityCommentCard
       admin={{
@@ -16,8 +18,9 @@ export const ActivityCommentItem = ({ comment }: Props) => {
       comments={comment.childComments}
       content={comment.content}
       likes={comment.likes}
-      onPressLike={console.log}
-      onPressComment={console.log}
+      likedByMe={comment.likedByMe}
+      onPressLike={onPressLike}
+      onPressComment={onPressComment}
     />
   );
 };

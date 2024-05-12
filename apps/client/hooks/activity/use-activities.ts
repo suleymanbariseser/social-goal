@@ -36,6 +36,8 @@ export const useActivities = (options?: ActivityOptions) => {
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
 
+  console.log('data', data);
+
   trpc.activity.feedEvents.useSubscription(
     {
       token: authToken,
