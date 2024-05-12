@@ -108,7 +108,7 @@ export const getNetworkActivities = async ({
   };
 };
 
-export const getActivityWithId = async ({ input }: ProtectedInputOptions<ActivityWithIdInput>) => {
+export const getActivityWithId = async ({ input, ctx }: ProtectedInputOptions<ActivityWithIdInput>) => {
   const activity = await db.query.activities.findFirst({
     where: eq(activities.id, input.id),
     with: {
@@ -123,6 +123,7 @@ export const getActivityWithId = async ({ input }: ProtectedInputOptions<Activit
       likes: {
         columns: {
           id: true,
+          userId: true,
         },
       },
       comments: {
@@ -146,6 +147,7 @@ export const getActivityWithId = async ({ input }: ProtectedInputOptions<Activit
   const modifiedActivity = {
     ...activity,
     likes: activity.likes.length,
+    likedByMe: activity.likes.some((like) => like.userId === ctx.user.id),
     comments: activity.comments.length,
   };
 

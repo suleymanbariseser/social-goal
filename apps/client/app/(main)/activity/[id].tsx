@@ -55,7 +55,7 @@ export default function Activity() {
               assets={activity.assets}
               onPressAvatar={handlePressAvatar}
               onPressLike={() => likeActivity(+id)}
-              likedByMe={false}
+              likedByMe={activity.likedByMe}
             />
             <Divider />
           </Stack>
