@@ -25,6 +25,11 @@ export const getComments = async ({ input }: ProtectedInputOptions<GetCommentsIn
           ),
         }),
       },
+      likes: {
+        columns: {
+          id: true,
+        },
+      },
       childComments: {
         columns: {
           id: true,
@@ -35,6 +40,7 @@ export const getComments = async ({ input }: ProtectedInputOptions<GetCommentsIn
 
   return allComments.map(({ childComments, ...comment }) => ({
     ...comment,
+    likes: comment.likes.length,
     childComments: childComments.length,
   }));
 };

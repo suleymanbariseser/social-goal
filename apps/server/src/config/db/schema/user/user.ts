@@ -1,7 +1,7 @@
 import { InferModel, relations } from 'drizzle-orm';
 import { pgTable, serial, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
 import { goals } from '../goal';
-import { activities, activityLikes } from '../activity';
+import { activities, activityCommentLikes, activityLikes } from '../activity';
 import { userSocialLinks } from './user-social-link';
 import { userRelationships } from './user-relationships';
 import { activityComments } from '../activity/comment/activity-comments';
@@ -27,6 +27,8 @@ export const userRelations = relations(users, ({ many }) => ({
   activities: many(activities),
   likes: many(activityLikes),
   comments: many(activityComments),
+
+  commentLikes: many(activityCommentLikes),
 
   // ? the relation name is reverse because the followers are people who following me
   followers: many(userRelationships, { relationName: 'following' }),

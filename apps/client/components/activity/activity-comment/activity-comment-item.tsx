@@ -15,7 +15,7 @@ export const ActivityCommentItem = ({ comment }: Props) => {
       }}
       comments={comment.childComments}
       content={comment.content}
-      likes={2}
+      likes={comment.likes}
       onPressLike={console.log}
       onPressComment={console.log}
     />
