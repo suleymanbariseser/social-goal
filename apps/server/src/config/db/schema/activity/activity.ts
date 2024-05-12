@@ -3,7 +3,7 @@ import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 import { goals } from '../goal';
 import { users } from '../user';
 import { activityLikes } from './activity-likes';
-import { activityComments } from './activity-comments';
+import { activityComments } from './comment/activity-comments';
 import { activityAssets } from './activity-assets';
 
 export const activities = pgTable('activities', {

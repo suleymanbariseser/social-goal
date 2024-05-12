@@ -7,9 +7,10 @@ import {
   timestamp,
   uniqueIndex,
 } from 'drizzle-orm/pg-core';
-import { users } from '../user';
-import { activities } from './activity';
+import { users } from '../../user';
+import { activities } from '../activity';
 import { InferInsertModel, InferSelectModel, relations } from 'drizzle-orm';
+import { activityCommentLikes } from './activity-comment-likes';
 
 export const activityComments = pgTable(
   'activity_comments',
@@ -42,6 +43,7 @@ export const activityCommentRelations = relations(activityComments, ({ one, many
     fields: [activityComments.userId],
     references: [users.id],
   }),
+  likes: many(activityCommentLikes),
   activity: one(activities, {
     fields: [activityComments.activityId],
     references: [activities.id],

@@ -4,7 +4,7 @@ import { goals } from '../goal';
 import { activities, activityLikes } from '../activity';
 import { userSocialLinks } from './user-social-link';
 import { userRelationships } from './user-relationships';
-import { activityComments } from '../activity/activity-comments';
+import { activityComments } from '../activity/comment/activity-comments';
 
 export const users = pgTable(
   'users',
