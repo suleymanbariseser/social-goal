@@ -42,7 +42,6 @@ export const useActivityComments = ({ activityId, parentCommentId }: Options) =>
   };
 
   const updateActivity = (id: number, value: MergeDeepPartial<NetworkActivityComment>) => {
-    console.log('data', data);
     const [pageIndex, itemIndex] = findItemInPages(data.pages, 'id', id);
 
     if (pageIndex !== -1 && itemIndex !== -1) {
