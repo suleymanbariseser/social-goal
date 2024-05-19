@@ -6,9 +6,7 @@ import { useRef } from 'react';
 import { useLike } from './use-like';
 import { useUnlike } from './use-unlike';
 
-import { useStorageItemValue } from '@/lib/storage';
 import { trpc } from '@/lib/trpc';
-import { authTokenState } from '@/store/auth';
 import { findItemInPages } from '@/utils/infinity/find-item-in-pages';
 import { MergeDeepPartial, mergeDeep } from '@/utils/mergeDeep';
 
@@ -16,7 +14,6 @@ export type ActivityOptions = Partial<ActivityInfiniteInput>;
 
 export const useActivities = (options?: ActivityOptions) => {
   const timestamp = useRef(moment().utc().toDate());
-  const authToken = useStorageItemValue(authTokenState);
   const _like = useLike();
   const _unlike = useUnlike();
   const utils = trpc.useContext();
@@ -35,20 +32,6 @@ export const useActivities = (options?: ActivityOptions) => {
   } = trpc.activity.list.useInfiniteQuery(queryOptions, {
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
-
-  trpc.activity.feedEvents.useSubscription(
-    {
-      token: authToken,
-    },
-    {
-      onData: (data) => {
-        console.log('data', data);
-      },
-      onError: (err) => {
-        console.log('err', err);
-      },
-    }
-  );
 
   const refetch = () => {
     timestamp.current = moment().utc().toDate();
