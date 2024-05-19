@@ -18,6 +18,22 @@ moment.updateLocale('en', {
     // Monday is the first day of the week.
     dow: 1,
   },
+  relativeTime: {
+    future: 'in %s',
+    past: '%s ago',
+    s: 'seconds',
+    ss: '%ss',
+    m: 'a minute',
+    mm: '%dm',
+    h: 'an hour',
+    hh: '%dh',
+    d: 'a day',
+    dd: '%dd',
+    M: 'a month',
+    MM: '%dM',
+    y: 'a year',
+    yy: '%dY',
+  },
 });
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {

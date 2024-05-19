@@ -51,6 +51,7 @@ export default function Activity() {
               comments={activity.comments}
               content={activity.content}
               likes={activity.likes}
+              createdAt={activity.createdAt}
               shares={3}
               assets={activity.assets}
               onPressAvatar={handlePressAvatar}

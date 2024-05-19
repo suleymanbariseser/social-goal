@@ -6,14 +6,14 @@ import {
   UnlikeCommentInput,
 } from './schema';
 import { db } from '@/config/db';
-import { and, desc, eq, isNull } from 'drizzle-orm';
+import { and, asc, eq, isNull } from 'drizzle-orm';
 import { activityCommentLikes, activityComments } from '@/config/db/schema';
 import { getInfiniteQuery } from '@/utils/infinity';
 
 export type NetworkActivityComment = {
   id: number;
   content: string;
-  createdAt: string;
+  createdAt: Date;
   updatedAt: string;
   userId: number;
   activityId: number;
@@ -38,7 +38,7 @@ export const getComments = async ({ input, ctx }: ProtectedInputOptions<GetComme
           ? eq(activityComments.id, input.parentCommentId)
           : isNull(activityComments.parentCommentId)
       ),
-      orderBy: [desc(activityComments.createdAt)],
+      orderBy: [asc(activityComments.createdAt)],
       with: {
         user: {
           columns: {

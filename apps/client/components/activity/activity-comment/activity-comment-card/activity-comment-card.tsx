@@ -23,11 +23,12 @@ export const ActivityCommentCard = ({
   comments,
   likes,
   likedByMe,
+  createdAt,
   onPressComment,
   onPressLike,
 }: Props) => (
   <Card p="$3" gap="$3" transparent boc="$transparent" onPress={console.log}>
-    <ActivityCommentCardHeader admin={admin} />
+    <ActivityCommentCardHeader admin={admin} createdAt={createdAt} />
     <ActivityCommentCardContent content={content} />
     <ActivityCommentCardFooter
       comments={comments}

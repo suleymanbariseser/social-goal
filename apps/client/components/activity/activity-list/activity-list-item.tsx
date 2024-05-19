@@ -26,6 +26,7 @@ export const ActivityListItem = ({ activity, onPressAvatar, onPress, onLike }: P
       likes={activity.likes}
       assets={activity.assets}
       likedByMe={activity.likedByMe}
+      createdAt={activity.createdAt}
       shares={3}
       onPress={onPress}
       onPressAvatar={onPressAvatar}

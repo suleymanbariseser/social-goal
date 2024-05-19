@@ -25,6 +25,7 @@ export function ActivityCard({
   onPressComment,
   onPressLike,
   onPressShare,
+  createdAt,
   bordered = false,
 }: Props) {
   return (
@@ -35,7 +36,12 @@ export function ActivityCard({
       bordered={bordered}
       boc={bordered ? '$borderColor' : '$transparent'}
       onPress={onPress}>
-      <ActivityCardHeader admin={admin} goal={goal} onPressAvatar={onPressAvatar} />
+      <ActivityCardHeader
+        admin={admin}
+        goal={goal}
+        onPressAvatar={onPressAvatar}
+        createdAt={createdAt}
+      />
       <ActivityCardContent content={content} assets={assets} />
       <ActivityCardFooter
         comments={comments}

@@ -19,6 +19,7 @@ export const ActivityCommentItem = ({ comment, onPressLike, onPressComment }: Pr
       content={comment.content}
       likes={comment.likes}
       likedByMe={comment.likedByMe}
+      createdAt={comment.createdAt}
       onPressLike={onPressLike}
       onPressComment={onPressComment}
     />
