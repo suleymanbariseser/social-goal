@@ -1,8 +1,10 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useState } from 'react';
 import { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { Stack } from 'tamagui';
 
 import { ActivityCard, ActivityCommentInput, ActivityCommentList } from '@/components/activity';
+import { ActivitySettingsModal } from '@/components/activity/activity-list/activity-settings';
 import { AnimatedStack } from '@/components/ui/animated-layout';
 import { Divider } from '@/components/ui/divider';
 import { useLike } from '@/hooks/activity/use-like';
@@ -13,6 +15,7 @@ export default function Activity() {
   const likeActivity = useLike();
   const router = useRouter();
   const animatedKeyboard = useAnimatedKeyboard();
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const { data: activity } = trpc.activity.activityWithId.useQuery(
     { id: +id },
@@ -57,12 +60,14 @@ export default function Activity() {
               onPressAvatar={handlePressAvatar}
               onPressLike={() => likeActivity(+id)}
               likedByMe={activity.likedByMe}
+              onPressSettings={() => setSettingsOpen(true)}
             />
             <Divider />
           </Stack>
         }
         activityId={+id}
       />
+      <ActivitySettingsModal open={settingsOpen} onOpenChange={setSettingsOpen} />
       <ActivityCommentInput activityId={+id} />
     </AnimatedStack>
   );

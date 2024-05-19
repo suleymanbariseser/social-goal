@@ -25,6 +25,7 @@ export function ActivityCard({
   onPressComment,
   onPressLike,
   onPressShare,
+  onPressSettings,
   createdAt,
   bordered = false,
 }: Props) {
@@ -41,6 +42,7 @@ export function ActivityCard({
         goal={goal}
         onPressAvatar={onPressAvatar}
         createdAt={createdAt}
+        onPressSettings={onPressSettings}
       />
       <ActivityCardContent content={content} assets={assets} />
       <ActivityCardFooter
