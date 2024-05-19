@@ -12,7 +12,7 @@ export const activityLikes = pgTable(
       .references(() => users.id),
     activityId: integer('activity_id')
       .notNull()
-      .references(() => activities.id),
+      .references(() => activities.id, { onDelete: 'cascade' }),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => ({

@@ -2,7 +2,7 @@ import { ProtectedInputOptions } from '@/types/trpc';
 import { DeleteActivityInput } from '../schema';
 import { db } from '@/config/db';
 import { eq } from 'drizzle-orm';
-import { activities } from '@/config/db/schema';
+import { activities, activityCommentLikes, activityComments, activityLikes } from '@/config/db/schema';
 import { TRPCError } from '@trpc/server';
 
 export const deleteActivity = async ({

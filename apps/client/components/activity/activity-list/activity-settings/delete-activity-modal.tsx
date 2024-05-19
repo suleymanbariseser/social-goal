@@ -1,14 +1,38 @@
-import { Sheet, SheetProps, Stack } from 'tamagui';
+import { useToastController } from '@tamagui/toast';
+import { Sheet, SheetProps, Spinner, Stack } from 'tamagui';
 
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
+import { trpc } from '@/lib/trpc';
 
-type Props = SheetProps & object;
+type Props = SheetProps & {
+  activityId: number;
+  onDelete: (id: number) => void;
+};
 
-export const DeleteActivityModal = ({ ...props }: Props) => {
+export const DeleteActivityModal = ({ activityId, onDelete, ...props }: Props) => {
+  const { mutate: deleteActivity, isLoading } = trpc.activity.delete.useMutation();
+  const toast = useToastController();
+
   const handleDelete = () => {
-    console.log('Delete activity');
-    props.onOpenChange(false);
+    deleteActivity(
+      {
+        id: activityId,
+      },
+      {
+        onSuccess: () => {
+          onDelete(activityId);
+        },
+        onError: (error) => {
+          toast.show(error.message, {
+            variant: 'error',
+          });
+        },
+        onSettled: () => {
+          props.onOpenChange(false);
+        },
+      }
+    );
   };
 
   return (
@@ -21,10 +45,14 @@ export const DeleteActivityModal = ({ ...props }: Props) => {
           </Text>
         </Stack>
         <Stack gap="$2">
-          <Button variant="contained" onPress={handleDelete}>
+          <Button
+            variant="contained"
+            onPress={handleDelete}
+            disabled={isLoading}
+            startAdornment={isLoading && <Spinner />}>
             Delete
           </Button>
-          <Button variant="outlined" onPress={() => props.onOpenChange(false)}>
+          <Button variant="outlined" onPress={() => props.onOpenChange(false)} disabled={isLoading}>
             Cancel
           </Button>
         </Stack>

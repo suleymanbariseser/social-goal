@@ -67,7 +67,14 @@ export default function Activity() {
         }
         activityId={+id}
       />
-      <ActivitySettingsModal open={settingsOpen} onOpenChange={setSettingsOpen} />
+      <ActivitySettingsModal
+        activityId={activity.id}
+        open={settingsOpen}
+        onOpenChange={setSettingsOpen}
+        onDelete={() => {
+          router.replace('/');
+        }}
+      />
       <ActivityCommentInput activityId={+id} />
     </AnimatedStack>
   );

@@ -5,11 +5,14 @@ import { ActivitySettingButton } from './activity-setting-button';
 import { DeleteActivityModal } from './delete-activity-modal';
 
 type Props = {
+  activityId: number;
+  onDelete: (id: number) => void;
+
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
 
-export const ActivitySettingsModal = ({ open, onOpenChange }: Props) => {
+export const ActivitySettingsModal = ({ open, onOpenChange, onDelete, activityId }: Props) => {
   const [deleteActivityModalOpen, setDeleteActivityModalOpen] = useState(false);
 
   const handleDeleteActivity = () => {
@@ -32,6 +35,8 @@ export const ActivitySettingsModal = ({ open, onOpenChange }: Props) => {
       <DeleteActivityModal
         open={deleteActivityModalOpen}
         onOpenChange={setDeleteActivityModalOpen}
+        activityId={activityId}
+        onDelete={onDelete}
       />
     </>
   );
