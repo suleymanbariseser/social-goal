@@ -17,6 +17,7 @@ export const activities = pgTable('activities', {
   content: text('content').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   expiresAt: timestamp('expires_at', { withTimezone: true }).defaultNow().notNull(),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
 });
 
 export type Activity = InferModel<typeof activities>;

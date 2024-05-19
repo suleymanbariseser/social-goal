@@ -43,7 +43,14 @@ export const feedEventSchema = z.object({
   }),
 });
 
+export const deleteActivitySchema = z.object({
+  id: z.number({
+    required_error: 'ID is required',
+  }),
+});
+
 export type CreateActivityInput = z.infer<typeof createActivitySchema>;
 export type ActivityInfiniteInput = z.infer<typeof activityInfiniteSchema>;
 export type ActivityWithIdInput = z.infer<typeof activityWithIdSchema>;
 export type FeedEventInput = z.infer<typeof feedEventSchema>;
+export type DeleteActivityInput = z.infer<typeof deleteActivitySchema>;
