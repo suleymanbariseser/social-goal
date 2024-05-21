@@ -7,9 +7,16 @@ type Props = {
   onPressAvatar: () => void;
   onPress: () => void;
   onLike: () => void;
+  onPressSettings: () => void;
 };
 
-export const ActivityListItem = ({ activity, onPressAvatar, onPress, onLike }: Props) => {
+export const ActivityListItem = ({
+  activity,
+  onPressAvatar,
+  onPress,
+  onLike,
+  onPressSettings,
+}: Props) => {
   return (
     <ActivityCard
       bordered
@@ -32,8 +39,8 @@ export const ActivityListItem = ({ activity, onPressAvatar, onPress, onLike }: P
       onPressAvatar={onPressAvatar}
       onPressComment={() => {}}
       onPressLike={onLike}
+      onPressSettings={onPressSettings}
       onPressShare={() => {}}
-      onPressSettings={() => {}}
     />
   );
 };

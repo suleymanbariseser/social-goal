@@ -79,6 +79,25 @@ export const useActivities = (options?: ActivityOptions) => {
     });
   };
 
+  const deleteActivity = (id: number) => {
+    const [pageIndex, itemIndex] = findItemInPages(data.pages, 'id', id);
+    if (pageIndex !== -1 && itemIndex !== -1) {
+      utils.activity.list.setInfiniteData(queryOptions, (oldData) => {
+        const newData = { ...oldData };
+        const page = newData.pages[pageIndex];
+
+        if (page) {
+          const item = page.items[itemIndex];
+          if (item) {
+            page.items.splice(itemIndex, 1);
+          }
+        }
+
+        return newData;
+      });
+    }
+  };
+
   return {
     activities: data?.pages.flatMap((page) => page.items) ?? [],
     isRefetching,
@@ -87,5 +106,6 @@ export const useActivities = (options?: ActivityOptions) => {
     isLoading,
     like,
     unlike,
+    deleteActivity,
   };
 };
