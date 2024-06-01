@@ -6,9 +6,15 @@ interface Props {
   comment: NetworkActivityComment;
   onPressLike: () => void;
   onPressComment: () => void;
+  onPressSettings: () => void;
 }
 
-export const ActivityCommentItem = ({ comment, onPressLike, onPressComment }: Props) => {
+export const ActivityCommentItem = ({
+  comment,
+  onPressLike,
+  onPressComment,
+  onPressSettings,
+}: Props) => {
   return (
     <ActivityCommentCard
       admin={{
@@ -22,6 +28,7 @@ export const ActivityCommentItem = ({ comment, onPressLike, onPressComment }: Pr
       createdAt={comment.createdAt}
       onPressLike={onPressLike}
       onPressComment={onPressComment}
+      onPressSettings={onPressSettings}
     />
   );
 };

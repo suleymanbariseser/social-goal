@@ -84,26 +84,22 @@ export const useActivityComments = ({ activityId, parentCommentId }: Options) =>
   };
 
   const deleteComment = (commentId: number) => {
-    _delete(commentId, {
-      onSuccess: () => {
-        const [pageIndex, itemIndex] = findItemInPages(data.pages, 'id', commentId);
-        if (pageIndex !== -1 && itemIndex !== -1) {
-          utils.activity.list.setInfiniteData(queryOptions, (oldData) => {
-            const newData = { ...oldData };
-            const page = newData.pages[pageIndex];
+    const [pageIndex, itemIndex] = findItemInPages(data.pages, 'id', commentId);
+    if (pageIndex !== -1 && itemIndex !== -1) {
+      utils.activity.list.setInfiniteData(queryOptions, (oldData) => {
+        const newData = { ...oldData };
+        const page = newData.pages[pageIndex];
 
-            if (page) {
-              const item = page.items[itemIndex];
-              if (item) {
-                page.items.splice(itemIndex, 1);
-              }
-            }
-
-            return newData;
-          });
+        if (page) {
+          const item = page.items[itemIndex];
+          if (item) {
+            page.items.splice(itemIndex, 1);
+          }
         }
-      },
-    });
+
+        return newData;
+      });
+    }
   };
 
   return {

@@ -3,7 +3,7 @@ import { useToastController } from '@tamagui/toast';
 import { trpc } from '@/lib/trpc';
 
 export const useDeleteComment = () => {
-  const { mutate: _delete } = trpc.activity.comments.delete.useMutation();
+  const { mutate: _delete, isLoading } = trpc.activity.comments.delete.useMutation();
   const toast = useToastController();
 
   const deleteComment = (commentId: number, options?: Parameters<typeof _delete>['1']) => {
@@ -20,5 +20,5 @@ export const useDeleteComment = () => {
     );
   };
 
-  return deleteComment;
+  return [deleteComment, { isLoading }] as const;
 };
