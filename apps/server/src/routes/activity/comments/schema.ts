@@ -30,7 +30,14 @@ export const unlikeCommentInputSchema = z.object({
   }),
 });
 
+export const deleteCommentInputSchema = z.object({
+  commentId: z.number({
+    required_error: 'Comment ID is required',
+  }),
+});
+
 export type GetCommentsInput = z.infer<typeof getCommentsSchema>;
 export type CreateCommentInput = z.infer<typeof createCommentInputSchema>;
 export type LikeCommentInput = z.infer<typeof likeCommentInputSchema>;
 export type UnlikeCommentInput = z.infer<typeof unlikeCommentInputSchema>;
+export type DeleteCommentInput = z.infer<typeof deleteCommentInputSchema>;

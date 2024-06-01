@@ -1,6 +1,7 @@
 import { ProtectedInputOptions } from '@/types/trpc';
 import {
   CreateCommentInput,
+  DeleteCommentInput,
   GetCommentsInput,
   LikeCommentInput,
   UnlikeCommentInput,
@@ -9,6 +10,7 @@ import { db } from '@/config/db';
 import { and, asc, eq, isNull } from 'drizzle-orm';
 import { activityCommentLikes, activityComments } from '@/config/db/schema';
 import { getInfiniteQuery } from '@/utils/infinity';
+import { TRPCError } from '@trpc/server';
 
 export type NetworkActivityComment = {
   id: number;
@@ -122,3 +124,26 @@ export const createComment = async ({ input, ctx }: ProtectedInputOptions<Create
 
   return comment;
 };
+
+
+export const deleteComment = async ({ input, ctx }: ProtectedInputOptions<DeleteCommentInput>) => {
+  const comment = await db.query.activities.findFirst({
+    where: eq(activityComments.id, input.commentId),
+  });
+
+  if (!comment) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      cause: 'Activity not found',
+    });
+  }
+
+  if (comment.creatorId !== ctx.user.id) {
+    throw new TRPCError({
+      code: 'FORBIDDEN',
+      cause: 'You are not the owner of this activity',
+    });
+  }
+
+  await db.delete(activityComments).where(eq(activityComments.id, input.commentId));
+}
