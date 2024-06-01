@@ -2,6 +2,7 @@ import { NetworkActivityComment } from '@app/server/src/routes/activity/comments
 import moment from 'moment';
 import { useRef } from 'react';
 
+import { useDeleteComment } from './use-delete-comment';
 import { useLikeComment } from './use-like-comment';
 import { useUnlikeComment } from './use-unlike-comment';
 
@@ -19,6 +20,7 @@ export const useActivityComments = ({ activityId, parentCommentId }: Options) =>
   const utils = trpc.useContext();
   const _like = useLikeComment();
   const _unlike = useUnlikeComment();
+  const _delete = useDeleteComment();
 
   const queryOptions = {
     activityId,
@@ -81,6 +83,29 @@ export const useActivityComments = ({ activityId, parentCommentId }: Options) =>
     });
   };
 
+  const deleteComment = (commentId: number) => {
+    _delete(commentId, {
+      onSuccess: () => {
+        const [pageIndex, itemIndex] = findItemInPages(data.pages, 'id', commentId);
+        if (pageIndex !== -1 && itemIndex !== -1) {
+          utils.activity.list.setInfiniteData(queryOptions, (oldData) => {
+            const newData = { ...oldData };
+            const page = newData.pages[pageIndex];
+
+            if (page) {
+              const item = page.items[itemIndex];
+              if (item) {
+                page.items.splice(itemIndex, 1);
+              }
+            }
+
+            return newData;
+          });
+        }
+      },
+    });
+  };
+
   return {
     comments: data?.pages.flatMap((page) => page.items) ?? [],
     isRefetching,
@@ -89,5 +114,6 @@ export const useActivityComments = ({ activityId, parentCommentId }: Options) =>
     refetch,
     like,
     unlike,
+    deleteComment,
   };
 };
