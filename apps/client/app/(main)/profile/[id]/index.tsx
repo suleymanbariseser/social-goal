@@ -2,6 +2,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'tamagui';
 
 import { ActivityList } from '@/components/activity';
+import { ProfileActivityListEmpty } from '@/components/profile/profile-activity-list-empty';
 import { ProfileHero } from '@/components/profile/profile-hero';
 
 const Profile = () => {
@@ -20,6 +21,7 @@ const Profile = () => {
         onPress={handlePress}
         onPressAvatar={handlePressAvatar}
         header={<ProfileHero userId={+params.id} />}
+        ListEmptyComponent={<ProfileActivityListEmpty userId={+params.id} />}
       />
     </Stack>
   );
