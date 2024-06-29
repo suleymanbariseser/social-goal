@@ -12,6 +12,7 @@ import {
 } from './schema';
 import { resend } from '@/config/resend';
 import jwt from 'jsonwebtoken';
+import { TRPCError } from '@trpc/server';
 
 export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) => {
   const { email, firstName, lastName } = input;
@@ -26,19 +27,15 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
     .limit(1);
 
   // if user already registered inside application then throw error
-  if (user && user.length > 0) throw new Error('User already exists');
-
-  const verifications = await db
-    .select({
-      id: userVerifications.id,
-    })
-    .from(userVerifications)
-    .where(eq(userVerifications.email, email))
-    .limit(1);
+  if (user && user.length > 0) {
+    throw new TRPCError({
+      code: 'CONFLICT',
+      message: 'User already exists',
+    });
+  }
 
   // remove verification row if it exists
-  if (verifications.length > 0)
-    await db.delete(userVerifications).where(eq(userVerifications.id, verifications[0].id));
+  await db.delete(userVerifications).where(eq(userVerifications.email, email));
 
   // create an alpha numeric code
   const code = nanoid({
@@ -66,8 +63,11 @@ export const registerUser = async ({ input }: InputOptions<RegisterUserInput>) =
       subject: 'Email Verification',
       html: `<div><h1>Dear ${firstName} ${lastName}</h1><p>Thank you for using our application. Please verify your email by entering the following code: <strong>${code}</strong></p></div>`,
     })
+    .then((res) => {
+      console.log('success', res);
+    })
     .catch(() => {
-      // TODO resend email
+      // TODO resend email again
       return null;
     });
 };
@@ -85,7 +85,12 @@ export const verifyEmail = async ({ input }: InputOptions<EmailVerificationInput
     .limit(1);
 
   // if user not found then throw error
-  if (user && user.length > 0) throw new Error('User already exists');
+  if (user && user.length > 0) {
+    throw new TRPCError({
+      code: 'CONFLICT',
+      message: 'User already exists',
+    });
+  }
 
   // find verification row by email
   const verifications = await db
@@ -98,14 +103,24 @@ export const verifyEmail = async ({ input }: InputOptions<EmailVerificationInput
     .limit(1);
 
   // if verification not found then throw error
-  if (!verifications || verifications.length === 0) throw new Error('Verification not found');
+  if (!verifications || verifications.length === 0) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'Verification not found',
+    });
+  }
   const verification = verifications[0];
 
   // compare the code from database with the code from user
   const isVerified = await compare(code, verification.code);
 
   // if code not matched then throw error
-  if (!isVerified) throw new Error('Invalid code');
+  if (!isVerified) {
+    throw new TRPCError({
+      code: 'BAD_REQUEST',
+      message: 'Invalid code',
+    });
+  }
 
   // expire the verificatin so it will not be used for the next time
   await db
@@ -132,7 +147,12 @@ export const completeRegisterUser = async ({ input }: InputOptions<CompleteRegis
     .from(userVerifications)
     .where(eq(userVerifications.id, id))
     .limit(1);
-  if (!verifications || verifications.length === 0) throw new Error('Verification not found');
+  if (!verifications || verifications.length === 0) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'Verification not found',
+    });
+  }
 
   const verification = verifications[0];
 
@@ -143,7 +163,12 @@ export const completeRegisterUser = async ({ input }: InputOptions<CompleteRegis
     .where(eq(users.email, verification.email))
     .limit(1);
 
-  if (user && user.length > 0) throw new Error('User already exists');
+  if (user && user.length > 0) {
+    throw new TRPCError({
+      code: 'CONFLICT',
+      message: 'User already exists',
+    });
+  }
 
   await db.delete(userVerifications).where(eq(userVerifications.id, verification.id));
 
@@ -187,13 +212,23 @@ export const login = async ({ input }: InputOptions<LoginInput>) => {
     .limit(1);
 
   // if user not found then throw error
-  if (!user || user.length === 0) throw new Error('Invalid email or password');
+  if (!user || user.length === 0) {
+    throw new TRPCError({
+      code: 'BAD_REQUEST',
+      message: 'Invalid email or password',
+    });
+  }
 
   // compare the password from database with the password from user
   const isPasswordMatched = await compare(password, user[0].password);
 
   // if password not matched then throw error
-  if (!isPasswordMatched) throw new Error('Invalid email or password');
+  if (!isPasswordMatched) {
+    throw new TRPCError({
+      code: 'BAD_REQUEST',
+      message: 'Invalid email or password',
+    });
+  }
 
   return { token: jwt.sign({ id: user[0].id }, process.env.AUTH_SECRET!, { expiresIn: '2d' }) };
 };

@@ -3,6 +3,7 @@ import { ActivityWithIdInput } from '../schema';
 import { db } from '@/config/db';
 import { eq } from 'drizzle-orm';
 import { activities } from '@/config/db/schema';
+import { TRPCError } from '@trpc/server';
 
 export const getActivityWithId = async ({
   input,
@@ -39,7 +40,10 @@ export const getActivityWithId = async ({
   });
 
   if (!activity) {
-    throw new Error('Activity not found');
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'Activity not found',
+    });
   }
 
   // TODO: get count of likes with SQL

@@ -26,6 +26,8 @@
     "drizzle-orm": "^0.31.2",
     "jsonwebtoken": "^9.0.2",
     "nanoid": "3.3.6",
+    "pino": "^9.2.0",
+    "pino-pretty": "^11.2.1",
     "postgres": "^3.4.4",
     "resend": "^3.3.0",
     "sharp": "0.32.6",

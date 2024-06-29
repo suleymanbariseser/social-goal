@@ -20,11 +20,11 @@ export default function Register() {
   } = useForm<RegisterUserInput>({
     resolver: zodResolver(registerUserSchema),
   });
-  const { mutate, isLoading, error } = trpc.auth.register.useMutation();
+  const { mutate, isLoading } = trpc.auth.register.useMutation();
   const router = useRouter();
 
-  const onSubmit = async (data: RegisterUserInput) => {
-    await mutate(data, {
+  const onSubmit = (data: RegisterUserInput) => {
+    mutate(data, {
       onSuccess: () =>
         router.push({
           pathname: '/register/email-verification',
@@ -32,8 +32,8 @@ export default function Register() {
             email: data.email,
           },
         }),
-      onError: () => {
-        toast.show(error.message, {
+      onError: (err) => {
+        toast.show(err.message, {
           variant: 'error',
         });
       },
@@ -70,11 +70,6 @@ export default function Register() {
           error={!!errors.email}
           helperText={errors.email?.message}
         />
-        {error && (
-          <Text variant="body3" color="$errorMain">
-            {error?.message}
-          </Text>
-        )}
       </YStack>
       <YStack ai="center" gap="$2">
         <Button onPress={handleSubmit(onSubmit)} w="100%" loading={isLoading} disabled={isLoading}>
