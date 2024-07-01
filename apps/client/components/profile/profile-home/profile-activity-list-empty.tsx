@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import { Stack } from 'tamagui';
 
-import { Text } from '../ui/text';
+import { Text } from '../../ui/text';
 
 import { useAuth } from '@/hooks/use-auth';
 

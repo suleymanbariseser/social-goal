@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { Stack } from 'tamagui';
 
-import { Text } from '../ui/text';
+import { Text } from '../../ui/text';
 
 type ProfileLinkProps = {
   count: number;

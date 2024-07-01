@@ -1,7 +1,7 @@
 import { Stack } from 'tamagui';
 
-import { Avatar } from '../ui/avatar';
-import { Text } from '../ui/text';
+import { Avatar } from '../../ui/avatar';
+import { Text } from '../../ui/text';
 
 interface Props {
   image: string;

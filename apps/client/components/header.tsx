@@ -1,9 +1,10 @@
-import { ArrowLeft, X } from '@tamagui/lucide-icons';
+import { ArrowLeft } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { XStack } from 'tamagui';
 
 import { IconButton } from './ui/icon-button';
+import { Text } from './ui/text';
 
 interface Props {
   back?: boolean;
@@ -26,7 +27,7 @@ export const Header = ({ back, title, actions }: Props) => {
         </XStack>
       )}
       <XStack fg={1} ai="center" jc="center">
-        {title}
+        {typeof title === 'string' ? <Text>{title}</Text> : title}
       </XStack>
       {showAction && <XStack w={40}>{actions}</XStack>}
     </XStack>

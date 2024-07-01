@@ -1,6 +1,6 @@
 import { Stack } from 'tamagui';
 
-import { ProfileAction } from './profile-action';
+import { ProfileAction } from './profile-action/profile-action';
 import { ProfileDescription } from './profile-description';
 import { ProfileHeader } from './profile-header';
 import { ProfileStatistics } from './profile-statictics';

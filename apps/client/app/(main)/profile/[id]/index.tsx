@@ -2,8 +2,8 @@ import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'tamagui';
 
 import { ActivityList } from '@/components/activity';
-import { ProfileActivityListEmpty } from '@/components/profile/profile-activity-list-empty';
-import { ProfileHero } from '@/components/profile/profile-hero';
+import { ProfileActivityListEmpty } from '@/components/profile/profile-home/profile-activity-list-empty';
+import { ProfileHero } from '@/components/profile/profile-home/profile-hero';
 
 const Profile = () => {
   const params = useLocalSearchParams<{ id: string }>();

@@ -1,6 +1,6 @@
 import { Stack } from 'tamagui';
 
-import { Text } from '../ui/text';
+import { Text } from '../../ui/text';
 
 interface Props {
   description: string;

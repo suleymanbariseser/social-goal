@@ -31,6 +31,12 @@ export default function Layout() {
           header: () => <Header title={<DiscoverSearchInput />} />,
         }}
       />
+      <RouterStack.Screen
+        name="profile/[id]"
+        options={{
+          headerShown: false,
+        }}
+      />
     </RouterStack>
   );
 }

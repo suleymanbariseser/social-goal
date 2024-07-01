@@ -1,6 +1,8 @@
 import { Stack } from 'expo-router';
 import { getTokens } from 'tamagui';
 
+import { Header } from '@/components/header';
+
 export const unstable_settings = {
   initialRouteName: 'followers',
 };
@@ -12,7 +14,9 @@ export default function ProfileLayout() {
         contentStyle: {
           backgroundColor: getTokens().color.$backgroundMain.val,
         },
-        headerShown: false,
+        header: ({ navigation, options }) => (
+          <Header back={navigation.canGoBack()} title={options.title} />
+        ),
       }}
     />
   );
