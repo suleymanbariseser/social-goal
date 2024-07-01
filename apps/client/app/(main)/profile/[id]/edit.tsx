@@ -1,7 +1,8 @@
 import { useFocusEffect, useNavigation } from 'expo-router';
 import { useCallback } from 'react';
+import { Stack } from 'tamagui';
 
-import { Text } from '@/components/ui/text';
+import { ProfileEditForm } from '@/components/profile/profile-edit/profile-edit-form';
 
 export default function ProfileEdit() {
   const navigation = useNavigation();
@@ -14,5 +15,9 @@ export default function ProfileEdit() {
     }, [])
   );
 
-  return <Text>ProfileEdit</Text>;
+  return (
+    <Stack px="$2" gap="$4" f={1}>
+      <ProfileEditForm />
+    </Stack>
+  );
 }
