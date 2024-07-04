@@ -4,7 +4,7 @@ import { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Spinner } from 'tamagui';
 
-import { AnimatedSafeAreaView } from '@/components/ui/animated-layout';
+import { AnimatedStack } from '@/components/ui/animated-layout';
 import { BaseInput } from '@/components/ui/form/input';
 import { useCreateComment } from '@/hooks/activity/comment/use-create-comment';
 import { trpc } from '@/lib/trpc';
@@ -18,7 +18,7 @@ export const ActivityCommentInput = ({ activityId, parentCommentId }: Props) => 
   const animatedKeyboard = useAnimatedKeyboard();
   const insets = useSafeAreaInsets();
   const [createComment, { isLoading }] = useCreateComment();
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
   const inputRef = useRef<TextInput>(null);
 
   const styles = useAnimatedStyle(() => {
@@ -63,16 +63,15 @@ export const ActivityCommentInput = ({ activityId, parentCommentId }: Props) => 
   };
 
   return (
-    <AnimatedSafeAreaView
+    <AnimatedStack
       style={styles}
-      edges={['bottom']}
       pos="absolute"
       b={0}
       l={0}
       r={0}
       bg="$backgroundMain"
       px="$2"
-      pt="$4"
+      py="$4"
       btw={1}
       btc="$borderColor">
       <BaseInput
@@ -82,6 +81,6 @@ export const ActivityCommentInput = ({ activityId, parentCommentId }: Props) => 
         disabled={isLoading}
         endAdornment={isLoading && <Spinner />}
       />
-    </AnimatedSafeAreaView>
+    </AnimatedStack>
   );
 };
