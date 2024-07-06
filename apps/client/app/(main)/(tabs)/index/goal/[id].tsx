@@ -1,8 +1,11 @@
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
 import moment from 'moment';
+import { useEffect } from 'react';
 import { Stack } from 'tamagui';
 
 import { ActivityList } from '@/components/activity';
+import { GoalHeaderActions } from '@/components/goals/goal-header/goal-header-actions';
+import { trpc } from '@/lib/trpc';
 
 type Params = {
   id: string;
@@ -12,6 +15,15 @@ type Params = {
 
 export default function Goal() {
   const { id, from, to } = useLocalSearchParams<Params>();
+  const [goal] = trpc.goal.summary.useSuspenseQuery({ id: +id });
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: goal.title,
+      headerRight: () => <GoalHeaderActions />,
+    });
+  }, []);
 
   const getDate = (date?: string) => {
     if (!date) return undefined;

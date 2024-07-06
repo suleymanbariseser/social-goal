@@ -30,7 +30,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="discover/index"
+        name="discover"
         options={{
           tabBarIcon: ({ color }) => <CompassIcon size="$6" color={color} />,
         }}
