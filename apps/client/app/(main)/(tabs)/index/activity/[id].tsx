@@ -1,6 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { Stack } from 'tamagui';
 
 import { ActivityCard, ActivityCommentInput, ActivityCommentList } from '@/components/activity';
@@ -14,7 +13,6 @@ export default function Activity() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const likeActivity = useLike();
   const router = useRouter();
-  const animatedKeyboard = useAnimatedKeyboard();
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   const { data: activity } = trpc.activity.activityWithId.useQuery(
@@ -28,17 +26,10 @@ export default function Activity() {
     router.push(`/profile/${activity?.creator.id}`);
   };
 
-  const styles = useAnimatedStyle(() => {
-    return {
-      // 120 is the height of the comment input
-      paddingBottom: animatedKeyboard.height.value + 120,
-    };
-  });
-
   if (!activity) return null;
 
   return (
-    <AnimatedStack f={1} px="$2" style={styles}>
+    <AnimatedStack f={1} px="$2">
       <ActivityCommentList
         header={
           <Stack>

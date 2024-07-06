@@ -5,12 +5,7 @@ import { Sheet, Stack, XStack } from 'tamagui';
 
 import { DatePicker } from '@/components/ui/form/date-picker';
 import { Text } from '@/components/ui/text';
-
-type Params = {
-  id: string;
-  from?: string;
-  to?: string;
-};
+import { GoalScreenParams } from '@/types/goal';
 
 type Props = {
   open: boolean;
@@ -19,7 +14,7 @@ type Props = {
 
 export const GoalFiltersModal = ({ open, setOpen }: Props) => {
   const router = useRouter();
-  const { from, to } = useLocalSearchParams<Params>();
+  const { from, to } = useLocalSearchParams<GoalScreenParams>();
 
   const {
     control,

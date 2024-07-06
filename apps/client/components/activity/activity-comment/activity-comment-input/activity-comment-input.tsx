@@ -1,8 +1,7 @@
 import { useRef } from 'react';
 import { NativeSyntheticEvent, TextInput, TextInputSubmitEditingEventData } from 'react-native';
 import { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Spinner } from 'tamagui';
+import { getTokens, Spinner } from 'tamagui';
 
 import { AnimatedStack } from '@/components/ui/animated-layout';
 import { BaseInput } from '@/components/ui/form/input';
@@ -16,16 +15,17 @@ type Props = {
 
 export const ActivityCommentInput = ({ activityId, parentCommentId }: Props) => {
   const animatedKeyboard = useAnimatedKeyboard();
-  const insets = useSafeAreaInsets();
   const [createComment, { isLoading }] = useCreateComment();
   const utils = trpc.useUtils();
   const inputRef = useRef<TextInput>(null);
 
-  const styles = useAnimatedStyle(() => {
+  const paddingBottom = getTokens().size.$4.val;
+
+  const animatedStyle = useAnimatedStyle(() => {
     return {
-      bottom: animatedKeyboard.height.value,
+      paddingBottom: Math.max(animatedKeyboard.height.value, paddingBottom),
     };
-  }, [insets.bottom]);
+  }, []);
 
   const handleSubmitComment = (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
     if (isLoading) return;
@@ -64,16 +64,12 @@ export const ActivityCommentInput = ({ activityId, parentCommentId }: Props) => 
 
   return (
     <AnimatedStack
-      style={styles}
-      pos="absolute"
-      b={0}
-      l={0}
-      r={0}
       bg="$backgroundMain"
       px="$2"
       py="$4"
       btw={1}
-      btc="$borderColor">
+      btc="$borderColor"
+      style={animatedStyle}>
       <BaseInput
         ref={inputRef}
         placeholder="Leave a comment..."

@@ -5,6 +5,7 @@ import { Stack } from 'tamagui';
 
 import { ActivityList } from '@/components/activity';
 import { GoalHeaderActions } from '@/components/goals/goal-header/goal-header-actions';
+import { GoalListEmpty } from '@/components/goals/goal-list/goal-list-empty';
 import { trpc } from '@/lib/trpc';
 
 type Params = {
@@ -35,7 +36,7 @@ export default function Goal() {
   };
 
   return (
-    <Stack f={1} px="$2">
+    <Stack f={1} px="$2" pt="$4">
       <ActivityList
         onPress={console.log}
         onPressAvatar={console.log}
@@ -44,6 +45,7 @@ export default function Goal() {
           from: getDate(from),
           to: getDate(to),
         }}
+        ListEmptyComponent={<GoalListEmpty />}
       />
     </Stack>
   );
