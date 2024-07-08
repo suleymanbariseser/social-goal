@@ -1,35 +1,35 @@
 import { ArrowLeft } from '@tamagui/lucide-icons';
-import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { XStack } from 'tamagui';
 
 import { IconButton } from './ui/icon-button';
 import { Text } from './ui/text';
 
-interface Props {
-  back?: boolean;
-  title?: React.ReactNode;
-  actions?: React.ReactNode;
-}
+import { NativeStackNavigationOptions } from '@/types/navigation';
 
-export const Header = ({ back, title, actions }: Props) => {
+export const Header: NativeStackNavigationOptions['header'] = ({ back, options, navigation }) => {
   const safeArea = useSafeAreaInsets();
 
-  const router = useRouter();
-
-  const showAction = back || actions;
+  const hasAction = !!options.headerRight;
 
   return (
-    <XStack px="$4" pb="$4" pt={safeArea.top}>
-      {showAction && (
+    <XStack px="$4" pt={safeArea.top} bg="$backgroundMain">
+      {navigation.canGoBack() && (
         <XStack w={40}>
-          {back && <IconButton icon={ArrowLeft} onPress={() => router.back()} />}
+          {back && <IconButton icon={ArrowLeft} onPress={navigation.goBack} />}
         </XStack>
       )}
       <XStack fg={1} ai="center" jc="center">
-        {typeof title === 'string' ? <Text>{title}</Text> : title}
+        {typeof options.title === 'string' ? <Text>{options.title}</Text> : options.title}
       </XStack>
-      {showAction && <XStack w={40}>{actions}</XStack>}
+      {hasAction && (
+        <XStack>
+          {options.headerRight({
+            canGoBack: navigation.canGoBack(),
+            tintColor: options.headerTintColor,
+          })}
+        </XStack>
+      )}
     </XStack>
   );
 };
