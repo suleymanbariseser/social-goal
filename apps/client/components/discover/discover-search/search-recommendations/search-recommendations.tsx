@@ -8,9 +8,10 @@ import { trpc } from '@/lib/trpc';
 
 type Props = {
   q: string;
+  handleSubmit: () => void;
 };
 
-export const SearchRecommendations = ({ q }: Props) => {
+export const SearchRecommendations = ({ q, handleSubmit }: Props) => {
   const { data, isLoading } = trpc.search.recommendation.useQuery({ q });
 
   return (
@@ -20,7 +21,7 @@ export const SearchRecommendations = ({ q }: Props) => {
       keyExtractor={(i) => i.firstName}
       estimatedItemSize={30}
       ListEmptyComponent={isLoading ? <Spinner p="$4" /> : undefined}
-      ListHeaderComponent={<SearchRecommendationHeader q={q} />}
+      ListHeaderComponent={<SearchRecommendationHeader q={q} handlePress={handleSubmit} />}
       ItemSeparatorComponent={() => <Stack py="$2" />}
     />
   );

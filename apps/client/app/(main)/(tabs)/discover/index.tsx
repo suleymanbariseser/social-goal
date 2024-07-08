@@ -5,7 +5,7 @@ import { DISCOVER_SEARCH_OVERLAY } from '@/constants/discover';
 
 const Discover = () => {
   return (
-    <Stack f={1} px="$2">
+    <Stack f={1} px="$2" pt="$4">
       <PortalHost name={DISCOVER_SEARCH_OVERLAY} />
       <ActivityList onPress={console.log} onPressAvatar={console.log} />
     </Stack>
