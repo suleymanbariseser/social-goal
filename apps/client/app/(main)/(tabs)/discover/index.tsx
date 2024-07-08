@@ -1,13 +1,13 @@
-import { Stack } from 'tamagui';
+import { PortalHost, Stack } from 'tamagui';
 
-import { DiscoverSearchOverlay } from '@/components/discover/discover-search/discover-search-overlay';
-import { DiscoverTabs } from '@/components/discover/discover-tabs/discover-tabs';
+import { ActivityList } from '@/components/activity';
+import { DISCOVER_SEARCH_OVERLAY } from '@/constants/discover';
 
 const Discover = () => {
   return (
     <Stack f={1} px="$2">
-      <DiscoverTabs />
-      <DiscoverSearchOverlay />
+      <PortalHost name={DISCOVER_SEARCH_OVERLAY} />
+      <ActivityList onPress={console.log} onPressAvatar={console.log} />
     </Stack>
   );
 };

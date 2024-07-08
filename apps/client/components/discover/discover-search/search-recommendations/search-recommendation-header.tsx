@@ -1,18 +1,16 @@
 import { Search as SearchIcon } from '@tamagui/lucide-icons';
 import { useRouter } from 'expo-router';
 import { Stack } from 'tamagui';
-import { useStore } from 'zustand';
 
 import { Text } from '@/components/ui/text';
-import { discoverStore } from '@/store/discover';
 
-export const SearchRecommendationHeader = () => {
-  const { search, blurSearch } = useStore(discoverStore);
+type Props = { q: string };
+
+export const SearchRecommendationHeader = ({ q }: Props) => {
   const router = useRouter();
 
   const handlePress = () => {
-    router.setParams({ q: search });
-    blurSearch();
+    router.push('/discover?q=' + q);
   };
 
   return (
@@ -20,7 +18,7 @@ export const SearchRecommendationHeader = () => {
       <Stack w="$10">
         <SearchIcon />
       </Stack>
-      <Text>{search}</Text>
+      <Text>{q}</Text>
     </Stack>
   );
 };

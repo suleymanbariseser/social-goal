@@ -1,16 +1,17 @@
 import { FlashList } from '@shopify/flash-list';
 import { Spinner, Stack } from 'tamagui';
-import { useStore } from 'zustand';
 
 import { SearchRecommendationHeader } from './search-recommendation-header';
 import { SearchRecommendationItem } from './search-recommendation-item';
 
 import { trpc } from '@/lib/trpc';
-import { discoverStore } from '@/store/discover';
 
-export const SearchRecommendations = () => {
-  const { search } = useStore(discoverStore);
-  const { data, isLoading } = trpc.search.recommendation.useQuery({ q: search });
+type Props = {
+  q: string;
+};
+
+export const SearchRecommendations = ({ q }: Props) => {
+  const { data, isLoading } = trpc.search.recommendation.useQuery({ q });
 
   return (
     <FlashList
@@ -19,7 +20,7 @@ export const SearchRecommendations = () => {
       keyExtractor={(i) => i.firstName}
       estimatedItemSize={30}
       ListEmptyComponent={isLoading ? <Spinner p="$4" /> : undefined}
-      ListHeaderComponent={<SearchRecommendationHeader />}
+      ListHeaderComponent={<SearchRecommendationHeader q={q} />}
       ItemSeparatorComponent={() => <Stack py="$2" />}
     />
   );

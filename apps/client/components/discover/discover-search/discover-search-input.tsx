@@ -1,52 +1,53 @@
 import { X } from '@tamagui/lucide-icons';
-import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRef } from 'react';
 import type { TextInput } from 'react-native';
 import { SlideInRight } from 'react-native-reanimated';
 import { Stack } from 'tamagui';
-import { useStore } from 'zustand';
-
-import { DiscoverLocalSearchParams } from '../types';
 
 import { AnimatedStack } from '@/components/ui/animated-layout';
 import { BaseInput } from '@/components/ui/form/input';
 import { IconButton } from '@/components/ui/icon-button';
-import { discoverStore } from '@/store/discover';
 
-export const DiscoverSearchInput = () => {
+type Props = {
+  value: string;
+  isFocused: boolean;
+  onFocusChange: (visible: boolean) => void;
+  onSubmit: (value: string) => void;
+  onChangeText: (value: string) => void;
+};
+
+export const DiscoverSearchInput = ({
+  isFocused,
+  onFocusChange,
+  value,
+  onSubmit,
+  onChangeText,
+}: Props) => {
   const inputRef = useRef<TextInput>(null);
-  const { q } = useLocalSearchParams<DiscoverLocalSearchParams>();
-  const router = useRouter();
-
-  const { isSearchFocused, focusSearch, blurSearch, updateSearch, search } =
-    useStore(discoverStore);
 
   const handleXPress = () => {
     inputRef.current.blur();
-
-    updateSearch(q);
   };
 
   const handleSubmit = () => {
     inputRef.current.blur();
-
-    router.setParams({ q: search });
+    onSubmit(value);
   };
 
   return (
-    <Stack f={1} pl="$4" fd="row" ai="center" gap="$4">
-      <Stack f={1}>
+    <Stack fg={1} fd="row" ai="center" gap="$4">
+      <Stack fg={1}>
         <BaseInput
           ref={inputRef}
           placeholder="Search..."
-          value={search}
-          onFocus={focusSearch}
-          onBlur={blurSearch}
+          value={value}
+          onFocus={() => onFocusChange(true)}
+          onBlur={() => onFocusChange(false)}
           onSubmitEditing={handleSubmit}
-          onChangeText={(value) => updateSearch(value)}
+          onChangeText={onChangeText}
         />
       </Stack>
-      {isSearchFocused && (
+      {isFocused && (
         <AnimatedStack entering={SlideInRight}>
           <IconButton onPress={handleXPress} icon={X} />
         </AnimatedStack>
