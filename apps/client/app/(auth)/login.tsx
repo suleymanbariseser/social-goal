@@ -16,7 +16,7 @@ export default function Login() {
   const toast = useToastController();
   const router = useRouter();
 
-  const { mutate: login, error } = trpc.auth.login.useMutation();
+  const { mutate: login } = trpc.auth.login.useMutation();
   const setAuthToken = useSetStorageItem(authTokenState);
 
   const {
@@ -68,11 +68,6 @@ export default function Login() {
         <Link href="/forgot-password">
           <Text color="$primaryMain">Forgot password?</Text>
         </Link>
-        {error && (
-          <Text variant="body3" color="$errorMain">
-            {error?.message}
-          </Text>
-        )}
       </YStack>
       <YStack ai="center" gap="$2">
         <Button onPress={handleSubmit(onSubmit)} w="100%">

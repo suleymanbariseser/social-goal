@@ -20,7 +20,7 @@ export default function Password() {
   const { emailToken } = useStore(authStore);
   const setAuthToken = useSetStorageItem(authTokenState);
 
-  const { mutate, isLoading, error } = trpc.auth.completeRegister.useMutation();
+  const { mutate, isLoading } = trpc.auth.completeRegister.useMutation();
 
   const {
     control,
@@ -72,11 +72,6 @@ export default function Password() {
           helperText={errors.rePassword?.message}
           secureTextEntry
         />
-        {error && (
-          <Text variant="body3" color="$errorMain">
-            {error?.message}
-          </Text>
-        )}
       </YStack>
       <YStack ai="center" gap="$2">
         <Button onPress={handleSubmit(onSubmit)} w="100%" disabled={isLoading} loading={isLoading}>

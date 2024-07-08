@@ -21,7 +21,7 @@ export default function EmailVerification() {
   const router = useRouter();
   const { email } = useLocalSearchParams<{ email: string }>();
   const { updateEmailToken } = useStore(authStore);
-  const { mutate, isLoading, error } = trpc.auth.verify.useMutation();
+  const { mutate, isLoading } = trpc.auth.verify.useMutation();
 
   const {
     control,
@@ -71,11 +71,6 @@ export default function EmailVerification() {
           error={!!errors.code}
           helperText={errors.code?.message}
         />
-        {error && (
-          <Text variant="body3" color="$errorMain">
-            {error?.message}
-          </Text>
-        )}
       </YStack>
       <YStack ai="center" gap="$2">
         <Button onPress={handleSubmit(onSubmit)} w="100%" loading={isLoading} disabled={isLoading}>
