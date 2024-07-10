@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getTokens } from 'tamagui';
 
 import { Header } from '@/components/header';
@@ -7,8 +8,14 @@ export const getCommonHeaderOptions = (): NativeStackNavigationOptions => ({
   header: (props) => <Header {...props} />,
 });
 
-export const getCommonContentOptions = (): NativeStackNavigationOptions => ({
-  contentStyle: {
-    backgroundColor: getTokens().color.$backgroundMain.val,
-  },
-});
+export const useCommonContentOptions = (): NativeStackNavigationOptions => {
+  const safeArea = useSafeAreaInsets();
+
+  return {
+    contentStyle: {
+      backgroundColor: getTokens().color.$backgroundMain.val,
+      paddingBottom: safeArea.bottom,
+      paddingTop: getTokens().space.$4.val,
+    },
+  };
+};

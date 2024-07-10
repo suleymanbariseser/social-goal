@@ -1,27 +1,21 @@
 import { Stack as RouterStack } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Stack, getTokens } from 'tamagui';
+import { Stack } from 'tamagui';
 
-import { Header } from '@/components/header';
+import { getCommonHeaderOptions, useCommonContentOptions } from '@/utils/navigation';
 
 export const unstable_settings = {
   initialRouteName: 'index',
 };
 
 export default function Layout() {
-  const safeArea = useSafeAreaInsets();
+  const commonContentOptions = useCommonContentOptions();
 
   return (
     <Stack f={1}>
       <RouterStack
         screenOptions={{
-          contentStyle: {
-            backgroundColor: getTokens().color.$backgroundMain.val,
-            paddingBottom: safeArea.bottom,
-          },
-          header: ({ navigation, options }) => (
-            <Header back={navigation.canGoBack()} title={options.title} />
-          ),
+          ...commonContentOptions,
+          ...getCommonHeaderOptions(),
         }}>
         <RouterStack.Screen
           name="index"

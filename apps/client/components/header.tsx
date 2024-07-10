@@ -16,7 +16,7 @@ type Props = {
 export const Header = ({ back, options, navigation, title }: Props) => {
   const safeArea = useSafeAreaInsets();
 
-  const hasAction = !!options.headerRight;
+  const hasAction = !!options?.headerRight;
 
   return (
     <XStack px="$4" pt={safeArea.top} bg="$backgroundMain" gap="$4">

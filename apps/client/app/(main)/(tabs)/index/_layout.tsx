@@ -1,17 +1,19 @@
 import { Stack } from 'expo-router';
 
-import { getCommonContentOptions, getCommonHeaderOptions } from '@/utils/navigation';
+import { getCommonHeaderOptions, useCommonContentOptions } from '@/utils/navigation';
 
 export const unstable_settings = {
   initialRouteName: 'home',
 };
 
 export default function HomeLayout() {
+  const commonContentOptions = useCommonContentOptions();
+
   return (
     <Stack
       screenOptions={{
         ...getCommonHeaderOptions(),
-        ...getCommonContentOptions(),
+        ...commonContentOptions,
       }}>
       <Stack.Screen
         name="home"
