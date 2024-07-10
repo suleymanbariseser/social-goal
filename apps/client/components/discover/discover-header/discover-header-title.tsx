@@ -23,6 +23,15 @@ export const DiscoverHeaderTitle = () => {
     if (search === q) return;
 
     router.push('/discover?q=' + search);
+
+    // reset search to previous value
+    setSearch(q);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    // reset search to previous value
+    setSearch(q);
   };
 
   return (
@@ -30,9 +39,10 @@ export const DiscoverHeaderTitle = () => {
       <DiscoverSearchInput
         ref={inputRef}
         value={search}
-        onSubmit={handleSubmit}
+        onSubmitEditing={handleSubmit}
+        onFocus={() => setIsFocused(true)}
+        onBlur={handleBlur}
         isFocused={isFocused}
-        onFocusChange={setIsFocused}
         onChangeText={setSearch}
       />
       {isScreenFocused && (
