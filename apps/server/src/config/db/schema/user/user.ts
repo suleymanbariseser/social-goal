@@ -5,6 +5,7 @@ import { activities, activityCommentLikes, activityLikes } from '../activity';
 import { userSocialLinks } from './user-social-link';
 import { userRelationships } from './user-relationships';
 import { activityComments } from '../activity/comment/activity-comments';
+import { userRecentSearches } from './user-recent-searches';
 
 export const users = pgTable(
   'users',
@@ -29,6 +30,8 @@ export const userRelations = relations(users, ({ many }) => ({
   comments: many(activityComments),
 
   commentLikes: many(activityCommentLikes),
+
+  recentSearches: many(userRecentSearches),
 
   // ? the relation name is reverse because the followers are people who following me
   followers: many(userRelationships, { relationName: 'following' }),
