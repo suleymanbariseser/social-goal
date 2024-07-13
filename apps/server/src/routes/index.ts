@@ -5,6 +5,7 @@ import { goalRouter } from './goal';
 import { activityRouter } from './activity';
 import { uploadRouter } from './upload';
 import { searchRouter } from './search';
+import { discoverRouter } from './discover';
 
 export const appRouter = router({
   auth: authRouter,
@@ -13,6 +14,7 @@ export const appRouter = router({
   activity: activityRouter,
   upload: uploadRouter,
   search: searchRouter,
+  discover: discoverRouter,
 });
 
 export type AppRouter = typeof appRouter;
