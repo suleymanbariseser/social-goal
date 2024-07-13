@@ -9,8 +9,8 @@
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "test": "jest",
-    "db:generate": "drizzle-kit generate:pg --config drizzle.config.ts",
-    "db:introspect": "drizzle-kit introspect:pg --config drizzle.config.ts",
+    "db:generate": "drizzle-kit generate --config drizzle.config.ts",
+    "db:introspect": "drizzle-kit introspect --config drizzle.config.ts",
     "db:preview": "drizzle-kit studio --config drizzle.config.ts",
     "db:seed": "ts-node src/config/db/seed/index.ts"
   },

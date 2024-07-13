@@ -1,10 +1,8 @@
 {
-  "id": "879653a7-e5bc-46cd-b94f-39a87fe4aa24",
-  "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "activity_assets": {
+    "public.activity_assets": {
       "name": "activity_assets",
       "schema": "",
       "columns": {
@@ -39,21 +37,21 @@
         "activity_assets_activity_id_activities_id_fk": {
           "name": "activity_assets_activity_id_activities_id_fk",
           "tableFrom": "activity_assets",
-          "tableTo": "activities",
           "columnsFrom": [
             "activity_id"
           ],
+          "tableTo": "activities",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "activity_comments": {
+    "public.activity_comments": {
       "name": "activity_comments",
       "schema": "",
       "columns": {
@@ -100,47 +98,47 @@
         "activity_comments_user_id_users_id_fk": {
           "name": "activity_comments_user_id_users_id_fk",
           "tableFrom": "activity_comments",
-          "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "activity_comments_activity_id_activities_id_fk": {
           "name": "activity_comments_activity_id_activities_id_fk",
           "tableFrom": "activity_comments",
-          "tableTo": "activities",
           "columnsFrom": [
             "activity_id"
           ],
+          "tableTo": "activities",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "parent_comment_reference": {
           "name": "parent_comment_reference",
           "tableFrom": "activity_comments",
-          "tableTo": "activity_comments",
           "columnsFrom": [
             "parent_comment_id"
           ],
+          "tableTo": "activity_comments",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "activity_likes": {
+    "public.activity_likes": {
       "name": "activity_likes",
       "schema": "",
       "columns": {
@@ -172,46 +170,59 @@
       },
       "indexes": {
         "user_activity_idx": {
-          "name": "user_activity_idx",
           "columns": [
-            "user_id",
-            "activity_id"
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "activity_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
           ],
-          "isUnique": true
+          "with": {},
+          "name": "user_activity_idx",
+          "isUnique": true,
+          "method": "btree",
+          "concurrently": false
         }
       },
       "foreignKeys": {
         "activity_likes_user_id_users_id_fk": {
           "name": "activity_likes_user_id_users_id_fk",
           "tableFrom": "activity_likes",
-          "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "activity_likes_activity_id_activities_id_fk": {
           "name": "activity_likes_activity_id_activities_id_fk",
           "tableFrom": "activity_likes",
-          "tableTo": "activities",
           "columnsFrom": [
             "activity_id"
           ],
+          "tableTo": "activities",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "activities": {
+    "public.activities": {
       "name": "activities",
       "schema": "",
       "columns": {
@@ -259,34 +270,34 @@
         "activities_creator_id_users_id_fk": {
           "name": "activities_creator_id_users_id_fk",
           "tableFrom": "activities",
-          "tableTo": "users",
           "columnsFrom": [
             "creator_id"
           ],
+          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "activities_goal_id_goals_id_fk": {
           "name": "activities_goal_id_goals_id_fk",
           "tableFrom": "activities",
-          "tableTo": "goals",
           "columnsFrom": [
             "goal_id"
           ],
+          "tableTo": "goals",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "assets": {
+    "public.assets": {
       "name": "assets",
       "schema": "",
       "columns": {
@@ -340,21 +351,21 @@
         "assets_creator_id_users_id_fk": {
           "name": "assets_creator_id_users_id_fk",
           "tableFrom": "assets",
-          "tableTo": "users",
           "columnsFrom": [
             "creator_id"
           ],
+          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "user_verification": {
+    "public.user_verification": {
       "name": "user_verification",
       "schema": "",
       "columns": {
@@ -408,7 +419,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "goals": {
+    "public.goals": {
       "name": "goals",
       "schema": "",
       "columns": {
@@ -461,21 +472,21 @@
         "goals_creator_id_users_id_fk": {
           "name": "goals_creator_id_users_id_fk",
           "tableFrom": "goals",
-          "tableTo": "users",
           "columnsFrom": [
             "creator_id"
           ],
+          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "users": {
+    "public.users": {
       "name": "users",
       "schema": "",
       "columns": {
@@ -542,14 +553,14 @@
       "uniqueConstraints": {
         "users_email_unique": {
           "name": "users_email_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "email"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "user_relationship": {
+    "public.user_relationship": {
       "name": "user_relationship",
       "schema": "",
       "columns": {
@@ -588,46 +599,59 @@
       },
       "indexes": {
         "user_relation_idx": {
-          "name": "user_relation_idx",
           "columns": [
-            "follower_id",
-            "followed_id"
+            {
+              "expression": "follower_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "followed_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
           ],
-          "isUnique": true
+          "with": {},
+          "name": "user_relation_idx",
+          "isUnique": true,
+          "method": "btree",
+          "concurrently": false
         }
       },
       "foreignKeys": {
         "user_relationship_follower_id_users_id_fk": {
           "name": "user_relationship_follower_id_users_id_fk",
           "tableFrom": "user_relationship",
-          "tableTo": "users",
           "columnsFrom": [
             "follower_id"
           ],
+          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "user_relationship_followed_id_users_id_fk": {
           "name": "user_relationship_followed_id_users_id_fk",
           "tableFrom": "user_relationship",
-          "tableTo": "users",
           "columnsFrom": [
             "followed_id"
           ],
+          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "user_social_link": {
+    "public.user_social_link": {
       "name": "user_social_link",
       "schema": "",
       "columns": {
@@ -669,15 +693,15 @@
         "user_social_link_user_id_users_id_fk": {
           "name": "user_social_link_user_id_users_id_fk",
           "tableFrom": "user_social_link",
-          "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -685,19 +709,22 @@
     }
   },
   "enums": {
-    "asset_type": {
+    "public.asset_type": {
       "name": "asset_type",
-      "values": {
-        "image": "image",
-        "video": "video",
-        "gif": "gif"
-      }
+      "schema": "public",
+      "values": [
+        "image",
+        "video",
+        "gif"
+      ]
     }
   },
   "schemas": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "879653a7-e5bc-46cd-b94f-39a87fe4aa24",
+  "prevId": "00000000-0000-0000-0000-000000000000"
 }
