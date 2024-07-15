@@ -31,15 +31,20 @@ export const GoalList = ({ filters, ...rest }: Props) => {
     }
   };
 
-  const renderItem = ({ item }: ListRenderItemInfo<GoalItem>) => {
-    return (
-      <GoalListItem
-        onPress={() => router.push(`/goal/${item.id}`)}
-        onPressAvatar={() => router.push(`/profile/${item.creator.id}`)}
-        goal={item}
+  const renderItem = ({ item }: ListRenderItemInfo<GoalItem>) => (
+    <GoalListItem onPress={() => router.push(`/goal/${item.id}`)}>
+      <GoalListItem.Avatar
+        onPress={() => router.push(`/profile/${item.creator.id}`)}
+        image={item.creator.image}
       />
-    );
-  };
+      <GoalListItem.Content
+        title={item.title}
+        creator={{
+          fullName: item.creator.fullName,
+        }}
+      />
+    </GoalListItem>
+  );
 
   const refreshControl = (
     <RefreshControl tintColor="white" refreshing={isRefetching} onRefresh={handleRefresh} />

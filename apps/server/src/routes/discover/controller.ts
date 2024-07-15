@@ -14,13 +14,35 @@ export const getRecentSearches = async ({ ctx }: ProtectedInputOptions<any>) => 
           lastName: true,
           image: true,
         },
+        extras: (table, { sql }) => ({
+          fullName: sql<string>`concat(${table.firstName} || ' ' || ${table.lastName})`.as(
+            'creator_full_name'
+          ),
+        }),
       },
       goal: {
         columns: {
           id: true,
           title: true,
         },
+        with: {
+          creator: {
+            columns: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              image: true,
+            },
+            extras: (table, { sql }) => ({
+              fullName: sql<string>`concat(${table.firstName} || ' ' || ${table.lastName})`.as(
+                'creator_full_name'
+              ),
+            }),
+          },
+        },
       },
     },
   });
 };
+
+export type RecentSearchItem = Awaited<ReturnType<typeof getRecentSearches>>['0'];

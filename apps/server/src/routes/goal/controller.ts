@@ -66,8 +66,6 @@ export const getGoalSummary = async ({ input }: ProtectedInputOptions<GoalSummar
 export type GoalItem = {
   id: number;
   title: string;
-  startDate: Date;
-  endDate: Date;
   creator: {
     id: number;
     firstName: string;

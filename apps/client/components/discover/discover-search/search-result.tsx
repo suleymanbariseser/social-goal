@@ -1,8 +1,5 @@
-import { Stack } from 'tamagui';
-
+import { DiscoverRecentSearches } from './discover-recent-searches';
 import { SearchRecommendations } from './search-recommendations/search-recommendations';
-
-import { Text } from '@/components/ui/text';
 
 type Props = {
   q: string;
@@ -10,12 +7,7 @@ type Props = {
 };
 
 export const SearchResult = ({ q, handleSubmit }: Props) => {
-  if (!q)
-    return (
-      <Stack p="$4">
-        <Text>Type something to search</Text>
-      </Stack>
-    );
+  if (!q) return <DiscoverRecentSearches />;
 
   return <SearchRecommendations q={q} handleSubmit={handleSubmit} />;
 };
