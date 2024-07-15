@@ -28,15 +28,20 @@ export const RelationList = ({
 }: Props) => {
   const toast = useToastController();
 
-  const renderItem = ({ item }: ListRenderItemInfo<RelationShipListItem>) => {
-    return (
-      <UserListItem
-        user={item.user}
-        onFollow={() => onFollow(item.user.id)}
-        onUnfollow={() => onUnfollow(item.user.id)}
-      />
-    );
-  };
+  const renderItem = ({ item }: ListRenderItemInfo<RelationShipListItem>) => (
+    // TODO navigate to user profile
+    <UserListItem onPress={console.log}>
+      <UserListItem.Content image={item.user.image} fullName={item.user.firstName} />
+      <UserListItem.Actions>
+        <UserListItem.FollowButton
+          userId={item.user.id}
+          followedByMe={item.user.followedByMe}
+          onFollow={() => onFollow(item.user.id)}
+          onUnfollow={() => onUnfollow(item.user.id)}
+        />
+      </UserListItem.Actions>
+    </UserListItem>
+  );
 
   const handleRefresh = async () => {
     try {

@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { RefreshControl } from 'react-native';
 import { Stack } from 'tamagui';
 
-import { UserListItem } from './user-list-item';
+import { UserListItem } from './user-list-item/user-list-item';
 
 import { UserListFilters, useUserList } from '@/hooks/user/use-user-list';
 
@@ -41,12 +41,17 @@ export const UserList = ({ filters, ...rest }: Props) => {
   };
 
   const renderItem = ({ item }: ListRenderItemInfo<UserItem>) => (
-    <UserListItem
-      user={item}
-      onPress={() => router.push(`/profile/${item.id}`)}
-      onFollow={() => follow(item.id)}
-      onUnfollow={() => unFollow(item.id)}
-    />
+    <UserListItem onPress={() => router.push(`/profile/${item.id}`)}>
+      <UserListItem.Content image={item.image} fullName={item.firstName} />
+      <UserListItem.Actions>
+        <UserListItem.FollowButton
+          userId={item.id}
+          followedByMe={item.followedByMe}
+          onFollow={() => follow(item.id)}
+          onUnfollow={() => unFollow(item.id)}
+        />
+      </UserListItem.Actions>
+    </UserListItem>
   );
 
   const refreshControl = (

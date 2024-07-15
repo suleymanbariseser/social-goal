@@ -1,11 +1,22 @@
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/use-auth';
 
 type Props = {
+  userId: number;
   followedByMe: boolean;
   onFollow: () => void;
   onUnfollow: () => void;
 };
-export const UserListItemButton = ({ followedByMe, onFollow, onUnfollow }: Props) => {
+
+export const UserListItemFollowButton = ({ userId, followedByMe, onFollow, onUnfollow }: Props) => {
+  const {
+    user: { id },
+  } = useAuth();
+
+  if (id === userId) {
+    return null;
+  }
+
   if (followedByMe) {
     return (
       <Button onPress={onUnfollow} size="small" variant="outlined" w="$16">

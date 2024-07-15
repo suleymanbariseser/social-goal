@@ -21,7 +21,7 @@ export const useUserList = (options: Options = {}) => {
   const timestamp = useRef(moment().utc().toDate());
   const _follow = useFollow();
   const _unfollow = useUnfollow();
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
 
   const queryOptions = {
     timestamp: timestamp.current,
