@@ -8,7 +8,7 @@ import { UserItem } from './user-item';
 import { trpc } from '@/lib/trpc';
 
 export const DiscoverRecentSearches = () => {
-  const { data } = trpc.discover.recentSearches.useQuery();
+  const { data } = trpc.discover.recentSearches.list.useQuery();
 
   return (
     <FlashList

@@ -25,6 +25,5 @@
   "dependencies": {
     "moment": "^2.29.4",
     "superjson": "^1.13.1"
-  },
-  "packageManager": "yarn@4.3.1"
+  }
 }
