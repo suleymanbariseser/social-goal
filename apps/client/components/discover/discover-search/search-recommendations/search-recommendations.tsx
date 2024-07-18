@@ -13,11 +13,21 @@ type Props = {
 
 export const SearchRecommendations = ({ q, handleSubmit }: Props) => {
   const { data, isLoading } = trpc.search.recommendation.useQuery({ q });
+  const { mutate: addRecentSearch } = trpc.discover.recentSearches.add.useMutation();
+
+  const handlePress = (userId: number) => {
+    addRecentSearch({
+      type: 'user',
+      userId,
+    });
+  };
 
   return (
     <FlashList
       data={data}
-      renderItem={({ item }) => <SearchRecommendationItem user={item} />}
+      renderItem={({ item }) => (
+        <SearchRecommendationItem onPress={() => handlePress(item.id)} user={item} />
+      )}
       keyExtractor={(i) => i.firstName}
       estimatedItemSize={30}
       ListEmptyComponent={isLoading ? <Spinner p="$4" /> : undefined}

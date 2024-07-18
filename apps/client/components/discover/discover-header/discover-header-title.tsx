@@ -7,6 +7,7 @@ import { DiscoverSearchInput } from '../discover-search/discover-search-input';
 import { DiscoverSearchOverlay } from '../discover-search/discover-search-overlay';
 
 import { DISCOVER_SEARCH_OVERLAY } from '@/constants/discover';
+import { trpc } from '@/lib/trpc';
 
 export const DiscoverHeaderTitle = () => {
   const inputRef = useRef<TextInput | null>(null);
@@ -16,6 +17,7 @@ export const DiscoverHeaderTitle = () => {
   const router = useRouter();
   const [isFocused, setIsFocused] = useState(false);
   const isScreenFocused = useNavigation().isFocused();
+  const { mutate: addRecentSearch } = trpc.discover.recentSearches.add.useMutation();
 
   const handleSubmit = () => {
     inputRef.current?.blur();
@@ -26,6 +28,7 @@ export const DiscoverHeaderTitle = () => {
 
     // reset search to previous value
     setSearch(q);
+    addRecentSearch({ type: 'text', text: search });
   };
 
   const handleBlur = () => {

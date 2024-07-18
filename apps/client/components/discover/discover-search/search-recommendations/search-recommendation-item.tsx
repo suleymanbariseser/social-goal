@@ -7,13 +7,15 @@ import { Text } from '@/components/ui/text';
 
 type Props = {
   user: UserSearchRecommendation;
+  onPress?: () => void;
 };
 
-export const SearchRecommendationItem = ({ user }: Props) => {
+export const SearchRecommendationItem = ({ user, onPress }: Props) => {
   const router = useRouter();
 
   const handlePress = () => {
     router.push(`/profile/${user.id}`);
+    onPress?.();
   };
 
   return (
