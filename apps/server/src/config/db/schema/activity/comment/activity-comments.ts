@@ -5,7 +5,6 @@ import {
   serial,
   text,
   timestamp,
-  uniqueIndex,
 } from 'drizzle-orm/pg-core';
 import { users } from '../../user';
 import { activities } from '../activity';
