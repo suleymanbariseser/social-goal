@@ -1,6 +1,7 @@
 import type { RecentSearchItem } from '@app/server/src/routes/discover/recentSearches/controller';
 import { FlashList } from '@shopify/flash-list';
 
+import { ClearAllButton } from './clear-all-button';
 import { GoalItem } from './goal-item';
 import { TextItem } from './text-item';
 import { UserItem } from './user-item';
@@ -29,6 +30,7 @@ export const DiscoverRecentSearches = () => {
   return (
     <FlashList
       data={data}
+      ListHeaderComponent={!!data?.length && <ClearAllButton />}
       renderItem={({ item }) => <Content item={item} />}
       estimatedItemSize={47}
     />
