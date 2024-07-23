@@ -24,7 +24,6 @@ export function ActivityCard({
   onPressAvatar,
   onPressComment,
   onPressLike,
-  onPressShare,
   onPressSettings,
   createdAt,
   bordered = false,
@@ -52,7 +51,6 @@ export function ActivityCard({
         likedByMe={likedByMe}
         onPressLike={onPressLike}
         onPressComment={onPressComment}
-        onPressShare={onPressShare}
       />
     </Card>
   );

@@ -40,7 +40,6 @@ export const ActivityListItem = ({
       onPressComment={() => {}}
       onPressLike={onLike}
       onPressSettings={onPressSettings}
-      onPressShare={() => {}}
     />
   );
 };
