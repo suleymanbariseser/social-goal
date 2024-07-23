@@ -1,18 +1,20 @@
-import { useLocalSearchParams, useRouter, useNavigation } from 'expo-router';
+import { useRouter, useNavigation } from 'expo-router';
 import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import { PortalItem, Stack } from 'tamagui';
 
 import { DiscoverSearchInput } from '../discover-search/discover-search-input';
 import { DiscoverSearchOverlay } from '../discover-search/discover-search-overlay';
+import { DiscoverLocalSearchParams } from '../types';
 
 import { DISCOVER_SEARCH_OVERLAY } from '@/constants/discover';
 import { trpc } from '@/lib/trpc';
 
-export const DiscoverHeaderTitle = () => {
+type Props = DiscoverLocalSearchParams;
+
+export const DiscoverHeaderTitle = ({ q }: Props) => {
   const inputRef = useRef<TextInput | null>(null);
 
-  const { q } = useLocalSearchParams<{ q: string }>();
   const [search, setSearch] = useState(q);
   const router = useRouter();
   const [isFocused, setIsFocused] = useState(false);
@@ -25,9 +27,6 @@ export const DiscoverHeaderTitle = () => {
     if (search === q) return;
 
     router.push('/discover?q=' + search);
-
-    // reset search to previous value
-    setSearch(q);
     addRecentSearch({ type: 'text', text: search });
   };
 

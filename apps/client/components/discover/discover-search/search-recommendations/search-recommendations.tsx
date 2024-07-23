@@ -1,5 +1,5 @@
 import { FlashList } from '@shopify/flash-list';
-import { Spinner, Stack } from 'tamagui';
+import { Spinner, Stack, useDebounceValue } from 'tamagui';
 
 import { SearchRecommendationHeader } from './search-recommendation-header';
 import { SearchRecommendationItem } from './search-recommendation-item';
@@ -12,7 +12,8 @@ type Props = {
 };
 
 export const SearchRecommendations = ({ q, handleSubmit }: Props) => {
-  const { data, isLoading } = trpc.search.recommendation.useQuery({ q });
+  const debouncedQ = useDebounceValue(q, 800);
+  const { data, isLoading } = trpc.search.recommendation.useQuery({ q: debouncedQ });
   const { mutate: addRecentSearch } = trpc.discover.recentSearches.add.useMutation();
 
   const handlePress = (userId: number) => {
