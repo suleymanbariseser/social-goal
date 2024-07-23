@@ -20,8 +20,8 @@ export const addSearchSchema = z.union([textSearchSchema, goalSearchSchema, user
 
 export type AddSearchSchema = z.infer<typeof addSearchSchema>;
 
-export const removeSearchSchema = z.object({
+export const deleteSearchSchema = z.object({
   id: z.number(),
 });
 
-export type RemoveSearchSchema = z.infer<typeof removeSearchSchema>;
+export type DeleteSearchSchema = z.infer<typeof deleteSearchSchema>;

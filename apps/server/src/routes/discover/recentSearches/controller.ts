@@ -2,7 +2,7 @@ import { db } from '@/config/db';
 import { userRecentSearches } from '@/config/db/schema';
 import { ProtectedInputOptions } from '@/types/trpc';
 import { eq } from 'drizzle-orm';
-import { AddSearchSchema, RemoveSearchSchema } from './schema';
+import { AddSearchSchema, DeleteSearchSchema } from './schema';
 import { TRPCError } from '@trpc/server';
 
 export const getRecentSearches = async ({ ctx }: ProtectedInputOptions<any>) => {
@@ -61,7 +61,7 @@ export const addSearch = async ({ input, ctx }: ProtectedInputOptions<AddSearchS
   });
 };
 
-export const removeSearch = async ({ input, ctx }: ProtectedInputOptions<RemoveSearchSchema>) => {
+export const deleteSearch = async ({ input, ctx }: ProtectedInputOptions<DeleteSearchSchema>) => {
   const search = await db.query.userRecentSearches.findFirst({
     where: eq(userRecentSearches.id, input.id),
   });
@@ -76,7 +76,7 @@ export const removeSearch = async ({ input, ctx }: ProtectedInputOptions<RemoveS
   if (search.ownerId !== ctx.user.id) {
     throw new TRPCError({
       code: 'FORBIDDEN',
-      message: 'You do not have permission to remove this search',
+      message: 'You do not have permission to delete this search',
     });
   }
 

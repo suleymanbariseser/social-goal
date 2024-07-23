@@ -5,14 +5,20 @@ import { Stack, XStack } from 'tamagui';
 
 import { IconButton } from '@/components/ui/icon-button';
 import { Text } from '@/components/ui/text';
+import { useDeleteRecentSearch } from '@/hooks/discover/use-delete-recent-search';
 
 type Props = RecentSearchItem;
 
-export const TextItem = ({ text }: Props) => {
+export const TextItem = ({ text, id }: Props) => {
   const router = useRouter();
+  const handleDeleteRecentSearch = useDeleteRecentSearch();
 
   const handlePress = () => {
     router.push('/discover?q=' + text);
+  };
+
+  const handleDelete = () => {
+    handleDeleteRecentSearch(id);
   };
 
   return (
@@ -20,7 +26,7 @@ export const TextItem = ({ text }: Props) => {
       <Stack fg={1}>
         <Text>{text}</Text>
       </Stack>
-      <IconButton variant="text" icon={X} onPress={console.log} />
+      <IconButton variant="text" icon={X} onPress={handleDelete} />
     </XStack>
   );
 };

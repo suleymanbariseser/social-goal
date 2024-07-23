@@ -1,11 +1,11 @@
 import { router } from '@/config/trpc';
 import { protectedProcedure } from '@/middlewares/isAuthed';
-import { addSearch, clearSearches, getRecentSearches, removeSearch } from './controller';
-import { addSearchSchema, removeSearchSchema } from './schema';
+import { addSearch, clearSearches, getRecentSearches, deleteSearch } from './controller';
+import { addSearchSchema, deleteSearchSchema } from './schema';
 
 export const recentSearchesRouter = router({
   list: protectedProcedure.query(getRecentSearches),
   add: protectedProcedure.input(addSearchSchema).mutation(addSearch),
-  remove: protectedProcedure.input(removeSearchSchema).mutation(removeSearch),
+  delete: protectedProcedure.input(deleteSearchSchema).mutation(deleteSearch),
   clear: protectedProcedure.mutation(clearSearches),
 });
