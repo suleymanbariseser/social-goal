@@ -22,6 +22,7 @@ export const loggerMiddleware: MiddlewareFunction<any, any> = async (opts) => {
     logger.info({
       data: result.data,
       meta,
+      input: opts.rawInput
     });
   } else {
     logger.error({
@@ -31,6 +32,7 @@ export const loggerMiddleware: MiddlewareFunction<any, any> = async (opts) => {
         stack: result.error.stack,
       },
       meta,
+      input: opts.rawInput
     });
   }
 

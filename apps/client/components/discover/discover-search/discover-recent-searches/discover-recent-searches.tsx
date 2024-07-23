@@ -1,5 +1,5 @@
+import type { RecentSearchItem } from '@app/server/src/routes/discover/recentSearches/controller';
 import { FlashList } from '@shopify/flash-list';
-import { Stack } from 'tamagui';
 
 import { GoalItem } from './goal-item';
 import { TextItem } from './text-item';
@@ -7,24 +7,29 @@ import { UserItem } from './user-item';
 
 import { trpc } from '@/lib/trpc';
 
+type ContentProps = {
+  item: RecentSearchItem;
+};
+
+const Content = ({ item }: ContentProps) => {
+  if (item.type === 'user') {
+    return <UserItem {...item} />;
+  }
+
+  if (item.type === 'goal') {
+    return <GoalItem {...item} />;
+  }
+
+  return <TextItem {...item} />;
+};
+
 export const DiscoverRecentSearches = () => {
   const { data } = trpc.discover.recentSearches.list.useQuery();
 
   return (
     <FlashList
       data={data}
-      renderItem={({ item }) => {
-        if (item.type === 'user') {
-          return <UserItem {...item} />;
-        }
-
-        if (item.type === 'goal') {
-          return <GoalItem {...item} />;
-        }
-
-        return <TextItem {...item} />;
-      }}
-      ItemSeparatorComponent={() => <Stack py="$2" />}
+      renderItem={({ item }) => <Content item={item} />}
       estimatedItemSize={47}
     />
   );
