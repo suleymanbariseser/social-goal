@@ -31,7 +31,9 @@ export const userRelations = relations(users, ({ many }) => ({
 
   commentLikes: many(activityCommentLikes),
 
-  recentSearches: many(userRecentSearches),
+  recentSearches: many(userRecentSearches, {
+    relationName: 'owner'
+  }),
 
   // ? the relation name is reverse because the followers are people who following me
   followers: many(userRelationships, { relationName: 'following' }),

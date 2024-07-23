@@ -37,10 +37,12 @@ export const userRecentSearchesRelations = relations(userRecentSearches, ({ one 
   owner: one(users, {
     fields: [userRecentSearches.ownerId],
     references: [users.id],
+    relationName: 'owner',
   }),
   user: one(users, {
-    fields: [userRecentSearches.ownerId],
+    fields: [userRecentSearches.userId],
     references: [users.id],
+    relationName: 'searchedUser',
   }),
   goal: one(goals, {
     fields: [userRecentSearches.goalId],
