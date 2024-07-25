@@ -3,7 +3,6 @@ import {
   Home as HomeIcon,
   Plus as PlusIcon,
   User as UserIcon,
-  MessageCircle as MessageIcon,
 } from '@tamagui/lucide-icons';
 import { Tabs } from 'expo-router';
 import { getTokens } from 'tamagui';
@@ -39,12 +38,6 @@ export default function TabLayout() {
         name="create"
         options={{
           tabBarIcon: ({ color }) => <PlusIcon size="$6" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="message"
-        options={{
-          tabBarIcon: ({ color }) => <MessageIcon size="$6" color={color} />,
         }}
       />
       <Tabs.Screen
