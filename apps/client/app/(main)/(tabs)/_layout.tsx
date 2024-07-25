@@ -7,7 +7,11 @@ import {
 import { Tabs } from 'expo-router';
 import { getTokens } from 'tamagui';
 
+import { trpc } from '@/lib/trpc';
+
 export default function TabLayout() {
+  const [user] = trpc.user.info.useSuspenseQuery();
+
   return (
     <Tabs
       sceneContainerStyle={{
@@ -43,6 +47,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile/[id]"
         options={{
+          href: `/profile/${user.id}`,
           tabBarIcon: ({ color }) => <UserIcon size="$6" color={color} />,
         }}
       />
