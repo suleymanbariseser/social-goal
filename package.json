@@ -9,21 +9,21 @@
     "packages/*"
   ],
   "scripts": {
-    "build:helpers": "yarn workspace @packages/helpers build",
-    "client": "yarn build:helpers && yarn workspace @app/client",
-    "server": "yarn build:helpers && yarn workspace @app/server",
-    "db:preview": "yarn workspace @app/server db:preview",
-    "format": "yarn prettier --write ."
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint"
   },
   "keywords": [],
   "author": "Suleyman Baris Eser",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.1.0",
-    "prettier": "^2.8.8"
+    "prettier": "^2.8.8",
+    "turbo": "^2.0.9"
   },
   "dependencies": {
     "moment": "^2.29.4",
     "superjson": "^1.13.1"
-  }
+  },
+  "packageManager": "yarn@1.22.22"
 }

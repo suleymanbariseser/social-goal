@@ -4,7 +4,7 @@
   "description": "Client of Social Goal",
   "main": "expo-router/entry",
   "scripts": {
-    "start": "TAMAGUI_TARGET=native expo start",
+    "dev": "yarn ios",
     "android": "TAMAGUI_TARGET=native expo start --android",
     "ios": "TAMAGUI_TARGET=native expo start --ios"
   },
