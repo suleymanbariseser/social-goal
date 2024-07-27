@@ -2,6 +2,7 @@ import { InferSelectModel, relations } from 'drizzle-orm';
 import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 import { users } from './user';
 import { activities } from './activity';
+import { goalCategories } from './goal-categories';
 
 export const goals = pgTable('goals', {
   id: serial('id').primaryKey(),
@@ -21,6 +22,7 @@ export const goalRelations = relations(goals, ({ one, many }) => ({
     references: [users.id],
   }),
   activities: many(activities),
+  categories: many(goalCategories)
 }));
 
 export type Goal = InferSelectModel<typeof goals>;
