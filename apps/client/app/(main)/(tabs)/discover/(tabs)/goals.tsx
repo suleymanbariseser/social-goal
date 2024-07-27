@@ -1,12 +1,11 @@
 import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'tamagui';
 
-import { DiscoverGoalListEmpty } from './discover-goal-list-empty';
-import { DiscoverLocalSearchParams } from '../../types';
-
+import { SearchGoalListEmpty } from '@/components/discover/search/search-goal-list-empty';
+import { DiscoverLocalSearchParams } from '@/components/discover/types';
 import { GoalList } from '@/components/goals/goal-list';
 
-export const DiscoverGoalList = () => {
+const SearchGoals = () => {
   const { q } = useLocalSearchParams<DiscoverLocalSearchParams>();
 
   return (
@@ -14,8 +13,10 @@ export const DiscoverGoalList = () => {
       <GoalList
         filters={{ q }}
         ListFooterComponent={<Stack h="$18" />}
-        ListEmptyComponent={<DiscoverGoalListEmpty />}
+        ListEmptyComponent={<SearchGoalListEmpty />}
       />
     </Stack>
   );
 };
+
+export default SearchGoals;

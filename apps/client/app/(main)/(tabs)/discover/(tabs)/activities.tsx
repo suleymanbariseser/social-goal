@@ -1,12 +1,11 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Stack } from 'tamagui';
 
-import { DiscoverActivityListEmpty } from './discover-activity-list-empty';
-import { DiscoverLocalSearchParams } from '../../types';
-
 import { ActivityList } from '@/components/activity';
+import { SearchActivityListEmpty } from '@/components/discover/search/search-activity-list-empty';
+import { DiscoverLocalSearchParams } from '@/components/discover/types';
 
-export const DiscoverActivityList = () => {
+const SearchActivities = () => {
   const { q } = useLocalSearchParams<DiscoverLocalSearchParams>();
   const router = useRouter();
 
@@ -26,9 +25,11 @@ export const DiscoverActivityList = () => {
         filters={{
           q,
         }}
-        ListEmptyComponent={<DiscoverActivityListEmpty />}
+        ListEmptyComponent={<SearchActivityListEmpty />}
         ListFooterComponent={<Stack h="$18" />}
       />
     </Stack>
   );
 };
+
+export default SearchActivities;

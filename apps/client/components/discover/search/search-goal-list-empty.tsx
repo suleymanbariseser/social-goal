@@ -1,11 +1,11 @@
 import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'tamagui';
 
-import { DiscoverLocalSearchParams } from '../../types';
+import { DiscoverLocalSearchParams } from '../types';
 
 import { Text } from '@/components/ui/text';
 
-export const DiscoverGoalListEmpty = () => {
+export const SearchGoalListEmpty = () => {
   const { q } = useLocalSearchParams<DiscoverLocalSearchParams>();
 
   return (

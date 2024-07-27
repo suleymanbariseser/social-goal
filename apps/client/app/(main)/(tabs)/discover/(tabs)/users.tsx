@@ -1,12 +1,11 @@
 import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'tamagui';
 
-import { DiscoverUserListEmpty } from './discover-user-list-empty';
-import { DiscoverLocalSearchParams } from '../../types';
-
+import { SearchUserListEmpty } from '@/components/discover/search/search-user-list-empty';
+import { DiscoverLocalSearchParams } from '@/components/discover/types';
 import { UserList } from '@/components/user/user-list';
 
-export const DiscoverUserList = () => {
+const SearchUsers = () => {
   const { q } = useLocalSearchParams<DiscoverLocalSearchParams>();
 
   return (
@@ -14,8 +13,10 @@ export const DiscoverUserList = () => {
       <UserList
         filters={{ q }}
         ListFooterComponent={<Stack h="$18" />}
-        ListEmptyComponent={<DiscoverUserListEmpty />}
+        ListEmptyComponent={<SearchUserListEmpty />}
       />
     </Stack>
   );
 };
+
+export default SearchUsers;

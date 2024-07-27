@@ -26,7 +26,7 @@ export const DiscoverHeaderTitle = ({ q }: Props) => {
 
     if (search === q) return;
 
-    router.push('/discover?q=' + search);
+    router.push('/discover/(tabs)?q=' + search);
     addRecentSearch({ type: 'text', text: search });
   };
 

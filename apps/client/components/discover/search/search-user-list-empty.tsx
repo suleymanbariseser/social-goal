@@ -5,7 +5,7 @@ import { DiscoverLocalSearchParams } from '../../types';
 
 import { Text } from '@/components/ui/text';
 
-export const DiscoverUserListEmpty = () => {
+export const SearchUserListEmpty = () => {
   const { q } = useLocalSearchParams<DiscoverLocalSearchParams>();
 
   return (
