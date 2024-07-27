@@ -14,7 +14,7 @@ export const TextItem = ({ text, id }: Props) => {
   const handleDeleteRecentSearch = useDeleteRecentSearch();
 
   const handlePress = () => {
-    router.push('/discover?q=' + text);
+    router.push('/discover/(tabs)?q=' + text);
   };
 
   const handleDelete = () => {

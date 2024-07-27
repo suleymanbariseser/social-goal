@@ -16,7 +16,7 @@ export const useActivities = (options?: ActivityOptions) => {
   const timestamp = useRef(moment().utc().toDate());
   const _like = useLike();
   const _unlike = useUnlike();
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
 
   const queryOptions = {
     timestamp: timestamp.current,
