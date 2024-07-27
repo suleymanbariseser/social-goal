@@ -29,18 +29,27 @@ interface Props {
 
 export const ProfileStatistics = ({ id, followers, following, goals }: Props) => {
   const router = useRouter();
+  const baseUrl = `/profile/${id}/(tabs)`;
 
   const handleGoalPress = () => {
-    router.push(`/profile/${id}/(tabs)/followers`);
+    router.push(`${baseUrl}/goals`);
+  };
+
+  const handleFollowersPress = () => {
+    router.push(`${baseUrl}/followers`);
+  };
+
+  const handleFollowingPress = () => {
+    router.push(`${baseUrl}/followings`);
   };
 
   return (
     <Stack fd="row" gap="$2">
       <ProfileLink count={goals} text="goals" onPress={handleGoalPress} />
       <Text variant="body3">-</Text>
-      <ProfileLink count={followers} text="followers" />
+      <ProfileLink count={followers} text="followers" onPress={handleFollowersPress} />
       <Text variant="body3">-</Text>
-      <ProfileLink count={following} text="following" />
+      <ProfileLink count={following} text="following" onPress={handleFollowingPress} />
     </Stack>
   );
 };

@@ -1,22 +1,31 @@
 import { useLocalSearchParams } from 'expo-router';
-import { Tabs } from 'expo-router/tabs';
+import { getTokens } from 'tamagui';
+
+import { TopTab } from '@/components/top-tab';
 
 export default function ProfileTabsLayout() {
   const params = useLocalSearchParams<{ id: string }>();
   const initialParams = { id: params.id };
 
   return (
-    <Tabs
+    <TopTab
       screenOptions={{
-        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: 'transparent',
+        },
+        tabBarLabelStyle: {
+          color: getTokens().color.$textPrimary.val,
+        },
+        tabBarIndicatorStyle: {
+          backgroundColor: getTokens().color.$primaryDark.val,
+        },
       }}
-      detachInactiveScreens
       sceneContainerStyle={{
         backgroundColor: 'transparent',
       }}>
-      <Tabs.Screen name="goals" initialParams={initialParams} />
-      <Tabs.Screen name="followers" initialParams={initialParams} />
-      <Tabs.Screen name="followings" initialParams={initialParams} />
-    </Tabs>
+      <TopTab.Screen name="goals" initialParams={initialParams} />
+      <TopTab.Screen name="followers" initialParams={initialParams} />
+      <TopTab.Screen name="followings" initialParams={initialParams} />
+    </TopTab>
   );
 }
