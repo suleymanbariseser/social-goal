@@ -8,6 +8,7 @@ export const createGoalSchema = z
         required_error: 'Title is required',
       })
       .min(3, 'Title must be at least 3 characters long'),
+    category: z.array(z.number()),
     description: z
       .string({
         required_error: 'Description is required',

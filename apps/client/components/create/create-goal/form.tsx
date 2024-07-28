@@ -6,6 +6,8 @@ import { useRef, useState } from 'react';
 import { UseFormSetValue, UseFormWatch, useForm } from 'react-hook-form';
 import { XStack, Stack, Sheet } from 'tamagui';
 
+import { CategorySelect } from './category-select';
+
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { DatePicker } from '@/components/ui/form/date-picker';
@@ -81,6 +83,7 @@ export function CreateGoalForm({ onSubmit }: Props) {
         error={!!errors.title}
         helperText={errors.title?.message}
       />
+      <CategorySelect control={control} name="category" />
       <Stack gap="$2">
         <XStack ai="center" jc="space-between" gap="$3">
           <Stack f={1}>
