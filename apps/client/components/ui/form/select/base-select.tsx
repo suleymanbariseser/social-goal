@@ -6,20 +6,20 @@ import { Text } from '../../text';
 
 export type SelectItem = {
   name: string;
-  value: string;
+  value: string | number;
   left?: React.ReactNode;
 };
 
 type MultiProps = {
   multiple?: true;
-  value?: string[];
-  onChange?: (value: string[]) => void;
+  value?: (string | number)[];
+  onChange?: (value: (string | number)[]) => void;
 };
 
 type SingleProps = {
   multiple?: false;
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: string | number;
+  onChange?: (value: string | number) => void;
 };
 
 export type BaseSelectProps = {
@@ -33,6 +33,10 @@ export type BaseSelectProps = {
   error?: boolean;
   helperText?: string;
 } & (MultiProps | SingleProps);
+
+const isMultiple = (props: MultiProps | SingleProps): props is MultiProps => {
+  return props.multiple;
+};
 
 export function BaseSelect({
   items = [],
@@ -57,18 +61,28 @@ export function BaseSelect({
     onChange,
   });
 
-  const hasValue = multiple ? value.length > 0 : !!value;
+  const control = { multiple, value, onChange: setValue } as MultiProps | SingleProps;
 
-  const handleValueChange = (newValue: string) => {
-    if (multiple) {
-      if (value.includes(newValue)) {
-        setValue((value as string[]).filter((v) => v !== newValue));
+  const hasValue = isMultiple(control) ? control.value.length > 0 : !!value;
+
+  const handleValueChange = (newValue: string | number) => {
+    if (isMultiple(control)) {
+      if (control.value.includes(newValue)) {
+        control.onChange(control.value.filter((v) => v !== newValue));
       } else {
-        setValue([...value, newValue]);
+        control.onChange([...control.value, newValue]);
       }
     } else {
       setValue(newValue);
     }
+  };
+
+  const isSelected = (itemValue: string | number) => {
+    if (isMultiple(control)) {
+      return control.value.includes(itemValue);
+    }
+
+    return control.value === itemValue;
   };
 
   return (
@@ -85,7 +99,11 @@ export function BaseSelect({
           color={error ? '$errorMain' : !hasValue ? '$placeholderColor' : '$textPrimary'}>
           {hasValue
             ? items
-                .filter((item) => (multiple ? value.includes(item.value) : item.value === value))
+                .filter((item) =>
+                  isMultiple(control)
+                    ? control.value.includes(item.value)
+                    : item.value === control.value
+                )
                 .map((item) => item.name)
                 .join(', ')
             : placeholder}
@@ -105,15 +123,7 @@ export function BaseSelect({
                 px="$6"
                 py="$4"
                 gap="$4"
-                bg={
-                  multiple
-                    ? value.includes(item.value)
-                      ? '$backgroundHover'
-                      : 'transparent'
-                    : item.value === value
-                    ? '$backgroundHover'
-                    : 'transparent'
-                }
+                bg={isSelected(item.value) ? '$backgroundHover' : '$transparent'}
                 onPress={() => handleValueChange(item.value)}>
                 {item.left && <Stack>{item.left}</Stack>}
                 <Text f={1}>{item.name}</Text>
