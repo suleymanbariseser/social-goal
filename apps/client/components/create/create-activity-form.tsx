@@ -1,4 +1,3 @@
-import { Goal } from '@app/server/src/config/db/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'expo-router';
@@ -19,7 +18,7 @@ import { trpc } from '@/lib/trpc';
 
 export const CreateActivityForm = () => {
   const router = useRouter();
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
   const auth = useAuth();
   const toast = useToastController();
 
@@ -49,7 +48,7 @@ export const CreateActivityForm = () => {
     setCreateGoalOpen(true);
   };
 
-  const handleSave = async (goal: Goal) => {
+  const handleSave = async (goal: { id: number }) => {
     await refetch();
     setValue('goalId', goal.id);
   };
@@ -91,12 +90,11 @@ export const CreateActivityForm = () => {
           }
           placeholder="Select a category"
           items={goals.map((goal) => ({
-            value: goal.id.toString(),
+            value: goal.id,
             name: goal.title,
           }))}
           error={!!errors.goalId}
           helperText={errors.goalId?.message}
-          transform={(val) => +val}
         />
         <Input
           control={control}

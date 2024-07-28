@@ -5,17 +5,15 @@ import { SelectAction } from './select-action';
 import { SelectHeader } from './select-header';
 import { SelectTitle } from './select-title';
 
-type SelectProps<T, Context = any> = Omit<BaseSelectProps, 'defaultValue'> & {
+type SelectProps<T, Context = any> = Omit<BaseSelectProps, 'defaultValue' | 'onChange'> & {
   control: Control<T, Context>;
   name: Path<T>;
   defaultValue?: FieldPathValue<T, Path<T>>;
-  transform?: (value: string) => any;
 };
 
 export const Select = <T extends object, Context = any>({
   control,
   name,
-  transform,
   ...rest
 }: SelectProps<T, Context>) => {
   const { field } = useController({
@@ -24,13 +22,7 @@ export const Select = <T extends object, Context = any>({
     defaultValue: rest?.defaultValue ?? undefined,
   });
 
-  return (
-    <BaseSelect
-      {...rest}
-      value={field.value}
-      onChange={(val) => field.onChange(transform ? transform(val) : val)}
-    />
-  );
+  return <BaseSelect {...rest} value={field.value} onChange={field.onChange} />;
 };
 
 Select.Header = SelectHeader;

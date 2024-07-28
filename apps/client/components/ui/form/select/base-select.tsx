@@ -74,6 +74,7 @@ export function BaseSelect({
       }
     } else {
       setValue(newValue);
+      setOpen(false);
     }
   };
 

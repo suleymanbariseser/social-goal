@@ -50,6 +50,13 @@
       "when": 1722101170962,
       "tag": "0006_glossy_hiroim",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1722168467667,
+      "tag": "0007_complete_lorna_dane",
+      "breakpoints": true
     }
   ]
 }

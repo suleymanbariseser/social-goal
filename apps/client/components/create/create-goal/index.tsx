@@ -1,4 +1,3 @@
-import { Goal } from '@app/server/src/config/db/schema';
 import { CreateGoalInput } from '@app/server/src/routes/goal/schema';
 import { useToastController } from '@tamagui/toast';
 import { Sheet } from 'tamagui';
@@ -12,7 +11,7 @@ interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 
-  onSave: (goal: Goal) => void;
+  onSave: (goal: { id: number }) => void;
 }
 export function CreateGoal(props: Props) {
   const { mutate } = trpc.goal.create.useMutation();

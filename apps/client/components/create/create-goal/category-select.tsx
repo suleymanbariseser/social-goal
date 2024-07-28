@@ -43,6 +43,7 @@ export const CategorySelect = <T extends object, Context>({ control, name }: Pro
       name={name}
       open={open}
       onOpenChange={setOpen}
+      placeholder="Select a category"
     />
   );
 };

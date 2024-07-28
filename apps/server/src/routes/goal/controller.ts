@@ -1,7 +1,7 @@
 import { ProtectedInputOptions } from '@/types/trpc';
 import { CreateGoalInput, GoalActivitiesInput, GoalSummaryInput } from './schema';
 import { db } from '@/config/db';
-import { activities, goals } from '@/config/db/schema';
+import { activities, goalCategories, goals } from '@/config/db/schema';
 import { and, asc, eq, gte, ilike, lte } from 'drizzle-orm';
 import { getInfiniteQuery } from '@/utils/infinity';
 
@@ -15,7 +15,15 @@ export const createGoal = async ({ input, ctx }: ProtectedInputOptions<CreateGoa
       description: input.description,
       endDate: input.endDate,
     })
-    .returning();
+    .returning({
+      id: goals.id,
+    });
+
+  if (input.category.length > 0) {
+    await db
+      .insert(goalCategories)
+      .values(input.category.map((categoryId) => ({ goalId: goal[0].id, categoryId })));
+  }
 
   return goal[0];
 };
@@ -25,7 +33,7 @@ export const getGoalsActivities = async ({ input }: ProtectedInputOptions<GoalAc
     where: and(
       eq(goals.creatorId, input.id),
       lte(goals.startDate, input.endDate),
-      gte(goals.endDate, input.startDate),
+      gte(goals.endDate, input.startDate)
     ),
     columns: {
       id: true,
@@ -57,11 +65,11 @@ export const getGoalSummary = async ({ input }: ProtectedInputOptions<GoalSummar
       createdAt: true,
     },
     with: {
-      creator: true
+      creator: true,
     },
     where: eq(goals.id, input.id),
-  })
-}
+  });
+};
 
 export type GoalItem = {
   id: number;
@@ -96,8 +104,8 @@ export const getGoalsList = async ({ input }: ProtectedInputOptions<any>) => {
               'creator_full_name'
             ),
           }),
-        }
-      }
+        },
+      },
     },
     {
       cursor: input.cursor,

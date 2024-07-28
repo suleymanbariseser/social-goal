@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS "goal_category_idx" ON "goal_categories" USING btree ("goal_id","category_id");
