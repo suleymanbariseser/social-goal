@@ -8,8 +8,8 @@ type Props = {
   size?: SizeTokens;
 } & UIAvatarImageProps;
 
-export const Avatar = ({ size = '$10', ...props }: Props) => (
-  <UIAvatar circular size={size}>
+export const Avatar = ({ size = '$10', onPress, ...props }: Props) => (
+  <UIAvatar circular size={size} onPress={onPress}>
     <UIAvatar.Image {...props} />
     <UIAvatar.Fallback backgroundColor="$blue10" ai="center" jc="center">
       <User size={size} />

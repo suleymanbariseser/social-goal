@@ -12,20 +12,7 @@ export default function HomeLayout() {
       screenOptions={{
         ...getCommonHeaderOptions(),
         ...getCommonContentOptions(),
-      }}>
-      <Stack.Screen
-        name="home"
-        options={{
-          title: '',
-        }}
-      />
-      <Stack.Screen
-        name="activity/[id]"
-        options={{
-          title: '',
-        }}
-      />
-      <Stack.Screen name="goal/[id]" options={{ title: 'Goal' }} />
-    </Stack>
+      }}
+    />
   );
 }

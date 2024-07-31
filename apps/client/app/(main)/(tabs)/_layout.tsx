@@ -14,6 +14,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      initialRouteName="feed"
       sceneContainerStyle={{
         backgroundColor: getTokens().color.$backgroundMain.val,
       }}
@@ -27,27 +28,27 @@ export default function TabLayout() {
         },
       }}>
       <Tabs.Screen
-        name="index"
+        name="(feed)"
         options={{
           tabBarIcon: ({ color }) => <HomeIcon size="$6" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="discover"
+        name="(discover)"
         options={{
           tabBarIcon: ({ color }) => <CompassIcon size="$6" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="create"
+        name="(create)"
         options={{
           tabBarIcon: ({ color }) => <PlusIcon size="$6" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="profile/[id]"
+        name="(profile)/[id]"
         options={{
-          href: `/profile/${user.id}`,
+          href: `/(profile)/${user.id}`,
           tabBarIcon: ({ color }) => <UserIcon size="$6" color={color} />,
         }}
       />
