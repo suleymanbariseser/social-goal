@@ -14,7 +14,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      initialRouteName="feed"
+      initialRouteName="(feed)"
       sceneContainerStyle={{
         backgroundColor: getTokens().color.$backgroundMain.val,
       }}
